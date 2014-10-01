@@ -7,9 +7,12 @@ public class Player : MonoBehaviour
 		// Use this for initialization
 		bool onJourney;
 		Vector2 travelingPoint;
+		Progress prog;
+		public GameObject progressBar;
 
 		void Start ()
 		{
+				prog = progressBar.GetComponent<Progress> ();
 				onJourney = false;
 		}
 
@@ -21,6 +24,11 @@ public class Player : MonoBehaviour
 								onJourney = false;
 						}
 				}
+				if (!onJourney) {
+						//prog.ProgressOneStep ();
+				}
+
+				
 		}
 
 		public void MoveTo (Vector3 v)
@@ -30,5 +38,12 @@ public class Player : MonoBehaviour
 						this.travelingPoint = v;
 				}
 				
+		}
+
+		void OnCollisionEnter2D (Collider2D c)
+		{
+				if (c.gameObject.tag == "home") {
+						Debug.Log ("jee");
+				}
 		}
 }
