@@ -40,8 +40,9 @@ public class Player : MonoBehaviour
 				
 		}
 
-		void OnCollisionEnter2D (Collider2D c)
+		void OnCollisionEnter2D (Collision2D c)
 		{
+				Debug.Log ("huhuu");
 				if (c.gameObject.tag == "home") {
 						Debug.Log ("jee");
 				}
