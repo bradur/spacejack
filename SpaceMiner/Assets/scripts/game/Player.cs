@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 using System.Collections;
 
 public class Player : MonoBehaviour
@@ -21,8 +21,10 @@ public class Player : MonoBehaviour
 		void Update ()
 		{
 				if (onJourney) {
-						transform.position = Vector2.MoveTowards (transform.position, travelingPoint, speed * Time.deltaTime);
-						if (transform.position.x == this.travelingPoint.x && transform.position.y == this.travelingPoint.y) {
+						Vector2 dir = (travelingPoint - (Vector2)transform.position).normalized;
+						rigidbody2D.velocity = dir * speed;
+						if (Mathf.Abs (transform.position.x - travelingPoint.x) < 0.01 && Mathf.Abs (transform.position.y - travelingPoint.y) < 0.01) {
+								rigidbody2D.velocity = Vector2.zero;
 								onJourney = false;
 						}
 				}
@@ -57,6 +59,7 @@ public class Player : MonoBehaviour
 
 		void OnTriggerExit2D (Collider2D collider)
 		{
+				Debug.Log ("hv");
 				if (collider.gameObject.tag == "asteroid") {
 						prog.Hide ();
 						prog.SetScaleToDefault ();
