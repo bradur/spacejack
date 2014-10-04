@@ -23,4 +23,5 @@ public class Asteroid : MonoBehaviour
 				p.MoveTo (transform.position);
 		}
 
+		
 }

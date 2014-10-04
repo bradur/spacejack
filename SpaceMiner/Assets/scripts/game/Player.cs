@@ -9,11 +9,13 @@ public class Player : MonoBehaviour
 		Vector2 travelingPoint;
 		Progress prog;
 		public GameObject progressBar;
+		bool isMining;
 
 		void Start ()
 		{
 				prog = progressBar.GetComponent<Progress> ();
 				onJourney = false;
+				isMining = false;
 		}
 
 		void Update ()
@@ -24,8 +26,8 @@ public class Player : MonoBehaviour
 								onJourney = false;
 						}
 				}
-				if (!onJourney) {
-						//prog.ProgressOneStep ();
+				if (isMining) {
+						prog.ProgressOneStep ();
 				}
 
 				
@@ -40,11 +42,25 @@ public class Player : MonoBehaviour
 				
 		}
 
-		void OnCollisionEnter2D (Collision2D c)
+		void OnTriggerEnter2D (Collider2D c)
 		{
-				Debug.Log ("huhuu");
+				
 				if (c.gameObject.tag == "home") {
-						Debug.Log ("jee");
+						
+				}
+				if (c.gameObject.tag == "asteroid") {
+						prog.Show ();
+						isMining = true;
+				}
+		
+		}
+
+		void OnTriggerExit2D (Collider2D collider)
+		{
+				if (collider.gameObject.tag == "asteroid") {
+						prog.Hide ();
+						prog.SetScaleToDefault ();
+						isMining = false;
 				}
 		}
 }
