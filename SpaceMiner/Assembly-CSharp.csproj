@@ -47,6 +47,7 @@
   </ItemGroup>
   <ItemGroup>
      <Compile Include="Assets\scripts\game\Asteroid.cs" />
+     <Compile Include="Assets\scripts\game\AsteroidManager.cs" />
      <Compile Include="Assets\scripts\game\Player.cs" />
      <Compile Include="Assets\scripts\game\Progress.cs" />
      <Compile Include="Assets\scripts\generic\TextMeshLayerOrderer.cs" />
