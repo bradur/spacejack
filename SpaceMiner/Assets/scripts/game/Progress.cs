@@ -3,18 +3,38 @@ using System.Collections;
 
 public class Progress : MonoBehaviour
 {
-	float scaleStep = 0.1f;
-	
-	void Update ()
-	{
-		if (Input.GetKeyUp ("left")) {
-			Debug.Log ("?");
+		public float scaleStep;
+		SpriteRenderer renderer;
+		float defaultScale;
 
+		void Start ()
+		{
+				defaultScale = transform.localScale.x;
+				renderer = this.gameObject.GetComponent<SpriteRenderer> ();
+				Hide ();
 		}
-	}
 
-	public void ProgressOneStep ()
-	{
-		transform.localScale = new Vector3 (transform.localScale.x + scaleStep, transform.localScale.y, transform.localScale.z);
-	}
+		void Update ()
+		{
+		}
+
+		public void ProgressOneStep ()
+		{
+				transform.localScale = new Vector3 (transform.localScale.x + scaleStep, transform.localScale.y, transform.localScale.z);
+		}
+
+		public void Hide ()
+		{
+				renderer.enabled = false;
+		}
+
+		public void Show ()
+		{
+				renderer.enabled = true;
+		}
+
+		public void SetScaleToDefault ()
+		{
+				transform.localScale = new Vector3 (defaultScale, transform.localScale.y, transform.localScale.z);
+		}
 }
