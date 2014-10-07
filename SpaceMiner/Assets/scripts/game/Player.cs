@@ -23,7 +23,7 @@ public class Player : MonoBehaviour
 				if (onJourney) {
 						Vector2 dir = (travelingPoint - (Vector2)transform.position).normalized;
 						rigidbody2D.velocity = dir * speed;
-						if (Mathf.Abs (transform.position.x - travelingPoint.x) < 0.01 && Mathf.Abs (transform.position.y - travelingPoint.y) < 0.01) {
+						if (Mathf.Abs (transform.position.x - travelingPoint.x) < 0.1 && Mathf.Abs (transform.position.y - travelingPoint.y) < 0.1) {
 								rigidbody2D.velocity = Vector2.zero;
 								onJourney = false;
 						}
