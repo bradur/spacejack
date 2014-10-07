@@ -861,6 +861,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   player: {fileID: 175163710}
+  distanceBetweenAsteroids: 2
 --- !u!4 &2132148245
 Transform:
   m_ObjectHideFlags: 0

@@ -11,6 +11,7 @@ public class AsteroidManager : MonoBehaviour
 		Player p;
 		List<float> scales;
 		int asteroidsInSpace = 5;
+		public float distanceBetweenAsteroids;
 
 		void Start ()
 		{
@@ -27,7 +28,7 @@ public class AsteroidManager : MonoBehaviour
 						randomY = Random.Range (-4, 4);
 						foreach (Transform child in transform) {
 								Debug.Log (Mathf.Abs (child.localPosition.x - tempAsteroid.transform.localPosition.x));
-								if (Mathf.Abs (child.localPosition.x - randomX) < child.transform.localScale.x * 2f && Mathf.Abs (child.localPosition.y - tempAsteroid.transform.localPosition.y) < child.transform.localScale.x * 2f) {
+								if (Mathf.Abs (child.localPosition.x - randomX) < distanceBetweenAsteroids && Mathf.Abs (child.localPosition.y - tempAsteroid.transform.localPosition.y) < distanceBetweenAsteroids) {
 										generate = false;
 										break;
 								}
@@ -36,7 +37,7 @@ public class AsteroidManager : MonoBehaviour
 						if (generate) {
 								GenerateAsteroid (randomX, randomY);
 						} else {
-								//i--;
+								i--;
 						}
 				}
 		}
@@ -51,7 +52,8 @@ public class AsteroidManager : MonoBehaviour
 				tempAsteroid = (GameObject)Instantiate (asteroidTemplate);
 				tempAsteroid.transform.parent = transform;
 				int scaleIndex = Random.Range (0, scales.Count);
-				tempAsteroid.transform.localScale = new Vector2 (1.3f, 1.3f);
+				float scaling = scales [(int)Random.Range (0, 2)];
+				tempAsteroid.transform.localScale = new Vector2 (scaling, scaling);
 				tempAsteroid.transform.position = new Vector2 (x, y);		
 
 
