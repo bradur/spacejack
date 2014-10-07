@@ -59,7 +59,6 @@ public class Player : MonoBehaviour
 
 		void OnTriggerExit2D (Collider2D collider)
 		{
-				Debug.Log ("hv");
 				if (collider.gameObject.tag == "asteroid") {
 						prog.Hide ();
 						prog.SetScaleToDefault ();

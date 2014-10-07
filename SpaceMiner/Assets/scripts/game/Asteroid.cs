@@ -9,6 +9,7 @@ public class Asteroid : MonoBehaviour
 		Vector3 eulerAngles;
 		public GameObject player;
 		Player p;
+		bool collided = false;
 		// Use this for initialization
 		void Start ()
 		{
@@ -28,5 +29,10 @@ public class Asteroid : MonoBehaviour
 		void OnMouseUp ()
 		{
 				p.MoveTo (transform.position);
+		}
+
+		void OnTriggerEnter2D (Collider2D col)
+		{
+				collided = true;
 		}
 }
