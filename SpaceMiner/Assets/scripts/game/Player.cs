@@ -3,66 +3,63 @@ using System.Collections;
 
 public class Player : MonoBehaviour
 {
-		public float speed;
-		// Use this for initialization
-		bool onJourney;
-		Vector2 travelingPoint;
-		Progress prog;
-		public GameObject progressBar;
-		bool isMining;
+    public GameObject progressBar;
+    public float speed;
 
-		void Start ()
-		{
-				prog = progressBar.GetComponent<Progress> ();
-				onJourney = false;
-				isMining = false;
-		}
+    bool onJourney;
+    bool asteroidReached;
 
-		void Update ()
-		{
-				if (onJourney) {
-						Vector2 dir = (travelingPoint - (Vector2)transform.position).normalized;
-						rigidbody2D.velocity = dir * speed;
-						if (Mathf.Abs (transform.position.x - travelingPoint.x) < 0.1 && Mathf.Abs (transform.position.y - travelingPoint.y) < 0.1) {
-								rigidbody2D.velocity = Vector2.zero;
-								onJourney = false;
-						}
-				}
-				if (isMining) {
-						prog.ProgressOneStep ();
-				}
+    Vector2 travelingPoint;
+    Progress progressbar;
 
-				
-		}
+    void Start ()
+    {
+        progressbar = progressBar.GetComponent<Progress>();
+        onJourney = false;
+        asteroidReached = false;
+    }
 
-		public void MoveTo (Vector3 v)
-		{
-				if (!onJourney) {
-						this.onJourney = true;
-						this.travelingPoint = v;
-				}
-				
-		}
+    void Update ()
+    {
+        if (onJourney) {
+            Vector2 dir = (travelingPoint - (Vector2)transform.position).normalized;
+            rigidbody2D.velocity = dir * speed;
+            if (Mathf.Abs (transform.position.x - travelingPoint.x) < 0.1 && Mathf.Abs (transform.position.y - travelingPoint.y) < 0.1) {
+                rigidbody2D.velocity = Vector2.zero;
+                onJourney = false;
+                // show progress bar only after player has stopped on the asteroid, not immediately when colliding
+                if(asteroidReached){
+                    progressbar.StartProcess();
+                }
+            }
+        }
 
-		void OnTriggerEnter2D (Collider2D c)
-		{
-				
-				if (c.gameObject.tag == "home") {
-						
-				}
-				if (c.gameObject.tag == "asteroid") {
-						prog.Show ();
-						isMining = true;
-				}
-		
-		}
+    }
 
-		void OnTriggerExit2D (Collider2D collider)
-		{
-				if (collider.gameObject.tag == "asteroid") {
-						prog.Hide ();
-						prog.SetScaleToDefault ();
-						isMining = false;
-				}
-		}
+    public void MoveTo (Vector3 targetPosition)
+    {
+        // hide progress bar when player starts to move
+        if(asteroidReached){
+            progressbar.EndProcess();
+        }
+        if (!onJourney) {
+            onJourney = true;
+            travelingPoint = targetPosition;
+        }
+        asteroidReached = false;
+    }
+
+    void OnTriggerEnter2D (Collider2D collider)
+    {
+        
+        if (collider.gameObject.tag == "home") {
+            
+        }
+        if (collider.gameObject.tag == "asteroid") {
+            asteroidReached = true;
+            progressbar.SetTarget(collider.gameObject);
+        }
+    
+    }
+
 }

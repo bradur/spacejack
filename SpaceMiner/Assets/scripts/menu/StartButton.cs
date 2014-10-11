@@ -3,40 +3,37 @@ using System.Collections;
 
 public class StartButton : MonoBehaviour
 {
-		Color originalColor;
-		public Color hoverColor;
-		public Color activeColor;
-		SpriteRenderer sr;
-		// Use this for initialization
-		void Start ()
-		{
-				sr = GetComponent<SpriteRenderer> ();
-				originalColor = sr.color;
-		}
+    public Color hoverColor;
+    public Color activeColor;
 
-		void OnMouseEnter ()
-		{
-				sr.color = hoverColor;
-		}
+    Color originalColor;
+    SpriteRenderer sr;
+    // Use this for initialization
+    void Start()
+    {
+        sr = GetComponent<SpriteRenderer>();
+        originalColor = sr.color;
+    }
 
-		void OnMouseExit ()
-		{
-				sr.color = originalColor;
-		}
+    void OnMouseEnter()
+    {
+        sr.color = hoverColor;
+    }
 
-		void OnMouseUp ()
-		{
-				sr.color = originalColor;
-				Application.LoadLevel (1);
-		}
+    void OnMouseExit()
+    {
+        sr.color = originalColor;
+    }
 
-		void OnMouseDown ()
-		{
-				sr.color = activeColor;
-		}
+    void OnMouseUp()
+    {
+        sr.color = originalColor;
+        Application.LoadLevel (1);
+    }
 
-		void OnMouseDrag ()
-		{
-				
-		}
+    void OnMouseDown()
+    {
+        sr.color = activeColor;
+    }
+
 }

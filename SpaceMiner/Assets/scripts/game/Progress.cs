@@ -3,38 +3,60 @@ using System.Collections;
 
 public class Progress : MonoBehaviour
 {
-		public float scaleStep;
-		SpriteRenderer renderer;
-		float defaultScale;
+    public Transform progressSprite;
+    public float scaleSpeed = 1f;
 
-		void Start ()
-		{
-				defaultScale = transform.localScale.x;
-				renderer = this.gameObject.GetComponent<SpriteRenderer> ();
-				Hide ();
-		}
+    Vector3 targetScale;
+    Vector3 startScale;
 
-		void Update ()
-		{
-		}
+    GameObject processTarget;
 
-		public void ProgressOneStep ()
-		{
-				transform.localScale = new Vector3 (transform.localScale.x + scaleStep, transform.localScale.y, transform.localScale.z);
-		}
+    bool isActive = false;
 
-		public void Hide ()
-		{
-				renderer.enabled = false;
-		}
+    void Start ()
+    {
+        targetScale = progressSprite.localScale;  // target scale (max) is set in scene
+        startScale = new Vector3(0f, targetScale.y, targetScale.z);
+        progressSprite.localScale = startScale;  // set scale to startscale (zero)
+    }
 
-		public void Show ()
-		{
-				renderer.enabled = true;
-		}
+    void Update ()
+    {
+        if(isActive)
+        {
+            progressSprite.localScale = Vector3.MoveTowards(progressSprite.localScale, targetScale, Time.deltaTime * scaleSpeed);
+            if(progressSprite.localScale == targetScale)
+            {
+                Finish();
+            }
+        }
+    }
 
-		public void SetScaleToDefault ()
-		{
-				transform.localScale = new Vector3 (defaultScale, transform.localScale.y, transform.localScale.z);
-		}
+    public void SetTarget(GameObject targetObject)
+    {
+        processTarget = targetObject;
+    }
+
+    public void StartProcess()
+    {
+        isActive = true;
+        gameObject.SetActive(true);
+    }
+
+    void Finish(){
+        if(processTarget != null)
+        {
+            processTarget.GetComponent<Asteroid>().Destroy();
+            processTarget = null;
+        }
+        EndProcess();
+    }
+
+    public void EndProcess()
+    {
+        isActive = false;
+        gameObject.SetActive(false);
+        progressSprite.localScale = startScale;
+    }
+
 }
