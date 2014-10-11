@@ -194,7 +194,7 @@ GameObject:
   - 4: {fileID: 772566615}
   - 82: {fileID: 772566614}
   m_Layer: 0
-  m_Name: GameObject
+  m_Name: music
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -208,7 +208,7 @@ AudioSource:
   m_GameObject: {fileID: 772566613}
   m_Enabled: 1
   serializedVersion: 3
-  m_audioClip: {fileID: 8300000, guid: 8eff2913c0dd72c4fbd0593f84cb8f5f, type: 3}
+  m_audioClip: {fileID: 8300000, guid: 72dce6bd83dc9d34cb3a2a679fb52d32, type: 3}
   m_PlayOnAwake: 1
   m_Volume: .136000007
   m_Pitch: 1
