@@ -5,6 +5,7 @@ public class StartButton : MonoBehaviour
 {
     public Color hoverColor;
     public Color activeColor;
+    public AudioSource clickSound;
 
     Color originalColor;
     SpriteRenderer sr;
@@ -27,6 +28,7 @@ public class StartButton : MonoBehaviour
 
     void OnMouseUp()
     {
+        clickSound.Play();
         sr.color = originalColor;
         Application.LoadLevel (1);
     }

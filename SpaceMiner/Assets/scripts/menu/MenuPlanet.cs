@@ -48,8 +48,7 @@ public class MenuPlanet : MonoBehaviour {
                     startTime = Time.time-0.1f;
                 }
                 float distCovered = (Time.time - startTime) * BounceSpeed;
-                float fracJourney = distCovered;// / journeyLength;
-                transform.localScale = Vector3.Lerp(transform.localScale, currentTargetScale, fracJourney);
+                transform.localScale = Vector3.Lerp(transform.localScale, currentTargetScale, distCovered);
                 if(transform.localScale == currentTargetScale)
                 {
                     startTime = 0f;

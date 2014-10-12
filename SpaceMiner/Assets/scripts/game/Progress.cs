@@ -18,6 +18,7 @@ public class Progress : MonoBehaviour
         targetScale = progressSprite.localScale;  // target scale (max) is set in scene
         startScale = new Vector3(0f, targetScale.y, targetScale.z);
         progressSprite.localScale = startScale;  // set scale to startscale (zero)
+        gameObject.SetActive(false);             // disable
     }
 
     void Update ()
