@@ -10,7 +10,7 @@ public class Asteroid : MonoBehaviour
 		public GameObject playerObject;
 		Player player;
 		bool collided = false;
-		int mineralAmount;
+		public int mineralAmount;
 
 		// Use this for initialization
 		void Start ()
@@ -20,7 +20,7 @@ public class Asteroid : MonoBehaviour
 				RotationStep = RotationStep * rotdir;
 				eulerAngles = new Vector3 (0f, 0f, RotationStep);
 				player = playerObject.GetComponent<Player> ();
-				mineralAmount = transform.localScale * 1000;
+				mineralAmount = (int)(transform.localScale.x * 1000);
 		}
 
 		public void DestroySelf ()
