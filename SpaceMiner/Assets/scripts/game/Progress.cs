@@ -47,7 +47,7 @@ public class Progress : MonoBehaviour
     void Finish(){
         if(processTarget != null)
         {
-            processTarget.GetComponent<Asteroid>().Destroy();
+            processTarget.GetComponent<Asteroid>().DestroySelf();
             processTarget = null;
         }
         EndProcess();

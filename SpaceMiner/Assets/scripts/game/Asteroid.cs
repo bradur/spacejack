@@ -20,7 +20,7 @@ public class Asteroid : MonoBehaviour
         player = playerObject.GetComponent<Player>();
     }
 
-    public void Destroy(){
+    public void DestroySelf(){
         // animation ? 
         Destroy(gameObject);
     }
