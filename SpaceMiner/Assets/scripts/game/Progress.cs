@@ -3,61 +3,61 @@ using System.Collections;
 
 public class Progress : MonoBehaviour
 {
-    public Transform progressSprite;
-    public float scaleSpeed = 1f;
+		public Transform progressSprite;
+		public float scaleSpeed = 1f;
+		Vector3 targetScale;
+		Vector3 startScale;
+		GameObject processTarget;
+		public GameObject resourceManager;
+		ResourceManager resources;
+		bool isActive = false;
 
-    Vector3 targetScale;
-    Vector3 startScale;
+		void Start ()
+		{
+				targetScale = progressSprite.localScale;  // target scale (max) is set in scene
+				startScale = new Vector3 (0f, targetScale.y, targetScale.z);
+				progressSprite.localScale = startScale;  // set scale to startscale (zero)
+				gameObject.SetActive (false);             // disable
 
-    GameObject processTarget;
+				resources = resourceManager.GetComponent<ResourceManager> ();
+		}
 
-    bool isActive = false;
+		void Update ()
+		{
+				if (isActive) {
+						resources.GiveMinerals (Mineral.Dmitryivanovite, 1);
+						progressSprite.localScale = Vector3.MoveTowards (progressSprite.localScale, targetScale, Time.deltaTime * scaleSpeed);
+						if (progressSprite.localScale == targetScale) {
+								Finish ();
+						}
+				}
+		}
 
-    void Start ()
-    {
-        targetScale = progressSprite.localScale;  // target scale (max) is set in scene
-        startScale = new Vector3(0f, targetScale.y, targetScale.z);
-        progressSprite.localScale = startScale;  // set scale to startscale (zero)
-        gameObject.SetActive(false);             // disable
-    }
+		public void SetTarget (GameObject targetObject)
+		{
+				processTarget = targetObject;
+		}
 
-    void Update ()
-    {
-        if(isActive)
-        {
-            progressSprite.localScale = Vector3.MoveTowards(progressSprite.localScale, targetScale, Time.deltaTime * scaleSpeed);
-            if(progressSprite.localScale == targetScale)
-            {
-                Finish();
-            }
-        }
-    }
+		public void StartProcess ()
+		{
+				isActive = true;
+				gameObject.SetActive (true);
+		}
 
-    public void SetTarget(GameObject targetObject)
-    {
-        processTarget = targetObject;
-    }
+		void Finish ()
+		{
+				if (processTarget != null) {
+						processTarget.GetComponent<Asteroid> ().DestroySelf ();
+						processTarget = null;
+				}
+				EndProcess ();
+		}
 
-    public void StartProcess()
-    {
-        isActive = true;
-        gameObject.SetActive(true);
-    }
-
-    void Finish(){
-        if(processTarget != null)
-        {
-            processTarget.GetComponent<Asteroid>().DestroySelf();
-            processTarget = null;
-        }
-        EndProcess();
-    }
-
-    public void EndProcess()
-    {
-        isActive = false;
-        gameObject.SetActive(false);
-        progressSprite.localScale = startScale;
-    }
+		public void EndProcess ()
+		{
+				isActive = false;
+				gameObject.SetActive (false);
+				progressSprite.localScale = startScale;
+		}
 
 }
