@@ -17,7 +17,7 @@ public class Player : MonoBehaviour
 				progressbar = progressBar.GetComponent<Progress> ();
 				onJourney = false;
 				asteroidReached = false;
-				farmingTool = Tool.BronzePickaxe;
+				farmingTool = Tool.DiamondPickaxe;
 
 		}
 
@@ -34,6 +34,9 @@ public class Player : MonoBehaviour
 										switch (farmingTool) {
 										case Tool.BronzePickaxe:
 												farmingSpeed = 1;
+												break;
+										case Tool.DiamondPickaxe:
+												farmingSpeed = 2;
 												break;
 										default:
 												farmingSpeed = 0;
@@ -71,6 +74,16 @@ public class Player : MonoBehaviour
 						progressbar.SetTarget (collider.gameObject);
 				}
     
+		}
+
+		public Tool FarmintTool {
+				get {
+						return this.farmingTool;
+				}
+
+				set {
+						this.farmingTool = value;
+				}
 		}
 
 }

@@ -27,7 +27,7 @@ public class Progress : MonoBehaviour
 		{
 				if (isActive) {
 
-						resources.GiveMinerals (Mineral.Dmitryivanovite, farmingSpeed);
+						resources.GiveMinerals (Mineral.Dmitryivanovite, 1);
 						progressSprite.localScale = Vector3.MoveTowards (progressSprite.localScale, targetScale, Time.deltaTime * scaleSpeed);
 						if (progressSprite.localScale == targetScale) {
 								Finish ();
@@ -44,7 +44,7 @@ public class Progress : MonoBehaviour
 		{
 				isActive = true;
 				gameObject.SetActive (true);
-				this.farmingSpeed = farmingSpeed;
+				scaleSpeed = farmingSpeed;
 		}
 
 		void Finish ()
