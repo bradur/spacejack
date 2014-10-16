@@ -17,10 +17,11 @@ public class ResourceManager : MonoBehaviour
 
 		public void GiveMinerals (Mineral mineralType, int amount)
 		{
-				if (mineralType == Mineral.Dmitryivanovite) {
-						dmitryivanoviteAmount += 1;
+				switch (mineralType) {
+				case Mineral.Dmitryivanovite:
+						dmitryivanoviteAmount += amount;
+						break;
 				}
-				//Debug.Log (dmitryivanoviteAmount);
 		}
 }
 
