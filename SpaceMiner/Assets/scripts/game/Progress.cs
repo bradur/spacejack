@@ -25,11 +25,10 @@ public class Progress : MonoBehaviour
 
 		void Update ()
 		{
-				if (isActive) {
-
-						resources.GiveMinerals (Mineral.Dmitryivanovite, 1);
-						progressSprite.localScale = Vector3.MoveTowards (progressSprite.localScale, targetScale, Time.deltaTime * scaleSpeed);
+				if (isActive) {						
+						progressSprite.localScale = Vector3.MoveTowards (progressSprite.localScale, targetScale, (Time.deltaTime * scaleSpeed) / (processTarget.GetComponent<Asteroid> ().mineralAmount / 10));
 						if (progressSprite.localScale == targetScale) {
+								resources.GiveMinerals (Mineral.Dmitryivanovite, processTarget.GetComponent<Asteroid> ().mineralAmount);
 								Finish ();
 						}
 				}
