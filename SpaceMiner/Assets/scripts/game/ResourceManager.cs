@@ -12,7 +12,7 @@ public class ResourceManager : MonoBehaviour
 
 		void Update ()
 		{
-	
+				
 		}
 
 		public void GiveMinerals (Mineral mineralType, int amount)
@@ -20,6 +20,7 @@ public class ResourceManager : MonoBehaviour
 				if (mineralType == Mineral.Dmitryivanovite) {
 						dmitryivanoviteAmount += 1;
 				}
+				Debug.Log (dmitryivanoviteAmount);
 		}
 }
 

@@ -423,6 +423,7 @@ MonoBehaviour:
   MaxRotationStep: .200000003
   MinRotationStep: .0500000007
   playerObject: {fileID: 175163710}
+  mineralAmount: 0
 --- !u!60 &802376760
 PolygonCollider2D:
   m_ObjectHideFlags: 0
@@ -486,6 +487,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   progressSprite: {fileID: 198405223}
   scaleSpeed: .5
+  resourceManager: {fileID: 1052015025}
 --- !u!4 &847618379
 Transform:
   m_ObjectHideFlags: 0
@@ -634,6 +636,46 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 2
+--- !u!1 &1052015025
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 4
+  m_Component:
+  - 4: {fileID: 1052015027}
+  - 114: {fileID: 1052015026}
+  m_Layer: 0
+  m_Name: resourcemanager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1052015026
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1052015025}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ff4d701283a29524590a0d1d50c74554, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  dmitryivanoviteAmount: 0
+--- !u!4 &1052015027
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1052015025}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 6
 --- !u!1 &1071590170
 GameObject:
   m_ObjectHideFlags: 0
@@ -729,6 +771,7 @@ MonoBehaviour:
   MaxRotationStep: .200000003
   MinRotationStep: .0500000007
   playerObject: {fileID: 175163710}
+  mineralAmount: 0
 --- !u!212 &1262609106
 SpriteRenderer:
   m_ObjectHideFlags: 0
