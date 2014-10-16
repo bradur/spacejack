@@ -20,7 +20,7 @@ public class ResourceManager : MonoBehaviour
 				if (mineralType == Mineral.Dmitryivanovite) {
 						dmitryivanoviteAmount += 1;
 				}
-				Debug.Log (dmitryivanoviteAmount);
+				//Debug.Log (dmitryivanoviteAmount);
 		}
 }
 
