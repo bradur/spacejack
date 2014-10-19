@@ -1,12 +1,11 @@
 ﻿<Properties>
   <MonoDevelop.Ide.Workspace />
-  <MonoDevelop.Ide.Workbench ActiveDocument="..\..\IceCraziness\Assets\Scripts\Player.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\scripts\game\AsteroidManager.cs">
     <Files>
-      <File FileName="..\..\IceCraziness\Assets\Scripts\GuiMover.cs" Line="1" Column="1" />
-      <File FileName="..\..\IceCraziness\Assets\Scripts\Player.cs" Line="37" Column="5" />
-      <File FileName="..\..\IceCraziness\Assets\Scripts\CameraMover.cs" Line="24" Column="7" />
-      <File FileName="..\..\IceCraziness\Assets\Scripts\Button.cs" Line="1" Column="1" />
-      <File FileName="..\..\IceCraziness\Assets\Scripts\AcceleroMeterController.cs" Line="54" Column="35" />
+      <File FileName="Assets\scripts\game\Asteroid.cs" Line="15" Column="30" />
+      <File FileName="Assets\scripts\game\AsteroidManager.cs" Line="18" Column="61" />
+      <File FileName="Assets\scripts\game\Player.cs" Line="91" Column="1" />
+      <File FileName="Assets\scripts\game\ResourceManager.cs" Line="26" Column="2" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>

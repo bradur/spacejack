@@ -88,11 +88,5 @@ public class Player : MonoBehaviour
 
 }
 
-public enum Tool
-{
-		BronzePickaxe,
-		DiamondPickaxe,
-		Drill,
-		Laser}
-;
+
 

@@ -31,3 +31,11 @@ public enum Mineral
 		Dmitryivanovite,
 		Alabandite}
 ;
+
+public enum Tool
+{
+	BronzePickaxe,
+	DiamondPickaxe,
+	Drill,
+	Laser}
+;
