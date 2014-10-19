@@ -11,7 +11,7 @@ public class Asteroid : MonoBehaviour
 		Player player;
 		bool collided = false;
 		public int mineralAmount;
-
+		public Mineral mineralType;
 		// Use this for initialization
 		void Start ()
 		{
@@ -20,7 +20,6 @@ public class Asteroid : MonoBehaviour
 				RotationStep = RotationStep * rotdir;
 				eulerAngles = new Vector3 (0f, 0f, RotationStep);
 				player = playerObject.GetComponent<Player> ();
-				mineralAmount = (int)(transform.localScale.x * 1000);
 		}
 
 		public void DestroySelf ()
@@ -43,5 +42,15 @@ public class Asteroid : MonoBehaviour
 		void OnTriggerEnter2D (Collider2D col)
 		{
 				collided = true;
+		}
+
+		public Mineral MineralType {
+				get { return this.mineralType;}
+				set { this.mineralType = value;}
+		}
+
+		public int MineralAmount {
+				get{ return this.mineralAmount;}
+				set{ this.mineralAmount = value;}
 		}
 }

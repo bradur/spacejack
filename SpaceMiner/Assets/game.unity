@@ -424,6 +424,7 @@ MonoBehaviour:
   MinRotationStep: .0500000007
   playerObject: {fileID: 175163710}
   mineralAmount: 0
+  mineralType: 0
 --- !u!60 &802376760
 PolygonCollider2D:
   m_ObjectHideFlags: 0
@@ -664,6 +665,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   dmitryivanoviteAmount: 0
+  sinoiteAmount: 0
 --- !u!4 &1052015027
 Transform:
   m_ObjectHideFlags: 0

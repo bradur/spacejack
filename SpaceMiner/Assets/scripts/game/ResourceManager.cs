@@ -4,6 +4,7 @@ using System.Collections;
 public class ResourceManager : MonoBehaviour
 {		
 		public int dmitryivanoviteAmount;
+		public int sinoiteAmount;
 
 		void Start ()
 		{
@@ -21,6 +22,10 @@ public class ResourceManager : MonoBehaviour
 				case Mineral.Dmitryivanovite:
 						dmitryivanoviteAmount += amount;
 						break;
+				
+				case Mineral.Sinoite:
+						sinoiteAmount += amount;
+						break;
 				}
 		}
 }
@@ -34,8 +39,8 @@ public enum Mineral
 
 public enum Tool
 {
-	BronzePickaxe,
-	DiamondPickaxe,
-	Drill,
-	Laser}
+		BronzePickaxe,
+		DiamondPickaxe,
+		Drill,
+		Laser}
 ;
