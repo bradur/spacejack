@@ -11,6 +11,8 @@ public class Player : MonoBehaviour
 		Progress progressbar;
 		int farmingSpeed;
 		Tool farmingTool;
+		public GameObject resourceManager;
+		ResourceManager resources;
 
 		void Start ()
 		{
@@ -18,12 +20,13 @@ public class Player : MonoBehaviour
 				onJourney = false;
 				asteroidReached = false;
 				farmingTool = Tool.DiamondPickaxe;
+				resources = resourceManager.GetComponent<ResourceManager> ();
 
 		}
 
 		void Update ()
 		{
-				if (onJourney) {
+				if (onJourney && resources.FuelAmount > 0) {
 						Vector2 dir = (travelingPoint - (Vector2)transform.position).normalized;
 						rigidbody2D.velocity = dir * speed;
 						if (Mathf.Abs (transform.position.x - travelingPoint.x) < 0.1 && Mathf.Abs (transform.position.y - travelingPoint.y) < 0.1) {

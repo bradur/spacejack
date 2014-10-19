@@ -5,10 +5,11 @@ public class ResourceManager : MonoBehaviour
 {		
 		public int dmitryivanoviteAmount;
 		public int sinoiteAmount;
+		public int fuelAmount;
 
 		void Start ()
 		{
-				dmitryivanoviteAmount = 0;
+
 		}
 
 		void Update ()
@@ -28,6 +29,11 @@ public class ResourceManager : MonoBehaviour
 						break;
 				}
 		}
+
+		public int FuelAmount {
+				set{ this.fuelAmount = value;}
+				get{ return this.fuelAmount;}
+		}
 }
 
 public enum Mineral
@@ -44,3 +50,12 @@ public enum Tool
 		Drill,
 		Laser}
 ;
+
+public enum JetPackUpgrade
+{
+		Lazy,
+		TheBeast,
+		Expert
+
+
+}
