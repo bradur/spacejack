@@ -12,9 +12,12 @@ public class AsteroidManager : MonoBehaviour
 		List<float> scales;
 		int asteroidsInSpace = 5;
 		public float distanceBetweenAsteroids;
+		public GameObject borderOb;
+		BorderManager borderManager;
 
 		void Start ()
 		{
+				borderManager = borderOb.GetComponent<BorderManager> ();
 				asteroidTemplate = Resources.Load ("asteroidpref");     
 				scales = new List<float> (){0.3f, 0.5f, 0.7f};
 
@@ -24,8 +27,8 @@ public class AsteroidManager : MonoBehaviour
 
 				for (int i = 0; i < asteroidsInSpace; i++) {
 						bool generate = true;
-						randomX = Random.Range (-6, 6);
-						randomY = Random.Range (-4, 4);
+						randomX = Random.Range (borderManager.leftBorder, borderManager.rightBorder);
+						randomY = Random.Range (borderManager.upBorder, borderManager.downBorder);
 						Vector3 newPosition = new Vector3 (randomX, randomY, 0f);
 						foreach (Transform child in transform) {
 								if (Vector3.Distance (child.localPosition, newPosition) < distanceBetweenAsteroids) {

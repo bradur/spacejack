@@ -51,6 +51,7 @@
      <Compile Include="Assets\scripts\game\Fuelbar.cs" />
      <Compile Include="Assets\scripts\game\Player.cs" />
      <Compile Include="Assets\scripts\game\Progress.cs" />
+     <Compile Include="Assets\scripts\generic\BorderManager.cs" />
      <Compile Include="Assets\scripts\generic\ResourceManager.cs" />
      <Compile Include="Assets\scripts\generic\TextMeshLayerOrderer.cs" />
      <Compile Include="Assets\scripts\menu\MenuPlanet.cs" />
