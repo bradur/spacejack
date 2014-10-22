@@ -184,7 +184,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1250bb4301c4b0d4d9cfcb16cb234473, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  progressSprite: {fileID: 1973691929}
+  fuelSprite: {fileID: 1973691929}
   scaleSpeed: 1
   resourceManager: {fileID: 1052015025}
 --- !u!1001 &149918078
@@ -240,7 +240,7 @@ Prefab:
       objectReference: {fileID: 1052015025}
     - target: {fileID: 11400000, guid: 0ebc90c4213a422409071ba7dc92f81e, type: 2}
       propertyPath: fuelConsumption
-      value: 3
+      value: 200
       objectReference: {fileID: 0}
     - target: {fileID: 11400000, guid: 0ebc90c4213a422409071ba7dc92f81e, type: 2}
       propertyPath: speed
@@ -337,7 +337,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   progressBar: {fileID: 847618377}
   speed: 100
-  fuelConsumption: 3
+  fuelConsumption: 200
   resourceManager: {fileID: 1052015025}
 --- !u!60 &175163715
 PolygonCollider2D:
@@ -881,6 +881,7 @@ MonoBehaviour:
   dmitryivanoviteAmount: 0
   sinoiteAmount: 0
   fuelAmount: 5000
+  maxFuelAmount: 5000
 --- !u!4 &1052015027
 Transform:
   m_ObjectHideFlags: 0
