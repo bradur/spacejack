@@ -5,6 +5,7 @@ public class Player : MonoBehaviour
 {
 		public GameObject progressBar;
 		public float speed;
+		public int fuelConsumption;
 		bool onJourney;
 		bool asteroidReached;
 		Vector2 travelingPoint;
@@ -13,6 +14,7 @@ public class Player : MonoBehaviour
 		Tool farmingTool;
 		public GameObject resourceManager;
 		ResourceManager resources;
+		float fuelTimer;
 
 		void Start ()
 		{
@@ -22,13 +24,18 @@ public class Player : MonoBehaviour
 				farmingTool = Tool.DiamondPickaxe;
 				resources = resourceManager.GetComponent<ResourceManager> ();
 
+				fuelTimer = Time.deltaTime;
 		}
 
 		void Update ()
 		{
-				if (onJourney && resources.FuelAmount > 0) {
+				if (onJourney && resources.fuelAmount > 0) {
 						Vector2 dir = (travelingPoint - (Vector2)transform.position).normalized;
-						rigidbody2D.velocity = dir * speed;
+						rigidbody2D.velocity = dir * speed * Time.deltaTime;
+
+						
+						UseFuel ();
+						
 						if (Mathf.Abs (transform.position.x - travelingPoint.x) < 0.1 && Mathf.Abs (transform.position.y - travelingPoint.y) < 0.1) {
 								rigidbody2D.velocity = Vector2.zero;
 								onJourney = false;
@@ -49,8 +56,18 @@ public class Player : MonoBehaviour
 										progressbar.StartProcess (farmingSpeed);
 								}
 						}
+				} else if (!onJourney) {
+						fuelTimer = Time.unscaledTime;
 				}
 
+		}
+	//uses fuelConsumption amount of fuel per second
+		void UseFuel ()
+		{
+				if (fuelTimer + 1 < Time.unscaledTime) {
+						resources.fuelAmount -= fuelConsumption;
+						fuelTimer = Time.unscaledTime;
+				}
 		}
 
 		public void MoveTo (Vector3 targetPosition)
