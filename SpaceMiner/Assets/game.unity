@@ -125,6 +125,14 @@ Prefab:
       propertyPath: resourceManager
       value: 
       objectReference: {fileID: 1052015025}
+    - target: {fileID: 11400000, guid: 0ebc90c4213a422409071ba7dc92f81e, type: 2}
+      propertyPath: fuelConsumption
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 11400000, guid: 0ebc90c4213a422409071ba7dc92f81e, type: 2}
+      propertyPath: speed
+      value: 100
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 0ebc90c4213a422409071ba7dc92f81e, type: 2}
   m_RootGameObject: {fileID: 175163710}
@@ -214,7 +222,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   progressBar: {fileID: 847618377}
-  speed: 3
+  speed: 100
+  fuelConsumption: 3
   resourceManager: {fileID: 1052015025}
 --- !u!60 &175163715
 PolygonCollider2D:
@@ -671,7 +680,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   dmitryivanoviteAmount: 0
   sinoiteAmount: 0
-  fuelAmount: 1
+  fuelAmount: 5000
 --- !u!4 &1052015027
 Transform:
   m_ObjectHideFlags: 0
