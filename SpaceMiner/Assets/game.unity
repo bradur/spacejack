@@ -958,10 +958,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ff4d701283a29524590a0d1d50c74554, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  dmitryivanoviteAmount: 0
-  sinoiteAmount: 0
   fuelAmount: 5000
   maxFuelAmount: 5000
+  creditCount: 1000
+  mineralArray: c80000002c01000090010000
 --- !u!4 &1052015027
 Transform:
   m_ObjectHideFlags: 0
