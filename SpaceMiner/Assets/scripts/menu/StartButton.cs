@@ -7,6 +7,8 @@ public class StartButton : MonoBehaviour
     public Color activeColor;
     public AudioSource clickSound;
 
+    public int LevelToLoad = 1;
+
     Color originalColor;
     SpriteRenderer sr;
     // Use this for initialization
@@ -30,7 +32,7 @@ public class StartButton : MonoBehaviour
     {
         clickSound.Play();
         sr.color = originalColor;
-        Application.LoadLevel (1);
+        Application.LoadLevel(LevelToLoad);
     }
 
     void OnMouseDown()
