@@ -14,6 +14,7 @@ public class MarketButton : MonoBehaviour {
     public GameObject backGround;
     public Sprite activeSprite;
     public Sprite disabledSprite;
+    Sprite currentSprite;
     Sprite originalSprite;
 
     public AudioSource clickSound;
@@ -44,11 +45,13 @@ public class MarketButton : MonoBehaviour {
     void DisableButton(){
         is_enabled = false;
         sr.sprite = disabledSprite;
+        currentSprite = disabledSprite;
     }
 
     void EnableButton(){
         is_enabled = true;
         sr.sprite = originalSprite;
+        currentSprite = originalSprite;
     }
 
     public void CheckAvailability(int count){
@@ -62,7 +65,7 @@ public class MarketButton : MonoBehaviour {
     }
 
     void OnMouseUp(){
-        sr.sprite = originalSprite;
+        sr.sprite = currentSprite;
     }
 
     void OnMouseDown(){
