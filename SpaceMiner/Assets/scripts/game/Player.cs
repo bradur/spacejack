@@ -16,6 +16,7 @@ public class Player : MonoBehaviour
 		ResourceManager resources;
 		GameObject lastCollider = null;
 		float fuelTimer;
+		public GameObject home;
 
 		void Start ()
 		{
@@ -53,9 +54,9 @@ public class Player : MonoBehaviour
 												farmingSpeed = 0;
 												break;
 										}
-										if(lastCollider != null){
-											progressbar.SetTarget(lastCollider);
-											progressbar.StartProcess(farmingSpeed);
+										if (lastCollider != null) {
+												progressbar.SetTarget (lastCollider);
+												progressbar.StartProcess (farmingSpeed);
 										}
 										
 								}
@@ -65,7 +66,7 @@ public class Player : MonoBehaviour
 				}
 
 		}
-	//uses fuelConsumption amount of fuel per second
+		//uses fuelConsumption amount of fuel per second
 		void UseFuel ()
 		{
 				if (fuelTimer + 1 < Time.unscaledTime) {
@@ -91,11 +92,11 @@ public class Player : MonoBehaviour
 		{
         
 				if (collider.gameObject.tag == "home") {
-					lastCollider = null;
+						lastCollider = null;
 				}
 				if (collider.gameObject.tag == "asteroid") {
-					asteroidReached = true;
-					lastCollider = collider.gameObject;
+						asteroidReached = true;
+						lastCollider = collider.gameObject;
 				}
     
 		}
@@ -110,6 +111,14 @@ public class Player : MonoBehaviour
 				}
 		}
 
+		public void TravelHome ()
+		{
+				travelingPoint = home.transform.position;
+				transform.position = home.transform.position;
+				onJourney = false;
+				rigidbody2D.velocity = Vector3.zero;
+				progressbar.EndProcess ();
+		}
 }
 
 
