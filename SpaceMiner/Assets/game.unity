@@ -1054,6 +1054,7 @@ MonoBehaviour:
   offScreenOb: {fileID: 1606021292}
   onScreenOb: {fileID: 1467982515}
   movementSpeed: 40
+  menuShown: 0
 --- !u!61 &867643540
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -1292,7 +1293,7 @@ MonoBehaviour:
   fuelAmount: 5000
   maxFuelAmount: 5000
   creditCount: 1000
-  mineralArray: c80000002c01000090010000
+  resourceArray: c8000000c800000032000000000000002c010000f4010000
 --- !u!4 &1052015027
 Transform:
   m_ObjectHideFlags: 0
