@@ -113,9 +113,11 @@ public class Player : MonoBehaviour
 
 		public void TravelHome ()
 		{
-				onJourney = true;
-				progressbar.EndProcess ();
 				travelingPoint = home.transform.position;
+				transform.position = home.transform.position;
+				onJourney = false;
+				rigidbody2D.velocity = Vector3.zero;
+				progressbar.EndProcess ();
 		}
 }
 

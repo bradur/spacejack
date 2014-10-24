@@ -15,6 +15,8 @@ public class DayCycle : MonoBehaviour
 		float lastTickTime;
 		public GameObject playerOb;
 		Player playerScript;
+		public GameObject dayPassedObject;
+		DayPassedMenu dayPassedScript;
 
 		//dayTime is 120 seconds
 		public float dayTime;
@@ -32,6 +34,7 @@ public class DayCycle : MonoBehaviour
 
 				ticks = 0;
 				playerScript = playerOb.GetComponent<Player> ();
+				dayPassedScript = dayPassedObject.GetComponent<DayPassedMenu> ();
 		}
 	
 		void Update ()
@@ -40,10 +43,7 @@ public class DayCycle : MonoBehaviour
 						timer += Time.deltaTime;
 				} else {
 						Tick ();
-				}
-				
-				//fuelSprite.localScale = new Vector3 (maxScaleX * ((float)resources.fuelAmount / (float)resources.maxFuelAmount), scaleY, scaleZ);
-		
+				}		
 		}
 
 		void Tick ()
@@ -56,7 +56,9 @@ public class DayCycle : MonoBehaviour
 				ticks++;
 				if (ticks > dayTime) {
 						playerScript.TravelHome ();
+						dayPassedScript.TravelOnScreen ();
 						ticks = 0;
+						
 				}
 		}
 }
