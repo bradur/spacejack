@@ -39,9 +39,9 @@ public class DayCycle : MonoBehaviour
 	
 		void Update ()
 		{					
-				if (timer < lastTickTime + 1) {
+				if (timer < lastTickTime + 1 && !dayPassedScript.menuShown) {
 						timer += Time.deltaTime;
-				} else {
+				} else if (!dayPassedScript.menuShown && timer >= lastTickTime + 1) {
 						Tick ();
 				}		
 		}
@@ -58,7 +58,7 @@ public class DayCycle : MonoBehaviour
 						playerScript.TravelHome ();
 						dayPassedScript.TravelOnScreen ();
 						ticks = 0;
-						
+						fuelSprite.localScale = new Vector3 (maxScaleX, scaleY, scaleZ);
 				}
 		}
 }
