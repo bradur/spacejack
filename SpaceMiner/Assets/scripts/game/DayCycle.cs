@@ -13,10 +13,12 @@ public class DayCycle : MonoBehaviour
 		float maxScaleX;
 		float timer;
 		float lastTickTime;
+		public GameObject playerOb;
+		Player playerScript;
 
 		//dayTime is 120 seconds
-		float dayTime = 120;
-		public float ticks;
+		public float dayTime;
+		float ticks;
 
 		void Start ()
 		{
@@ -29,7 +31,7 @@ public class DayCycle : MonoBehaviour
 				maxScaleX = fuelSprite.localScale.x;
 
 				ticks = 0;
-		
+				playerScript = playerOb.GetComponent<Player> ();
 		}
 	
 		void Update ()
@@ -39,7 +41,7 @@ public class DayCycle : MonoBehaviour
 				} else {
 						Tick ();
 				}
-		
+				
 				//fuelSprite.localScale = new Vector3 (maxScaleX * ((float)resources.fuelAmount / (float)resources.maxFuelAmount), scaleY, scaleZ);
 		
 		}
@@ -52,5 +54,9 @@ public class DayCycle : MonoBehaviour
 				timer = Time.unscaledTime;
 				lastTickTime = Time.unscaledTime;
 				ticks++;
+				if (ticks > dayTime) {
+						playerScript.TravelHome ();
+						ticks = 0;
+				}
 		}
 }

@@ -246,6 +246,10 @@ Prefab:
       propertyPath: speed
       value: 100
       objectReference: {fileID: 0}
+    - target: {fileID: 11400000, guid: 0ebc90c4213a422409071ba7dc92f81e, type: 2}
+      propertyPath: home
+      value: 
+      objectReference: {fileID: 802376756}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 0ebc90c4213a422409071ba7dc92f81e, type: 2}
   m_RootGameObject: {fileID: 175163710}
@@ -294,6 +298,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   fuelSprite: {fileID: 201944216}
   scaleSpeed: 1
+  playerOb: {fileID: 175163710}
+  ticks: 0
 --- !u!1 &175163710
 GameObject:
   m_ObjectHideFlags: 0
@@ -381,6 +387,7 @@ MonoBehaviour:
   speed: 100
   fuelConsumption: 200
   resourceManager: {fileID: 1052015025}
+  home: {fileID: 802376756}
 --- !u!60 &175163715
 PolygonCollider2D:
   m_ObjectHideFlags: 0
@@ -1348,7 +1355,7 @@ AudioSource:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1513565021}
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 3
   m_audioClip: {fileID: 8300000, guid: 0337cb58f0eca3945aaeb57afcf227af, type: 3}
   m_PlayOnAwake: 1
