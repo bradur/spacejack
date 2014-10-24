@@ -14,6 +14,7 @@ public class Player : MonoBehaviour
 		Tool farmingTool;
 		public GameObject resourceManager;
 		ResourceManager resources;
+		GameObject lastCollider = null;
 		float fuelTimer;
 
 		void Start ()
@@ -52,8 +53,11 @@ public class Player : MonoBehaviour
 												farmingSpeed = 0;
 												break;
 										}
+										if(lastCollider != null){
+											progressbar.SetTarget(lastCollider);
+											progressbar.StartProcess(farmingSpeed);
+										}
 										
-										progressbar.StartProcess (farmingSpeed);
 								}
 						}
 				} else if (!onJourney) {
@@ -87,11 +91,11 @@ public class Player : MonoBehaviour
 		{
         
 				if (collider.gameObject.tag == "home") {
-            
+					lastCollider = null;
 				}
 				if (collider.gameObject.tag == "asteroid") {
-						asteroidReached = true;
-						progressbar.SetTarget (collider.gameObject);
+					asteroidReached = true;
+					lastCollider = collider.gameObject;
 				}
     
 		}
