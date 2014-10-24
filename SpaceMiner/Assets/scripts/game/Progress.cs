@@ -28,7 +28,7 @@ public class Progress : MonoBehaviour
 				if (isActive) {						
 						progressSprite.localScale = Vector3.MoveTowards (progressSprite.localScale, targetScale, (Time.deltaTime * scaleSpeed) / (processTarget.GetComponent<Asteroid> ().mineralAmount / 10));
 						if (progressSprite.localScale == targetScale) {
-								resources.GiveMinerals (processTarget.GetComponent<Asteroid> ().MineralType, processTarget.GetComponent<Asteroid> ().MineralAmount);
+								resources.UpdateResourceCount(processTarget.GetComponent<Asteroid> ().MineralType, processTarget.GetComponent<Asteroid> ().MineralAmount);
 								Finish ();
 						}
 				}

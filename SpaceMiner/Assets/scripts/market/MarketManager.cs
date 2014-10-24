@@ -5,69 +5,54 @@ public class MarketManager : MonoBehaviour {
 
     ResourceManager resourceManager;
 
-    public GameObject fuelCountObject;
-    TextMesh fuelCountText;
-    int fuelCount;
     string maxFuel;
 
-    public GameObject creditCountObject;
-    TextMesh creditCountText;
-    int creditCount;
-
-    public int[] mineralArray = new int[System.Enum.GetNames(typeof(Mineral)).Length];
-    public GameObject[] mineralObjects = new GameObject[System.Enum.GetNames(typeof(Mineral)).Length];
-    TextMesh[] mineralTexts = new TextMesh[System.Enum.GetNames(typeof(Mineral)).Length];
-
+    public GameObject[] buttonObjects = new GameObject[System.Enum.GetNames(typeof(Resource)).Length];
+    MarketButton[] marketButtons = new MarketButton[System.Enum.GetNames(typeof(Resource)).Length];
+    public GameObject[] counterObjects = new GameObject[System.Enum.GetNames(typeof(Resource)).Length];
+    TextMesh[] resourceTexts = new TextMesh[System.Enum.GetNames(typeof(Resource)).Length];
 
     // Use this for initialization
     void Start () {
         resourceManager = GameObject.FindWithTag("resourceManager").GetComponent<ResourceManager>();
-        fuelCountText = fuelCountObject.GetComponent<TextMesh>();
-        creditCountText = creditCountObject.GetComponent<TextMesh>();
 
-        //resourceManager.GetMineralCount(Mineral.Sinoite);
-        //resourceManager.GetMineralCount(Mineral.Dmitryivanovite);
-        //resourceManager.GetMineralCount(Mineral.Alabandite);
-
-        for(int i = 0;i < mineralArray.Length; i++){
-            mineralArray[i] = resourceManager.GetMineralCount((Mineral)i);
-        }
-        for(int i = 0; i< mineralObjects.Length; i++){
-            mineralTexts[i] = mineralObjects[i].GetComponent<TextMesh>();
-            UpdateMineralCount((Mineral)i);
+        for(int i = 0; i< counterObjects.Length; i++){
+            resourceTexts[i] = counterObjects[i].GetComponent<TextMesh>();
+            UpdateResourceCount((Resource)i);
         }
 
-        creditCount = resourceManager.creditCount;
-        fuelCount = resourceManager.fuelAmount;
+        for(int i = 0; i < buttonObjects.Length; i++){
+            marketButtons[i] = buttonObjects[i].GetComponent<MarketButton>();
+        }
+
+        UpdateButtons();
+
         maxFuel = resourceManager.maxFuelAmount.ToString();
-        UpdateCreditCount();
-        UpdateFuelCount();
-
-
-    }
-    
-    // Update is called once per frame
-    void Update () {
-    
     }
 
-    public void UpdateMineralCount(Mineral mineral, int count=0){
-        mineralArray[(int)mineral] += count;
-        resourceManager.SetMineralCount(mineral, count);
-        print(mineral + ": " + resourceManager.GetMineralCount(mineral));
-        mineralTexts[(int)mineral].text = resourceManager.GetMineralCount(mineral).ToString();
+    void UpdateButtons(){
+        for(int i = 0; i < marketButtons.Length; i++)
+        {
+            marketButtons[i].CheckAvailability(GetResourceCount(marketButtons[i].costType));
+        }
     }
 
-    public void UpdateCreditCount(int newCount=0){
-        creditCount += newCount;
-        creditCountText.text = "$" + creditCount.ToString();
-        resourceManager.creditCount = creditCount;
+    public int GetResourceCount(Resource resource){
+        return resourceManager.GetResourceCount(resource);
     }
 
-    public void UpdateFuelCount(int newCount=0){
-        fuelCount += newCount;
-        fuelCountText.text = fuelCount.ToString() + " / " + maxFuel;
-        print(maxFuel);
-        resourceManager.fuelAmount = fuelCount;
+    public void UpdateResourceCount(Resource resource, int count = 0){
+        resourceManager.UpdateResourceCount(resource, count);
+        string text = resourceManager.GetResourceCount(resource).ToString();
+        if(resource == Resource.Fuel){
+            text += " / " + maxFuel;
+        }
+        if(resource == Resource.Credits){
+            text = "$"+text;
+        }
+        resourceTexts[(int)resource].text = text;
+        if(count != 0){
+            UpdateButtons();
+        }
     }
 }

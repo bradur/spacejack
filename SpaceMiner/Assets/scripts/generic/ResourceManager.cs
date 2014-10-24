@@ -1,11 +1,13 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public enum Mineral
-{
-    Sinoite,
+public enum Resource{
     Dmitryivanovite,
-    Alabandite
+    Sinoite,
+    Alabandite,
+    Credits,
+    LifeSupport,
+    Fuel
 };
 
 public enum Tool
@@ -23,6 +25,15 @@ public enum JetPackUpgrade
     Expert
 }
 
+public enum ResourceType{
+    Dmitryivanovite,
+    Sinoite,
+    Alabandite,
+    Credits,
+    LifeSupport,
+    Fuel
+};
+
 public class ResourceManager : MonoBehaviour
 {
     public int fuelAmount;
@@ -30,7 +41,7 @@ public class ResourceManager : MonoBehaviour
 
     public int creditCount;
 
-    public int[] mineralArray = new int[System.Enum.GetNames(typeof(Mineral)).Length];
+    public int[] resourceArray = new int[System.Enum.GetNames(typeof(Resource)).Length];
 
     void Awake() {
         DontDestroyOnLoad(transform.gameObject);
@@ -45,27 +56,13 @@ public class ResourceManager : MonoBehaviour
         
     }
 
-    public int GetMineralCount(Mineral mineral){
-        return mineralArray[(int)mineral];
+    public int GetResourceCount(Resource resource){
+        return resourceArray[(int)resource];
     }
 
-    public void SetMineralCount(Mineral mineral, int count){
-        mineralArray[(int)mineral] += count;
-    }
-
-    public void GiveMinerals (Mineral mineralType, int amount)
+    public void UpdateResourceCount(Resource resource, int amount=0)
     {
-        mineralArray[(int)mineralType] += amount;
-        /*
-        switch (mineralType) {
-        case Mineral.Dmitryivanovite:
-            dmitryivanoviteAmount += amount;
-            break;
-
-        case Mineral.Sinoite:
-            sinoiteAmount += amount;
-            break;
-        }*/
+        resourceArray[(int)resource] += amount;
     }
 
     public int FuelAmount {

@@ -61,9 +61,9 @@ public class AsteroidManager : MonoBehaviour
 				// 3 - 10 = Dmitryivanovite
 				int mineralType = (int)Random.Range (1, 10);
 				if (mineralType < 3) {
-						tempAsteroid.GetComponent<Asteroid> ().MineralType = Mineral.Sinoite;
+						tempAsteroid.GetComponent<Asteroid> ().MineralType = Resource.Sinoite;
 				} else if (mineralType >= 3 && mineralType <= 10) {
-						tempAsteroid.GetComponent<Asteroid> ().MineralType = Mineral.Dmitryivanovite;
+						tempAsteroid.GetComponent<Asteroid> ().MineralType = Resource.Dmitryivanovite;
 				}
 
 				//Set amount of minerals in asteroid

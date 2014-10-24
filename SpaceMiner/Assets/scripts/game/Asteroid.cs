@@ -11,7 +11,7 @@ public class Asteroid : MonoBehaviour
 		Player player;
 		bool collided = false;
 		public int mineralAmount;
-		public Mineral mineralType;
+		public Resource mineralType;
 		// Use this for initialization
 		void Start ()
 		{
@@ -44,7 +44,7 @@ public class Asteroid : MonoBehaviour
 				collided = true;
 		}
 
-		public Mineral MineralType {
+		public Resource MineralType {
 				get { return this.mineralType;}
 				set { this.mineralType = value;}
 		}
