@@ -7,25 +7,20 @@ public class MarketManager : MonoBehaviour {
 
     string maxFuel;
 
-    public GameObject[] buttonObjects = new GameObject[System.Enum.GetNames(typeof(Resource)).Length];
-    MarketButton[] marketButtons = new MarketButton[System.Enum.GetNames(typeof(Resource)).Length];
-    public GameObject[] counterObjects = new GameObject[System.Enum.GetNames(typeof(Resource)).Length];
-    TextMesh[] resourceTexts = new TextMesh[System.Enum.GetNames(typeof(Resource)).Length];
+    public MarketButton[] marketButtons = new MarketButton[System.Enum.GetNames(typeof(Resource)).Length];
+    public TextMesh[] resourceTexts = new TextMesh[System.Enum.GetNames(typeof(Resource)).Length];
+    public GoalAvailability[] goals = new GoalAvailability[2];
 
     // Use this for initialization
     void Start () {
         resourceManager = GameObject.FindWithTag("resourceManager").GetComponent<ResourceManager>();
 
-        for(int i = 0; i< counterObjects.Length; i++){
-            resourceTexts[i] = counterObjects[i].GetComponent<TextMesh>();
+        for(int i = 0; i< marketButtons.Length; i++){
             UpdateResourceCount((Resource)i);
         }
 
-        for(int i = 0; i < buttonObjects.Length; i++){
-            marketButtons[i] = buttonObjects[i].GetComponent<MarketButton>();
-        }
-
         UpdateButtons();
+        UpdateGoals();
 
         maxFuel = resourceManager.maxFuelAmount.ToString();
     }
@@ -41,11 +36,20 @@ public class MarketManager : MonoBehaviour {
         return resourceManager.GetResourceCount(resource);
     }
 
+    void UpdateGoals(){
+        for(int i = 0; i < goals.Length; i++){
+            goals[i].UpdateGoal(GetResourceCount(goals[i].goalType));
+        }
+    }
+
     public void UpdateResourceCount(Resource resource, int count = 0){
         resourceManager.UpdateResourceCount(resource, count);
-        string text = resourceManager.GetResourceCount(resource).ToString();
+        int newcount = resourceManager.GetResourceCount(resource);
+        string text = newcount.ToString();
+
         if(resource == Resource.Fuel){
             text += " / " + maxFuel;
+            // get spaceship info here later on
         }
         if(resource == Resource.Credits){
             text = "$"+text;
@@ -53,6 +57,7 @@ public class MarketManager : MonoBehaviour {
         resourceTexts[(int)resource].text = text;
         if(count != 0){
             UpdateButtons();
+            UpdateGoals();
         }
     }
 }

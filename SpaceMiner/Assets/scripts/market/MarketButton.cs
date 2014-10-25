@@ -11,7 +11,7 @@ public class MarketButton : MonoBehaviour {
     public int costValue;
     public int rewardValue;
 
-    public GameObject backGround;
+    public SpriteRenderer sr;
     public Sprite activeSprite;
     public Sprite disabledSprite;
     Sprite currentSprite;
@@ -19,28 +19,24 @@ public class MarketButton : MonoBehaviour {
 
     public AudioSource clickSound;
     public AudioSource failSound;
-    SpriteRenderer sr;
 
-    public GameObject MarketManagerObject;
-    MarketManager marketManager;
+    public MarketManager marketManager;
 
     public bool is_enabled = true;
 
     void Awake(){
-        sr = backGround.GetComponent<SpriteRenderer>();
         originalSprite = sr.sprite;
-        marketManager = MarketManagerObject.GetComponent<MarketManager>();
     }
 
-	// Use this for initialization
-	void Start () {
-
-	}
-	
-	// Update is called once per frame
-	void Update () {
-	
-	}
+    // Use this for initialization
+    void Start () {
+        
+    }
+    
+    // Update is called once per frame
+    void Update () {
+    
+    }
 
     void DisableButton(){
         is_enabled = false;
@@ -55,8 +51,10 @@ public class MarketButton : MonoBehaviour {
     }
 
     public void CheckAvailability(int count){
+        //print("["+costType.ToString() + "] cost: "+costValue.ToString()+" - count: " + count.ToString());
         if(count < costValue){
             DisableButton();
+            print("[disable] "+rewardType.ToString() + " for "+costType.ToString());
             //print("Not enough("+costValue.ToString()+") "+costType+"("+count.ToString()+")!");
         }
         else{
@@ -65,6 +63,7 @@ public class MarketButton : MonoBehaviour {
     }
 
     void OnMouseUp(){
+        
         sr.sprite = currentSprite;
     }
 
