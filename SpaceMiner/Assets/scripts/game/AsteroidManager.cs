@@ -10,7 +10,7 @@ public class AsteroidManager : MonoBehaviour
 		public GameObject playerObject;
 		Player player;
 		List<float> scales;
-		int asteroidsInSpace = 5;
+		public int asteroidsInSpace;
 		public float distanceBetweenAsteroids;
 		public GameObject borderOb;
 		BorderManager borderManager;
@@ -20,29 +20,7 @@ public class AsteroidManager : MonoBehaviour
 				borderManager = borderOb.GetComponent<BorderManager> ();
 				asteroidTemplate = Resources.Load ("asteroidpref");     
 				scales = new List<float> (){0.3f, 0.5f, 0.7f};
-
-				float randomX = Random.Range (-6, 6);
-				float randomY = Random.Range (-4, 4);
-				GenerateAsteroid (randomX, randomY);
-
-				for (int i = 0; i < asteroidsInSpace; i++) {
-						bool generate = true;
-						randomX = Random.Range (borderManager.leftBorder, borderManager.rightBorder);
-						randomY = Random.Range (borderManager.upBorder, borderManager.downBorder);
-						Vector3 newPosition = new Vector3 (randomX, randomY, 0f);
-						foreach (Transform child in transform) {
-								if (Vector3.Distance (child.localPosition, newPosition) < distanceBetweenAsteroids) {
-										generate = false;
-										break;
-								}
-						}
-
-						if (generate) {
-								GenerateAsteroid (randomX, randomY);
-						} else {
-								i--;
-						}
-				}
+				GenerateAsteroids (asteroidsInSpace);
 		}
 
 		public void GenerateAsteroid (float x, float y)
@@ -69,4 +47,39 @@ public class AsteroidManager : MonoBehaviour
 				//Set amount of minerals in asteroid
 				tempAsteroid.GetComponent<Asteroid> ().MineralAmount = (int)(scaling * 1000);
 		}
+
+		public void GenerateAsteroids (int amount)
+		{
+				float randomX = Random.Range (borderManager.leftBorder, borderManager.rightBorder);
+				float randomY = Random.Range (borderManager.downBorder, borderManager.upBorder);
+				GenerateAsteroid (randomX, randomY);		
+				for (int i = 0; i < amount; i++) {
+						bool generate = true;
+						randomX = Random.Range (borderManager.leftBorder, borderManager.rightBorder);
+						randomY = Random.Range (borderManager.downBorder, borderManager.upBorder);
+						Vector3 newPosition = new Vector3 (randomX, randomY, 0f);
+						foreach (Transform child in transform) {
+								if (Vector3.Distance (child.localPosition, newPosition) < distanceBetweenAsteroids) {
+										generate = false;
+										break;
+								}
+						}
+			
+						if (generate) {
+								GenerateAsteroid (randomX, randomY);
+						} else {
+								i--;
+						}
+				}
+		}
+
+		public void DestroyAsteroidsInSpace ()
+		{
+				foreach (Transform child in transform) {
+						if (child.gameObject.tag != "home") {
+								Destroy (child.gameObject);
+						}
+				}
+		}
+
 }

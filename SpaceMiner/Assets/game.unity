@@ -415,7 +415,8 @@ MonoBehaviour:
   scaleSpeed: 1
   playerOb: {fileID: 175163710}
   dayPassedObject: {fileID: 867643536}
-  dayTime: 100
+  asteroidManager: {fileID: 2132148244}
+  dayTime: 5
 --- !u!1 &175163710
 GameObject:
   m_ObjectHideFlags: 0
@@ -951,7 +952,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 689995742}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -.410477102, y: 5.10495806, z: 0}
+  m_LocalPosition: {x: -.486393094, y: 6.39552975, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1126653989}
@@ -1544,7 +1545,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 891579369}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -.463504314, y: -4.67686653, z: 0}
+  m_LocalPosition: {x: -.31167239, y: -4.14545441, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1126653989}
@@ -2767,6 +2768,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerObject: {fileID: 175163710}
+  asteroidsInSpace: 5
   distanceBetweenAsteroids: 2
   borderOb: {fileID: 1126653988}
 --- !u!4 &2132148245
