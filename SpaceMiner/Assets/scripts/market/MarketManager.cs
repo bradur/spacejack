@@ -15,6 +15,8 @@ public class MarketManager : MonoBehaviour {
     void Start () {
         resourceManager = GameObject.FindWithTag("resourceManager").GetComponent<ResourceManager>();
 
+        maxFuel = resourceManager.maxFuelAmount.ToString();
+
         for(int i = 0; i< marketButtons.Length; i++){
             UpdateResourceCount((Resource)i);
         }
@@ -22,7 +24,7 @@ public class MarketManager : MonoBehaviour {
         UpdateButtons();
         UpdateGoals();
 
-        maxFuel = resourceManager.maxFuelAmount.ToString();
+        
     }
 
     void UpdateButtons(){
