@@ -14,6 +14,7 @@ public class Player : MonoBehaviour
 		Tool farmingTool;
 		public GameObject resourceManager;
 		ResourceManager resources;
+		public HudManager hudManager;
 		GameObject lastCollider = null;
 		float fuelTimer;
 		public GameObject home;
@@ -70,8 +71,8 @@ public class Player : MonoBehaviour
 		void UseFuel ()
 		{
 				if (fuelTimer + 1 < Time.unscaledTime) {
-						resources.fuelAmount -= fuelConsumption;
 						fuelTimer = Time.unscaledTime;
+						hudManager.UseFuel (fuelConsumption);
 				}
 		}
 

@@ -301,6 +301,18 @@ Prefab:
       propertyPath: home
       value: 
       objectReference: {fileID: 802376756}
+    - target: {fileID: 11400000, guid: 0ebc90c4213a422409071ba7dc92f81e, type: 2}
+      propertyPath: hudManager
+      value: 
+      objectReference: {fileID: 843974874}
+    - target: {fileID: 5000000, guid: 0ebc90c4213a422409071ba7dc92f81e, type: 2}
+      propertyPath: m_SleepingMode
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5000000, guid: 0ebc90c4213a422409071ba7dc92f81e, type: 2}
+      propertyPath: m_CollisionDetection
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 0ebc90c4213a422409071ba7dc92f81e, type: 2}
   m_RootGameObject: {fileID: 175163710}
@@ -473,8 +485,8 @@ Rigidbody2D:
   m_FixedAngle: 0
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_SleepingMode: 1
-  m_CollisionDetection: 0
+  m_SleepingMode: 0
+  m_CollisionDetection: 1
 --- !u!114 &175163714
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -491,6 +503,7 @@ MonoBehaviour:
   speed: 100
   fuelConsumption: 200
   resourceManager: {fileID: 1052015025}
+  hudManager: {fileID: 843974874}
   home: {fileID: 802376756}
 --- !u!60 &175163715
 PolygonCollider2D:
@@ -1282,7 +1295,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   progressSprite: {fileID: 198405223}
   scaleSpeed: .5
-  resourceManager: {fileID: 1052015025}
+  hudManager: {fileID: 843974874}
 --- !u!4 &847618379
 Transform:
   m_ObjectHideFlags: 0
@@ -2488,7 +2501,7 @@ Renderer:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1881437351}
-  m_Enabled: 1
+  m_Enabled: 0
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_LightmapIndex: 255
