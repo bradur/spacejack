@@ -17,6 +17,7 @@ public class DayCycle : MonoBehaviour
 		Player playerScript;
 		public GameObject dayPassedObject;
 		DayPassedMenu dayPassedScript;
+		public AsteroidManager asteroidManager;
 
 		//dayTime is 120 seconds
 		public float dayTime;
@@ -59,6 +60,8 @@ public class DayCycle : MonoBehaviour
 						dayPassedScript.TravelOnScreen ();
 						ticks = 0;
 						fuelSprite.localScale = new Vector3 (maxScaleX, scaleY, scaleZ);
+						asteroidManager.DestroyAsteroidsInSpace ();
+						asteroidManager.GenerateAsteroids (asteroidManager.asteroidsInSpace);
 				}
 		}
 }

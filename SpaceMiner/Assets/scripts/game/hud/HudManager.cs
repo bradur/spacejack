@@ -10,16 +10,7 @@ public class HudManager : MonoBehaviour
 		// Use this for initialization
 		void Start ()
 		{	
-				for (int i = 0; i < text.Length; i++) {
-						Resource indicatorsResource = indicatorList [i].GetComponent<Indicator> ().resource;
-						if (indicatorsResource == Resource.Fuel) {
-								indicatorList [i].GetComponent<TextMesh> ().text = resourceManager.GetResourceCount (indicatorsResource) + "/" + resourceManager.maxFuelAmount;
-						} else {
-								indicatorList [i].GetComponent<TextMesh> ().text = "" + resourceManager.GetResourceCount (indicatorsResource);
-						}
-						
-
-				}
+				UpdateHud ();
 		}
 	
 		// Update is called once per frame
@@ -28,8 +19,27 @@ public class HudManager : MonoBehaviour
 	
 		}
 
-		void UpdateResources (Resource resource)
+		public void UpdateResources (Resource resource, int amount)
 		{
+				resourceManager.UpdateResourceCount (resource, amount);
+				UpdateHud ();
+		}
 
+		public void UseFuel (int amount)
+		{
+				resourceManager.fuelAmount -= amount;
+				
+		}
+		
+		void UpdateHud ()
+		{
+				for (int i = 0; i < text.Length; i++) {
+						Resource indicatorsResource = indicatorList [i].GetComponent<Indicator> ().resource;
+						if (indicatorsResource == Resource.Fuel) {
+//								indicatorList [i].GetComponent<TextMesh> ().text = resourceManager.GetResourceCount (indicatorsResource) + "/" + resourceManager.maxFuelAmount;
+						} else {
+								indicatorList [i].GetComponent<TextMesh> ().text = "" + resourceManager.GetResourceCount (indicatorsResource);
+						}			
+				}
 		}
 }
