@@ -1,6 +1,12 @@
 ﻿<Properties>
-  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="MonoDevelop.Default" />
-  <MonoDevelop.Ide.Workbench />
+  <MonoDevelop.Ide.Workspace />
+  <MonoDevelop.Ide.Workbench ActiveDocument="..\..\IceCraziness\Assets\Scripts\Player\PlayerMovement.cs">
+    <Files>
+      <File FileName="..\..\IceCraziness\Assets\Scripts\Player\PlayerMovement.cs" Line="77" Column="57" />
+      <File FileName="..\..\IceCraziness\Assets\Scripts\Player\PlayerCollision.cs" Line="22" Column="8" />
+      <File FileName="..\..\IceCraziness\Assets\Scripts\Player\GenericButton.cs" Line="39" Column="2" />
+    </Files>
+  </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
     <BreakpointStore />
   </MonoDevelop.Ide.DebuggingService.Breakpoints>

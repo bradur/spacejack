@@ -8,6 +8,7 @@ public class DayPassedMenu : MonoBehaviour
 		public float movementSpeed;
 		Vector3 travelingPoint;
 		public bool menuShown;
+		public AsteroidManager asteroidManager;
 
 		// Use this for initialization
 		void Start ()
@@ -37,5 +38,7 @@ public class DayPassedMenu : MonoBehaviour
 		{
 				menuShown = false;
 				travelingPoint = offScreenOb.transform.position;
+				asteroidManager.DestroyAsteroidsInSpace ();
+				asteroidManager.GenerateAsteroids (asteroidManager.asteroidsInSpace);
 		}
 }

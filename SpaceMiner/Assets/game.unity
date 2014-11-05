@@ -473,8 +473,7 @@ MonoBehaviour:
   scaleSpeed: 1
   playerOb: {fileID: 175163710}
   dayPassedObject: {fileID: 867643536}
-  asteroidManager: {fileID: 2132148244}
-  dayTime: 5
+  dayTime: 4
 --- !u!1 &175163710
 GameObject:
   m_ObjectHideFlags: 0
@@ -1520,6 +1519,7 @@ MonoBehaviour:
   onScreenOb: {fileID: 1467982515}
   movementSpeed: 40
   menuShown: 0
+  asteroidManager: {fileID: 2132148244}
 --- !u!61 &867643540
 BoxCollider2D:
   m_ObjectHideFlags: 0
