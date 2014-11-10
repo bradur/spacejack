@@ -45,6 +45,10 @@ public class GridManager : MonoBehaviour {
         for(int i = 0; i < rows; i++){
             for(int j = 0; j < columns; j++){
                 GameObject square = GenerateSquare();
+                int oddeven = (columns*i+j)%2;
+                if(oddeven > 0){
+                    square.GetComponent<GridSquare>().Odd();
+                }
                 square.transform.localPosition = new Vector3(1f*j, 1f*i, 0f);
             }
         }
