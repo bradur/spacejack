@@ -5,9 +5,9 @@ public class Pirate : MonoBehaviour
 {
 
 		public AsteroidManager asteroidManager;
-		public GameObject asteroidObj;
+		public GameObject managerObj;
 		Vector2 myPos;
-		bool onJourney;
+		bool onJourney = false;
 		public Vector2 travelingPoint;
 		public float speed;
 
@@ -27,7 +27,8 @@ public class Pirate : MonoBehaviour
 								onJourney = false;
 						}
 				} else {
-						UpdateTravelingPoint ();
+						myPos = transform.position;
+						UpdateTravelingPoint ();						
 						onJourney = true;
 				}	
 		}
@@ -37,7 +38,7 @@ public class Pirate : MonoBehaviour
 				float xDistance, yDistance, distanceToCurrent;		
 				float nearestDistance = 1000;
 
-				foreach (Transform child in asteroidObj.GetComponentsInChildren<Transform>()) {
+				foreach (Transform child in managerObj.GetComponentsInChildren<Transform>()) {
 						if (child.gameObject.tag == "asteroid") {
 								xDistance = myPos.x - child.transform.position.x;
 								yDistance = myPos.y - child.transform.position.y;
@@ -50,5 +51,13 @@ public class Pirate : MonoBehaviour
 				}
 
 		}
+
+		void OnTriggerEnter2D (Collider2D collider)
+		{
+				if (collider.gameObject.tag == "asteroid") {
+						collider.gameObject.GetComponent<Asteroid> ().DestroySelf ();
+				}
+		}
+
 
 }
