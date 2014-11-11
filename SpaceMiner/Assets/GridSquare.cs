@@ -13,7 +13,9 @@ public class GridSquare : MonoBehaviour {
         sr = GetComponent<SpriteRenderer>();
     }
 
-
+    bool dead = false;
+    int row;
+    int column;
     // Use this for initialization
     void Start () {
         
@@ -25,6 +27,28 @@ public class GridSquare : MonoBehaviour {
     // Update is called once per frame
     void Update () {
     
+    }
+
+    void Kill(){
+        Disable();
+        dead = true;
+    }
+
+    public void Disable(){
+        gameObject.SetActive(false);
+        
+    }
+
+    public void Enable(){
+        //print("Enable: y: "+ row +" <> x: "+column+" SiblingIndex: "+transform.GetSiblingIndex());
+        if(!dead){
+            gameObject.SetActive(true);
+        }
+    }
+
+    public void SetPosition(int row, int column){
+        this.row = row;
+        this.column = column;
     }
 
     public void Odd(){
@@ -41,6 +65,9 @@ public class GridSquare : MonoBehaviour {
 
     void OnMouseUp(){
         sr.color = originalColor;
+        //print("y: "+ row +" <> x: "+column+" SiblingIndex: "+transform.GetSiblingIndex());
+        transform.parent.gameObject.GetComponent<GridManager>().SquareDestroyed(row, column);
+        Kill();
     }
 
     void OnMouseDown(){
