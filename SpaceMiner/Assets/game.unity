@@ -656,7 +656,12 @@ MonoBehaviour:
   asteroidManager: {fileID: 2132148244}
   managerObj: {fileID: 2132148243}
   travelingPoint: {x: 0, y: 0}
-  speed: 200
+  speed: 100
+  asteroidReached: 0
+  bombPlanted: 0
+  onJourney: 0
+  bombPlantTimer: 5
+  bombExplosionTimer: 2
 --- !u!50 &190823926
 Rigidbody2D:
   m_ObjectHideFlags: 0
@@ -3174,6 +3179,7 @@ MonoBehaviour:
   asteroidsInSpace: 5
   distanceBetweenAsteroids: 2
   borderOb: {fileID: 1126653988}
+  pirate: {fileID: 190823925}
 --- !u!4 &2132148245
 Transform:
   m_ObjectHideFlags: 0

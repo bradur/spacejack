@@ -14,6 +14,7 @@ public class AsteroidManager : MonoBehaviour
 		public float distanceBetweenAsteroids;
 		public GameObject borderOb;
 		BorderManager borderManager;
+		public Pirate pirate;
 
 		void Start ()
 		{
@@ -21,6 +22,7 @@ public class AsteroidManager : MonoBehaviour
 				asteroidTemplate = Resources.Load ("asteroidpref");     
 				scales = new List<float> (){0.3f, 0.5f, 0.7f};
 				GenerateAsteroids (asteroidsInSpace);
+				pirate.UpdateTravelingPoint ();
 		}
 
 		public void GenerateAsteroid (float x, float y)
