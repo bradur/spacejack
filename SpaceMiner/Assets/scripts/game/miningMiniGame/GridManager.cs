@@ -26,6 +26,8 @@ public class GridManager : MonoBehaviour {
     int width;
     int height;
 
+    bool firstDestruction = true;
+
     // Use this for initialization
     void Start () {
         float moveX = columns/2;
@@ -56,14 +58,28 @@ public class GridManager : MonoBehaviour {
         //transform.GetChild(row+column);
         //print("Destroyed: y: "+row+ " <> x: "+column);
         //GameObject[] children = new GameObject[4];
-        for(int i = row-1; i <= row+1; i++){
-            if(i == -1 || i == rows){
+
+        if(firstDestruction){
+            /*for(int j = 0; j < columns; j++){
+                transform.GetChild(j).gameObject.GetComponent<GridSquare>().Disable();
+            }*/
+            foreach(Transform child in transform){
+                child.gameObject.GetComponent<GridSquare>().Disable();
+            }
+            //firstDestruction = false;
+        }
+
+        for(int i = row; i <= row+1; i++){
+            if(i == rows){
                 //print("contROW:"+i);
                 continue;
             }
             for(int j = column-1; j <= column +1; j++){
                 if(j == -1 || j == columns){
                     //print("contCOL:"+j+i);
+                    continue;
+                }
+                if(i == row+1 && j != column){
                     continue;
                 }
                 transform.GetChild(i*columns+j).gameObject.GetComponent<GridSquare>().Enable();
