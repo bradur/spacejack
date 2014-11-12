@@ -59,14 +59,20 @@ public class GridManager : MonoBehaviour {
         //print("Destroyed: y: "+row+ " <> x: "+column);
         //GameObject[] children = new GameObject[4];
 
-        if(firstDestruction){
-            /*for(int j = 0; j < columns; j++){
+        /*if(firstDestruction){
+            for(int j = 0; j < columns; j++){
                 transform.GetChild(j).gameObject.GetComponent<GridSquare>().Disable();
-            }*/
+            }
             foreach(Transform child in transform){
                 child.gameObject.GetComponent<GridSquare>().Disable();
             }
-            //firstDestruction = false;
+            firstDestruction = false;
+        }*/
+
+        for(int i = 0; i < row; i++){
+            for(int j = 0; j <= columns; j++){
+                transform.GetChild(i*columns+j).gameObject.GetComponent<GridSquare>().Disable();
+            }
         }
 
         for(int i = row; i <= row+1; i++){
