@@ -656,11 +656,10 @@ MonoBehaviour:
   asteroidManager: {fileID: 2132148244}
   managerObj: {fileID: 2132148243}
   travelingPoint: {x: 0, y: 0}
-  speed: 100
+  speed: 200
   asteroidReached: 0
-  bombPlanted: 0
   onJourney: 0
-  bombPlantTimer: 5
+  bombPlantTimer: 1
   bombExplosionTimer: 2
 --- !u!50 &190823926
 Rigidbody2D:
