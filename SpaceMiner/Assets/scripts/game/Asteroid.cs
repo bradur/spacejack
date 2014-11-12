@@ -12,9 +12,12 @@ public class Asteroid : MonoBehaviour
 		bool collided = false;
 		public int mineralAmount;
 		public Resource mineralType;
+		bool bombPlanted;
+		float explosionTimer;
 		// Use this for initialization
 		void Start ()
 		{
+				bombPlanted = false;
 				RotationStep = Random.Range (MinRotationStep, MaxRotationStep);
 				int rotdir = Random.value > 0.5f ? 1 : -1;
 				RotationStep = RotationStep * rotdir;
@@ -32,6 +35,12 @@ public class Asteroid : MonoBehaviour
 		void Update ()
 		{
 				transform.Rotate (eulerAngles);
+				if (bombPlanted) {
+						explosionTimer -= Time.deltaTime;
+						if (explosionTimer < 0) {
+								DestroySelf ();
+						}
+				}
 		}
 
 		void OnMouseUp ()
@@ -42,6 +51,12 @@ public class Asteroid : MonoBehaviour
 		void OnTriggerEnter2D (Collider2D col)
 		{
 				collided = true;
+		}
+
+		public void ExplodeInSeconds (float seconds)
+		{
+				bombPlanted = true;
+				explosionTimer = seconds;
 		}
 
 		public Resource MineralType {

@@ -10,7 +10,6 @@ public class Pirate : MonoBehaviour
 		public Vector2 travelingPoint;
 		public float speed;
 		public bool asteroidReached;
-		public bool bombPlanted;
 		public bool onJourney;
 		public float bombPlantTimer;
 		public float bombExplosionTimer;
@@ -22,7 +21,6 @@ public class Pirate : MonoBehaviour
 		{
 				onJourney = true;
 				asteroidReached = false;
-				bombPlanted = false;
 				myPos = transform.position;
 				originalBombPlantTimer = bombPlantTimer;
 				originalBombExplosionTimer = bombExplosionTimer;
@@ -39,23 +37,19 @@ public class Pirate : MonoBehaviour
 								onJourney = false;
 								asteroidReached = true;
 						}
-				} else if (asteroidReached) {
+				} 
+				if (asteroidReached) {
+						//last asteroid in space wont explode, fix pls
 						bombPlantTimer -= Time.deltaTime;
-						if (bombPlantTimer < 0) {
+						if (bombPlantTimer < 0) {								
 								UpdateTravelingPoint ();
-								bombPlanted = true;
 								onJourney = true;
 								asteroidReached = false;								
 								bombPlantTimer = originalBombPlantTimer;
+								if (asteroid != null) {
+										asteroid.GetComponent<Asteroid> ().ExplodeInSeconds (bombExplosionTimer);
+								}
 						}						
-				}
-				if (bombPlanted) {
-						bombExplosionTimer -= Time.deltaTime;
-						if (bombExplosionTimer < 0) {
-								asteroid.GetComponent<Asteroid> ().DestroySelf ();
-								bombExplosionTimer = originalBombExplosionTimer;
-								bombPlanted = false;
-						}
 				}
 		}
 
@@ -76,7 +70,9 @@ public class Pirate : MonoBehaviour
 								}
 						}
 				}
-				nearestAsteroid.transform.parent = null;
+				if (nearestAsteroid != null) {
+						nearestAsteroid.transform.parent = null;
+				}
 
 		}
 
