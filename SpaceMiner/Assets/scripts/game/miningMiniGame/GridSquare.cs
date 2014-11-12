@@ -7,6 +7,10 @@ public class GridSquare : MonoBehaviour {
     public Color activeColor;
     public Color oddColor;
 
+
+    public SpriteRenderer surprise;
+    bool hasSurprise;
+
     SpriteRenderer sr;
     Color originalColor;
     void Awake(){
@@ -32,6 +36,11 @@ public class GridSquare : MonoBehaviour {
     void Kill(){
         Disable();
         dead = true;
+    }
+
+    public void AddSurprise(){
+        hasSurprise = true;
+        surprise.enabled = true;
     }
 
     public void Disable(){

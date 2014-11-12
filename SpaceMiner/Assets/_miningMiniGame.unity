@@ -201,6 +201,7 @@ MonoBehaviour:
   rows: 5
   background: {fileID: 2024879028}
   tpColor: {r: 1, g: 1, b: 1, a: 0}
+  surpriseChance: .200000003
 --- !u!1 &2024879028
 GameObject:
   m_ObjectHideFlags: 0

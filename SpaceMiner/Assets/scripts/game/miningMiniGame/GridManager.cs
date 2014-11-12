@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 
 public class GridManager : MonoBehaviour {
 
@@ -16,17 +17,30 @@ public class GridManager : MonoBehaviour {
     Texture2D texture;
     //float PixelsToUnits;
 
+    public float surpriseChance = 0.2f;
+
     Color[] transParent;
 
     void Awake(){
         squarePrefab = Resources.Load("gridSquare");
+        int squareCount = (rows-1)*columns;
+        maxSurprises = (int)(surpriseChance*squareCount);
+        for(int i = 0;i < squareCount; i++){
+            shuffleBag.Add(i);
+        }
         GenerateGrid();
+
     }
 
     int width;
     int height;
+    int maxSurprises;
 
     bool firstDestruction = true;
+
+    List<int> shuffleBag = new List<int>();
+
+
 
     // Use this for initialization
     void Start () {
@@ -120,6 +134,18 @@ public class GridManager : MonoBehaviour {
 
     }
 
+    int Shuffle(){
+        int randomShuffle;
+        while(shuffleBag.Count > 0){
+            randomShuffle = Random.Range(0, shuffleBag.Count);
+            if(shuffleBag.Contains(randomShuffle)){
+                shuffleBag.Remove(randomShuffle);
+                return randomShuffle;
+            }
+        }
+        return -1;
+    }
+
     GameObject GenerateSquare(){
         GameObject newSquare = (GameObject)Instantiate(squarePrefab);
         newSquare.transform.parent = transform;
@@ -136,6 +162,7 @@ public class GridManager : MonoBehaviour {
                 if(oddeven > 0){
                     square.GetComponent<GridSquare>().Odd();
                 }*/
+
                 gridSquare.SetPosition(i, j);
                 if(i == 0){
                     gridSquare.Enable();
@@ -144,5 +171,19 @@ public class GridManager : MonoBehaviour {
                 square.transform.localPosition = new Vector3(-1f*j, -1f*i, 0f);
             }
         }
+
+        int shuffle;
+        print(maxSurprises);
+        for(int i = 0; i < maxSurprises; i++){
+            shuffle = Shuffle();
+            if (shuffle == -1){
+                break;
+            }
+
+            transform.GetChild(shuffle).GetComponent<GridSquare>().AddSurprise();
+            //print("Surprise added to: "+shuffle);
+        }
+
+
     }
 }
