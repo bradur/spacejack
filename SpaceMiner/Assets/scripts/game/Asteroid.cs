@@ -55,8 +55,10 @@ public class Asteroid : MonoBehaviour
 
 		public void ExplodeInSeconds (float seconds)
 		{
-				bombPlanted = true;
-				explosionTimer = seconds;
+				if (!bombPlanted) {
+						bombPlanted = true;
+						explosionTimer = seconds;
+				}
 		}
 
 		public Resource MineralType {

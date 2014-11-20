@@ -41,14 +41,15 @@ public class Pirate : MonoBehaviour
 				if (asteroidReached) {
 						//last asteroid in space wont explode, fix pls
 						bombPlantTimer -= Time.deltaTime;
-						if (bombPlantTimer < 0) {								
-								UpdateTravelingPoint ();
+						if (bombPlantTimer < 0) {
 								onJourney = true;
-								asteroidReached = false;								
-								bombPlantTimer = originalBombPlantTimer;
+								asteroidReached = false;
 								if (asteroid != null) {
+										Debug.Log ("Exploding in n seconds!");
 										asteroid.GetComponent<Asteroid> ().ExplodeInSeconds (bombExplosionTimer);
 								}
+								UpdateTravelingPoint ();
+								bombPlantTimer = originalBombPlantTimer;
 						}						
 				}
 		}
