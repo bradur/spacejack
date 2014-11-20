@@ -5,41 +5,42 @@ using System.Collections.Generic;
 public class GridManager : MonoBehaviour {
 
     // editor variables
+    public int columns = 5;                             // how many columns
+    public int rows = 5;                                // how many rows
+    public GameObject background;                       // background object
+    public float maxSurprisePercentage = 0.2f;          // maximum percentage of surprises per blocks
+    public float surpriseFactor = 0.85f;                // chance of surprise spawning
 
-    public int columns = 5;
-    public int rows = 5;
+    // local variables
+    SpriteRenderer sr;                                  // renderer for the background
+    Object squarePrefab;                                // square prefab
+    Texture2D texture;                                  // background texture (will be drawn on!)
 
-    public GameObject background;
+    int width;                                          // texture width
+    int height;                                         // texture height
+    int maxSurprises;                                   // maximum amount of surprises (calculated from maxSurprisePercentage)
 
-    public Color tpColor;
-    SpriteRenderer sr;
-    Object squarePrefab;
-    Texture2D texture;
-    //float PixelsToUnits;
+    List<int> shuffleBag = new List<int>();             // list for shuffle
 
-    public float surpriseChance = 0.2f;
-
-    Color[] transParent;
+    Color[] transParent;                                // transparent color (used as an "eraser" on texture)
 
     void Awake(){
         squarePrefab = Resources.Load("gridSquare");
-        int squareCount = (rows-1)*columns;
-        maxSurprises = (int)(surpriseChance*squareCount);
-        for(int i = 0;i < squareCount; i++){
+        int squares = (rows-1)*columns;                 // calculate squares (except last row)
+        maxSurprises = (int)(maxSurprisePercentage*squares);
+        if(maxSurprises >= squares){
+            maxSurprises = squares;
+        }
+        else if(maxSurprises <= 0){
+            maxSurprises = 0;
+        }
+        //print(maxSurprises);
+        maxSurprises = 5;
+        for(int i = 0;i < squares; i++){
             shuffleBag.Add(i);
         }
         GenerateGrid();
-
     }
-
-    int width;
-    int height;
-    int maxSurprises;
-
-    bool firstDestruction = true;
-
-    List<int> shuffleBag = new List<int>();
-
 
 
     // Use this for initialization
@@ -54,7 +55,6 @@ public class GridManager : MonoBehaviour {
         //float viewPortUnits = Camera.main.orthographicSize*2f*(Screen.width/Screen.height);
 
         transParent = new Color[64*64];
-        //Color tpColor = new Color(0f, 0f, 0f, 0f);
         for(int i = 0;i < transParent.Length; i++){
             transParent[i] = Color.clear;
         }
@@ -65,75 +65,66 @@ public class GridManager : MonoBehaviour {
     
     // Update is called once per frame
     void Update () {
-    
+        if(Input.GetKeyDown(KeyCode.Escape))
+        {
+            Application.Quit();
+        }
     }
 
     public void SquareDestroyed(int row, int column){
-        //transform.GetChild(row+column);
         //print("Destroyed: y: "+row+ " <> x: "+column);
-        //GameObject[] children = new GameObject[4];
-
-        /*if(firstDestruction){
-            for(int j = 0; j < columns; j++){
-                transform.GetChild(j).gameObject.GetComponent<GridSquare>().Disable();
-            }
-            foreach(Transform child in transform){
-                child.gameObject.GetComponent<GridSquare>().Disable();
-            }
-            firstDestruction = false;
-        }*/
-
-        for(int i = 0; i < row; i++){
+        // squares are laid out like this:
+        /*
+         x    0  1  2  3  4  
+           .----------------.
+         0 | 00 01 02 03 04 |
+         1 | 05 06 07 08 09 |
+         2 | 10 11 12 13 14 |
+         3 | 15 16 17 18 19 |
+         4 | 20 21 22 23 24 |
+         y '----------------'
+           
+           so 24 is 24 because it's 5*5 (zero index)
+           you can use transform.GetChild() to get a specific square
+        */
+        for(int i = 0; i < row+1; i++){
             for(int j = 0; j <= columns; j++){
+                print("never");
                 transform.GetChild(i*columns+j).gameObject.GetComponent<GridSquare>().Disable();
             }
         }
 
         for(int i = row; i <= row+1; i++){
             if(i == rows){
-                //print("contROW:"+i);
+                print("cont1: i"+i+" <> row"+row);
                 continue;
             }
             for(int j = column-1; j <= column +1; j++){
                 if(j == -1 || j == columns){
-                    //print("contCOL:"+j+i);
+                    print("cont2: j"+j+" <> column"+column);
                     continue;
                 }
                 if(i == row+1 && j != column){
+                    print("cont3: j"+j+" <> column"+column);
                     continue;
                 }
                 transform.GetChild(i*columns+j).gameObject.GetComponent<GridSquare>().Enable();
             }
         }
 
-
-        // BLOCK DESTRUCTION SHOWN IN BACKGROUND
-        /*var cols = texture.GetPixels();
-        for(int i = 0; i*64 < rows; i++) {
-            
-            for( int j = 0; j < cols.Length; ++j) {
-                cols[i] = Color.Lerp( cols[i], colors[mip], 0.33 );
-            }
-            texture.SetPixels( cols, mip );
-        }*/
-        // void SetPixels(int x, int y, int blockWidth, int blockHeight, Color[] colors, int miplevel = 0);
-        //texture = (Texture2D)GameObject.Instantiate(sr.sprite.texture);
-
-        
-        Color[] pixels = texture.GetPixels();
-        texture = new Texture2D(width, height, TextureFormat.ARGB32, false);
-        texture.SetPixels(pixels);
-        //texture.Apply(false);
-        //sr.sprite = Sprite.Create(texture, sr.sprite.rect, new Vector2(0.5f, 0.5f), 64);
-
-
-        texture.SetPixels(width-64-column*64, height-64-row*64, 64, 64, transParent);
-        texture.Apply(false);
-        sr.sprite = Sprite.Create(texture, sr.sprite.rect, new Vector2(0.5f, 0.5f), 64);
-        // BLOCK DESTRUCTION SHOWN IN BACKGROUND
+        // draw transparent pixels on texture to simulate destruction
+        Color[] pixels = texture.GetPixels();                                                   // get pixel array from old texture
+        texture = new Texture2D(width, height, TextureFormat.ARGB32, false);                    // initialize new Texture2D in ARGB(alpha rgb, alpha is for transparency)
+        texture.SetPixels(pixels);                                                              // set old texture pixels on new texture
+        texture.SetPixels(width-(columns-column)*64, height-64-row*64, 64, 64, transParent);    // set one block worth of transparent pixels on texture on correct spot
+        texture.Apply();                                                                        // apply texture. remember to do this!
+        sr.sprite = Sprite.Create(texture, sr.sprite.rect, new Vector2(0.5f, 0.5f), 64);        // create new sprite and set it as our sprite
+        // end of draw transparent pixels
 
     }
 
+    // pick randomly from a "bag"
+    // bag here: indices of all squares above mineral level
     int Shuffle(){
         int randomShuffle;
         while(shuffleBag.Count > 0){
@@ -149,39 +140,34 @@ public class GridManager : MonoBehaviour {
     GameObject GenerateSquare(){
         GameObject newSquare = (GameObject)Instantiate(squarePrefab);
         newSquare.transform.parent = transform;
-        newSquare.SetActive(false);
+        //newSquare.SetActive(false);
         return newSquare;
     }
 
     void GenerateGrid(){
         for(int i = 0; i < rows; i++){
-            for(int j = 0; j < columns; j++){
+            for(int j = columns-1; j >= 0; j--){
                 GameObject square = GenerateSquare();
                 GridSquare gridSquare = square.GetComponent<GridSquare>();
-                /*int oddeven = (columns*i+j)%2;
-                if(oddeven > 0){
-                    square.GetComponent<GridSquare>().Odd();
-                }*/
-
-                gridSquare.SetPosition(i, j);
+                gridSquare.SetPosition(i, columns-1-j);
                 if(i == 0){
-                    gridSquare.Enable();
+                    gridSquare.Enable();        // enable first row
                 }
-                //gridSquare.Enable();
                 square.transform.localPosition = new Vector3(-1f*j, -1f*i, 0f);
             }
         }
 
         int shuffle;
-        print(maxSurprises);
         for(int i = 0; i < maxSurprises; i++){
-            shuffle = Shuffle();
-            if (shuffle == -1){
-                break;
+            if(Random.value > surpriseFactor){
+                shuffle = Shuffle();
+                if(shuffle == -1){
+                    break;
+                }
+                transform.GetChild(shuffle).GetComponent<GridSquare>().AddSurprise();
+                //print("Surprise added to: "+shuffle);
             }
 
-            transform.GetChild(shuffle).GetComponent<GridSquare>().AddSurprise();
-            //print("Surprise added to: "+shuffle);
         }
 
 
