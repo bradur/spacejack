@@ -23,6 +23,7 @@ public class GridManager : MonoBehaviour {
     List<int> shuffleBag = new List<int>();             // list for shuffle
 
     Color[] transParent;                                // transparent color (used as an "eraser" on texture)
+    int movesMade = 0;
 
     void Awake(){
         squarePrefab = Resources.Load("gridSquare");
@@ -72,6 +73,7 @@ public class GridManager : MonoBehaviour {
     }
 
     public void SquareDestroyed(int row, int column){
+
         //print("Destroyed: y: "+row+ " <> x: "+column);
         // squares are laid out like this:
         /*
@@ -84,32 +86,38 @@ public class GridManager : MonoBehaviour {
          4 | 20 21 22 23 24 |
          y '----------------'
            
-           so 24 is 24 because it's 5*5 (zero index)
            you can use transform.GetChild() to get a specific square
         */
-        for(int i = 0; i < row+1; i++){
-            for(int j = 0; j <= columns; j++){
-                print("never");
+
+        // 1. Disable all squares that are on the same row or above
+        for(int i = 0; i <= row; i++){
+            for(int j = 0; j <= columns-1; j++){
+                print(i+" : "+(i*columns+j));
                 transform.GetChild(i*columns+j).gameObject.GetComponent<GridSquare>().Disable();
             }
         }
 
-        for(int i = row; i <= row+1; i++){
-            if(i == rows){
-                print("cont1: i"+i+" <> row"+row);
-                continue;
+        // 2. Enable the square to the left of current position (or if there is empty space in between the next non-empty square)
+        for(int j = column; j <= columns-1; j++){
+            GridSquare gs = transform.GetChild(row*columns+j).gameObject.GetComponent<GridSquare>();
+            if(!gs.IsDead()){
+                gs.Enable();
+                break;
             }
-            for(int j = column-1; j <= column +1; j++){
-                if(j == -1 || j == columns){
-                    print("cont2: j"+j+" <> column"+column);
-                    continue;
-                }
-                if(i == row+1 && j != column){
-                    print("cont3: j"+j+" <> column"+column);
-                    continue;
-                }
-                transform.GetChild(i*columns+j).gameObject.GetComponent<GridSquare>().Enable();
+        }
+
+        // 3. Enable the square to the right of current position (or if there is empty space in between the next non-empty square)
+        for(int j = column; j >= 0; j--){
+            GridSquare gs = transform.GetChild(row*columns+j).gameObject.GetComponent<GridSquare>();
+            if(!gs.IsDead()){
+                gs.Enable();
+                break;
             }
+        }
+
+        // 4. If not the final row, enable the square directly underneath
+        if(row != rows-1){
+            transform.GetChild((row+1)*columns+column).gameObject.GetComponent<GridSquare>().Enable();
         }
 
         // draw transparent pixels on texture to simulate destruction
@@ -120,7 +128,7 @@ public class GridManager : MonoBehaviour {
         texture.Apply();                                                                        // apply texture. remember to do this!
         sr.sprite = Sprite.Create(texture, sr.sprite.rect, new Vector2(0.5f, 0.5f), 64);        // create new sprite and set it as our sprite
         // end of draw transparent pixels
-
+        movesMade += 1;
     }
 
     // pick randomly from a "bag"

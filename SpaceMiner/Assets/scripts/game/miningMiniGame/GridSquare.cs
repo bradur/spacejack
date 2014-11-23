@@ -38,6 +38,10 @@ public class GridSquare : MonoBehaviour {
         dead = true;
     }
 
+    public bool IsDead(){
+        return dead;
+    }
+
     public void AddSurprise(){
         hasSurprise = true;
         if(sr.enabled){
@@ -48,7 +52,7 @@ public class GridSquare : MonoBehaviour {
     public void Disable(){
         //gameObject.SetActive(false);
         sr.enabled = false;
-        print("Disable: y: "+ row +" <> x: "+column+" SiblingIndex: "+transform.GetSiblingIndex());
+        //print("Disable: y: "+ row +" <> x: "+column+" SiblingIndex: "+transform.GetSiblingIndex());
         gameObject.collider2D.enabled = false;
     }
 
@@ -83,9 +87,9 @@ public class GridSquare : MonoBehaviour {
 
     void OnMouseUp(){
         sr.color = originalColor;
-        print("y: "+ row +" <> x: "+column+" SiblingIndex: "+transform.GetSiblingIndex());
-        transform.parent.gameObject.GetComponent<GridManager>().SquareDestroyed(row, column);
+        //print("y: "+ row +" <> x: "+column+" SiblingIndex: "+transform.GetSiblingIndex());
         Kill();
+        transform.parent.gameObject.GetComponent<GridManager>().SquareDestroyed(row, column);
     }
 
     void OnMouseDown(){
