@@ -1,38 +1,21 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class ExplosionNumber : MonoBehaviour {
+public class ExplosionNumber : MonoBehaviour
+{
 
-	public float timer;
-	bool countingStarted;
+		Object explosionTimerTemplate;
+		GameObject explosionTimer;
 
-	// Use this for initialization
-	void Start () {
-//		this.GetComponent<Animator>().
-		this.GetComponent<Animator>().speed = 1/12f;
-//		Debug.Log(this.GetComponent<Animator>().speed);
-		
-		countingStarted = false;
-	}
-	
-	// Update is called once per frame
-	void Update () {
-
-		if(countingStarted){
-			timer -= Time.deltaTime;
-			if(timer > 2){
-
-			}
-			else if(timer > 1 && timer < 2){
-
-			}
-			else if(timer < 1){
-
-			}
+		// Use this for initialization
+		void Start ()
+		{
+				explosionTimerTemplate = Resources.Load ("explosionNumbers");
 		}
-	}
 
-	public void StartCounting(){
-		countingStarted = true;
-	}
+		public void StartCounting ()
+		{
+				explosionTimer = (GameObject)Instantiate (explosionTimerTemplate);
+				explosionTimer.GetComponent<Explosion> ().Explode (transform.position.x, transform.position.y);
+		}
 }

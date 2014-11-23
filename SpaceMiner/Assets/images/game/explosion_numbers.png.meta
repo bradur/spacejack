@@ -2,9 +2,9 @@ fileFormatVersion: 2
 guid: 0c36a1c94dbc27948951cacf0ad87b97
 TextureImporter:
   fileIDToRecycleName:
-    21300000: explosion_numbers_3
-    21300002: explosion_numbers_2
-    21300004: explosion_numbers_1
+    21300000: explosion_a
+    21300002: explosion_b
+    21300004: explosion_c
     21300006: explosion_numbers_3
   serializedVersion: 2
   mipmaps:
@@ -47,7 +47,7 @@ TextureImporter:
   buildTargetSettings: []
   spriteSheet:
     sprites:
-    - name: explosion_numbers_3
+    - name: explosion_a
       rect:
         serializedVersion: 2
         x: 1
@@ -57,7 +57,7 @@ TextureImporter:
       alignment: 0
       pivot: {x: .5, y: .5}
       border: {x: 0, y: 0, z: 0, w: 0}
-    - name: explosion_numbers_2
+    - name: explosion_b
       rect:
         serializedVersion: 2
         x: 1
@@ -67,7 +67,7 @@ TextureImporter:
       alignment: 0
       pivot: {x: .5, y: .5}
       border: {x: 0, y: 0, z: 0, w: 0}
-    - name: explosion_numbers_1
+    - name: explosion_c
       rect:
         serializedVersion: 2
         x: 5
