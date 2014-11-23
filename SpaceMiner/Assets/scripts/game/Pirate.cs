@@ -3,7 +3,7 @@ using System.Collections;
 
 public class Pirate : MonoBehaviour
 {
-
+		public ExplosionNumber expNumber;
 		public AsteroidManager asteroidManager;
 		public GameObject managerObj;
 		Vector2 myPos;
@@ -36,6 +36,7 @@ public class Pirate : MonoBehaviour
 								rigidbody2D.velocity = Vector2.zero;
 								onJourney = false;
 								asteroidReached = true;
+								expNumber.StartCounting ();
 						}
 				} 
 				if (asteroidReached) {
