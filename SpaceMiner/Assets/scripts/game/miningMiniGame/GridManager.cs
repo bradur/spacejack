@@ -18,7 +18,19 @@ public class GridManager : MonoBehaviour {
 
     int width;                                          // texture width
     int height;                                         // texture height
+    int squareWidth;                                    // square texture width
+    int squareHeight;                                   // square texture height
     int maxSurprises;                                   // maximum amount of surprises (calculated from maxSurprisePercentage)
+    int gameWidth;
+    int gameHeight;
+    int marginY;
+    int marginX;
+
+    float scale_x;
+    float scale_y;
+
+    float gameScaleX;
+    float gameScaleY;
 
     List<int> shuffleBag = new List<int>();             // list for shuffle
 
@@ -36,10 +48,19 @@ public class GridManager : MonoBehaviour {
             maxSurprises = 0;
         }
         //print(maxSurprises);
-        maxSurprises = 5;
+        //maxSurprises = 5;
         for(int i = 0;i < squares; i++){
             shuffleBag.Add(i);
         }
+
+        GameObject newSquare = (GameObject)Instantiate(squarePrefab);
+        squareWidth = newSquare.GetComponent<SpriteRenderer>().sprite.texture.width;
+        squareHeight = newSquare.GetComponent<SpriteRenderer>().sprite.texture.height;
+        gameWidth = squareWidth*columns;
+        gameHeight = squareHeight*rows;
+        scale_x = newSquare.transform.localScale.x;
+        scale_y = newSquare.transform.localScale.y;
+
         GenerateGrid();
     }
 
@@ -49,18 +70,29 @@ public class GridManager : MonoBehaviour {
         float moveX = columns/2;
         float moveY = rows/2;
 
+        gameScaleX = transform.localScale.x;
+        gameScaleY = transform.localScale.y;
+        //background.transform.localScale = new Vector3(gameScaleX, gameScaleY, 1f);
         sr = background.GetComponent<SpriteRenderer>();
         
         //PixelsToUnits = sr.sprite.rect.width / sr.sprite.bounds.size.x;
-        background.transform.position = new Vector3(transform.position.x-moveX, transform.position.y-moveY);
+        
         //float viewPortUnits = Camera.main.orthographicSize*2f*(Screen.width/Screen.height);
+        width = sr.sprite.texture.width;
+        height = sr.sprite.texture.height;
 
-        transParent = new Color[64*64];
+        marginX = (int)(width-gameWidth);
+        marginY = (int)(height-gameHeight);
+        background.transform.localPosition = new Vector3(-moveX, -moveY, 1f);
+        /*background.transform.localPosition = new Vector3(
+            transform.localPosition.x-moveX-(marginX/2/squareWidth*gameScaleX),
+            transform.localPosition.y-moveY-(marginY/2/squareHeight*gameScaleY)
+        );*/
+        transParent = new Color[squareWidth*squareHeight];
         for(int i = 0;i < transParent.Length; i++){
             transParent[i] = Color.clear;
         }
-        width = sr.sprite.texture.width;
-        height = sr.sprite.texture.height;
+
         texture = sr.sprite.texture;
     }
     
@@ -92,7 +124,7 @@ public class GridManager : MonoBehaviour {
         // 1. Disable all squares that are on the same row or above
         for(int i = 0; i <= row; i++){
             for(int j = 0; j <= columns-1; j++){
-                print(i+" : "+(i*columns+j));
+                //print(i+" : "+(i*columns+j));
                 transform.GetChild(i*columns+j).gameObject.GetComponent<GridSquare>().Disable();
             }
         }
@@ -124,9 +156,35 @@ public class GridManager : MonoBehaviour {
         Color[] pixels = texture.GetPixels();                                                   // get pixel array from old texture
         texture = new Texture2D(width, height, TextureFormat.ARGB32, false);                    // initialize new Texture2D in ARGB(alpha rgb, alpha is for transparency)
         texture.SetPixels(pixels);                                                              // set old texture pixels on new texture
-        texture.SetPixels(width-(columns-column)*64, height-64-row*64, 64, 64, transParent);    // set one block worth of transparent pixels on texture on correct spot
+        
+        /*print(width-squareWidth-(columns-column)*squareWidth + "// int x");
+        print(height-marginY-squareHeight-row*squareHeight + "// int y");
+        print(marginY + "// marginY");
+        print(marginX + "// marginX");*/
+        
+        texture.SetPixels(                                                                      // set one block worth of transparent pixels on texture on correct spot
+            width-marginX/2-(columns-column)*squareWidth,         // int x
+            height-marginY/2-(row+1)*squareHeight,            // int y
+            squareWidth,                                // int blockWidth
+            squareHeight,                               // int blockHeight
+            transParent                                 // Color[] colors
+            // int miplevel = 0
+        );
+        /*texture.SetPixels(                                                                      // set one block worth of transparent pixels on texture on correct spot
+            width-squareWidth-(columns-column)*squareWidth,         // int x
+            height-marginY-row*squareHeight,            // int y
+            squareWidth,                                // int blockWidth
+            squareHeight,                               // int blockHeight
+            transParent                                 // Color[] colors
+            // int miplevel = 0
+        );*/
         texture.Apply();                                                                        // apply texture. remember to do this!
-        sr.sprite = Sprite.Create(texture, sr.sprite.rect, new Vector2(0.5f, 0.5f), 64);        // create new sprite and set it as our sprite
+        sr.sprite = Sprite.Create(                                                              // create new sprite and set it as our sprite
+            texture,                                    // Texture2D texture
+            sr.sprite.rect,                             // Rect rect
+            new Vector2(0.5f, 0.5f),                    // Vector2 pivot
+            squareWidth                                 // float pixelsToUnits
+        );
         // end of draw transparent pixels
         movesMade += 1;
     }
@@ -148,6 +206,7 @@ public class GridManager : MonoBehaviour {
     GameObject GenerateSquare(){
         GameObject newSquare = (GameObject)Instantiate(squarePrefab);
         newSquare.transform.parent = transform;
+        newSquare.transform.localScale = Vector3.one;
         //newSquare.SetActive(false);
         return newSquare;
     }
@@ -161,7 +220,7 @@ public class GridManager : MonoBehaviour {
                 if(i == 0){
                     gridSquare.Enable();        // enable first row
                 }
-                square.transform.localPosition = new Vector3(-1f*j, -1f*i, 0f);
+                square.transform.localPosition = new Vector3(-scale_x*j, -scale_y*i, 0f);
             }
         }
 
