@@ -662,7 +662,7 @@ MonoBehaviour:
   asteroidReached: 0
   onJourney: 0
   bombPlantTimer: 1
-  bombExplosionTimer: 2.5
+  bombExplosionTimer: 3
 --- !u!50 &190823926
 Rigidbody2D:
   m_ObjectHideFlags: 0

@@ -36,17 +36,18 @@ public class Pirate : MonoBehaviour
 								rigidbody2D.velocity = Vector2.zero;
 								onJourney = false;
 								asteroidReached = true;
-								expNumber.StartCounting ();
+								
 						}
 				} 
 				if (asteroidReached) {
-						//last asteroid in space wont explode, fix pls
+						//When asteroid reached, plant the bomb.
 						bombPlantTimer -= Time.deltaTime;
 						if (bombPlantTimer < 0) {
 								onJourney = true;
 								asteroidReached = false;
 								if (asteroid != null) {
-										Debug.Log ("Exploding in n seconds!");
+										//Call asteroids explode method to destroy it
+										expNumber.StartCounting ();
 										asteroid.GetComponent<Asteroid> ().ExplodeInSeconds (bombExplosionTimer);
 								}
 								UpdateTravelingPoint ();

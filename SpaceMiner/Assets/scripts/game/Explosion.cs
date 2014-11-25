@@ -3,18 +3,21 @@ using System.Collections;
 
 public class Explosion : MonoBehaviour
 {		
-//		public float timer;
+		public float timer;
 
 		void Start ()
 		{
 				this.GetComponent<Animator> ().speed = 1 / 12f;	
-				Explode (transform.position.x, transform.position.y);
+				timer = 3;
 		}
 
-//		void Update ()
-//		{
-//				timer -= Time.deltaTime;
-//		}
+		void Update ()
+		{
+				timer -= Time.deltaTime;
+				if (timer < 0) {
+					Destroy(this.gameObject);
+				}
+		}
 
 		public void Explode (float x, float y)
 		{
