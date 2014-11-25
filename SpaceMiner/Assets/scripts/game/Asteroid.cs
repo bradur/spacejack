@@ -14,6 +14,7 @@ public class Asteroid : MonoBehaviour
 		public Resource mineralType;
 		bool bombPlanted;
 		float explosionTimer;
+		GameObject asteroidExplosion;
 		// Use this for initialization
 		void Start ()
 		{
@@ -27,7 +28,7 @@ public class Asteroid : MonoBehaviour
 
 		public void DestroySelf ()
 		{
-				// animation ? 
+				asteroidExplosion.GetComponent<Explosion> ().Explode (transform.position.x, transform.position.y);
 				Destroy (gameObject);
 		}
 
@@ -51,6 +52,11 @@ public class Asteroid : MonoBehaviour
 		void OnTriggerEnter2D (Collider2D col)
 		{
 				collided = true;
+		}
+
+		public void SetAsteroidExplosion (GameObject asteroidAnim)
+		{
+				this.asteroidExplosion = asteroidAnim;
 		}
 
 		public void ExplodeInSeconds (float seconds)

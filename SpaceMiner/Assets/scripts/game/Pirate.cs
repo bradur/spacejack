@@ -48,6 +48,8 @@ public class Pirate : MonoBehaviour
 								if (asteroid != null) {
 										//Call asteroids explode method to destroy it
 										expNumber.StartCounting ();
+										//makes explosion animation and links it to current asteroid
+										expNumber.SetupExplosionForAsteroid (asteroid);
 										asteroid.GetComponent<Asteroid> ().ExplodeInSeconds (bombExplosionTimer);
 								}
 								UpdateTravelingPoint ();
