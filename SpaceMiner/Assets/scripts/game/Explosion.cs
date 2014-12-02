@@ -7,11 +7,12 @@ public class Explosion : MonoBehaviour
 		public float animationSpeed;
 		Animator animator;
 
+		//Countdown number and explosion animation uses this class. They have different timers for their animations. 
+		//Methods are called from Asteroid and ExplosionNumber.
 		void Start ()
 		{
 				animator = this.GetComponent<Animator> ();
 				animator.speed = animationSpeed;
-//				this.GetComponent<Animator> ().speed = animationSpeed;
 		}
 
 		void Update ()
