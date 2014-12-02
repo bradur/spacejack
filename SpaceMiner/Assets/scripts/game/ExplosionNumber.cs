@@ -30,6 +30,7 @@ public class ExplosionNumber : MonoBehaviour
 				}
 				asteroidExplosion = (GameObject)Instantiate (asteroidExplosionTemplate);
 				asteroid.GetComponent<Asteroid> ().SetAsteroidExplosion (asteroidExplosion);
+				asteroidExplosion.transform.position = new Vector3 (asteroid.transform.position.x, asteroid.transform.position.y, 0);
 				asteroidExplosion.GetComponent<Explosion> ().Hide ();
 		}
 }
