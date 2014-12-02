@@ -473,7 +473,7 @@ MonoBehaviour:
   scaleSpeed: 1
   playerOb: {fileID: 175163710}
   dayPassedObject: {fileID: 867643536}
-  dayTime: 100
+  dayTime: 10
 --- !u!1 &175163710
 GameObject:
   m_ObjectHideFlags: 0
@@ -658,9 +658,8 @@ MonoBehaviour:
   asteroidManager: {fileID: 2132148244}
   managerObj: {fileID: 2132148243}
   travelingPoint: {x: 0, y: 0}
-  speed: 100
+  speed: 30
   asteroidReached: 0
-  onJourney: 0
   bombPlantTimer: 1
   bombExplosionTimer: 3
 --- !u!50 &190823926
@@ -1988,6 +1987,7 @@ MonoBehaviour:
   movementSpeed: 40
   menuShown: 0
   asteroidManager: {fileID: 2132148244}
+  pirate: {fileID: 190823925}
 --- !u!61 &867643540
 BoxCollider2D:
   m_ObjectHideFlags: 0
