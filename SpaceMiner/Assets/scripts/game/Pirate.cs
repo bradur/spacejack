@@ -10,16 +10,19 @@ public class Pirate : MonoBehaviour
 		public Vector2 travelingPoint;
 		public float speed;
 		public bool asteroidReached;
-		public bool onJourney;
 		public float bombPlantTimer;
 		public float bombExplosionTimer;
 		float originalBombPlantTimer;
 		float originalBombExplosionTimer;
 		GameObject asteroid;
+		bool dayTime;
+		bool onJourney;
 
 		void Start ()
 		{
-				onJourney = true;
+		//Uncomment this when you start working next time!!
+//				onJourney = true;
+				dayTime = true;
 				asteroidReached = false;
 				myPos = transform.position;
 				originalBombPlantTimer = bombPlantTimer;
@@ -28,34 +31,36 @@ public class Pirate : MonoBehaviour
 
 		void Update ()
 		{
-				if (onJourney) {
-						Vector2 dir = (travelingPoint - (Vector2)transform.position).normalized;
-						rigidbody2D.velocity = dir * speed * Time.deltaTime;
+				if (dayTime) {				
+						if (onJourney) {
+								Vector2 dir = (travelingPoint - (Vector2)transform.position).normalized;
+								rigidbody2D.velocity = dir * speed * Time.deltaTime;
 
-						if (Mathf.Abs (transform.position.x - travelingPoint.x) < 0.1 && Mathf.Abs (transform.position.y - travelingPoint.y) < 0.1) {
-								rigidbody2D.velocity = Vector2.zero;
-								onJourney = false;
-								asteroidReached = true;
+								if (Mathf.Abs (transform.position.x - travelingPoint.x) < 0.1 && Mathf.Abs (transform.position.y - travelingPoint.y) < 0.1) {
+										rigidbody2D.velocity = Vector2.zero;
+										onJourney = false;
+										asteroidReached = true;
 								
-						}
-				} 
-				if (asteroidReached) {
-						//When asteroid reached, plant the bomb.
-						bombPlantTimer -= Time.deltaTime;
-						if (bombPlantTimer < 0) {
-								onJourney = true;
-								asteroidReached = false;
-								if (asteroid != null) {
-										//Instantiate countdown numbers
-										expNumber.StartCounting ();
-										//Asteroid will destroy at the same time as countdown goes to zero
-										asteroid.GetComponent<Asteroid> ().ExplodeInSeconds (bombExplosionTimer);
-										//makes explosion for asteroid animation and links it to current asteroid
-										expNumber.SetupExplosionForAsteroid (asteroid);
 								}
-								UpdateTravelingPoint ();
-								bombPlantTimer = originalBombPlantTimer;
-						}						
+						} 
+						if (asteroidReached) {
+								//When asteroid reached, plant the bomb.
+								bombPlantTimer -= Time.deltaTime;
+								if (bombPlantTimer < 0) {
+										onJourney = true;
+										asteroidReached = false;
+										if (asteroid != null) {
+												//Instantiate countdown numbers
+												expNumber.StartCounting ();
+												//Asteroid will destroy at the same time as countdown goes to zero
+												asteroid.GetComponent<Asteroid> ().ExplodeInSeconds (bombExplosionTimer);
+												//makes explosion for asteroid animation and links it to current asteroid
+												expNumber.SetupExplosionForAsteroid (asteroid);
+										}
+										UpdateTravelingPoint ();
+										bombPlantTimer = originalBombPlantTimer;
+								}						
+						}
 				}
 		}
 
@@ -64,6 +69,7 @@ public class Pirate : MonoBehaviour
 				float xDistance, yDistance, distanceToCurrent;		
 				float nearestDistance = 1000;
 				GameObject nearestAsteroid = null;
+				//When new day this does not work, it checks from old children list? :o
 				foreach (Transform child in managerObj.GetComponentsInChildren<Transform>()) {
 						if (child.gameObject.tag == "asteroid") {
 								xDistance = myPos.x - child.transform.position.x;
@@ -76,9 +82,11 @@ public class Pirate : MonoBehaviour
 								}
 						}
 				}
-				if (nearestAsteroid != null) {
-						nearestAsteroid.transform.parent = null;
-				}
+//				if (nearestAsteroid != null) {
+//						nearestAsteroid.transform.parent = null;
+//				}
+//				Debug.Log ("Traveling towards x: " + nearestAsteroid.transform.localPosition.x + " y: " + nearestAsteroid.transform.localPosition.y);
+
 
 		}
 
@@ -87,5 +95,19 @@ public class Pirate : MonoBehaviour
 				asteroid = collider.gameObject;
 		}
 
+		public void StopVandalizing ()
+		{
+				travelingPoint = Vector3.zero;
+				rigidbody2D.velocity = Vector2.zero;
+				dayTime = false;
+				asteroidReached = false;
+				onJourney = false;
+		}
 
+		public void StartVandalizing ()
+		{
+				dayTime = true;
+				UpdateTravelingPoint ();
+				onJourney = true;
+		}
 }

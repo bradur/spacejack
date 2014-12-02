@@ -19,14 +19,12 @@ public class DayCycle : MonoBehaviour
 		DayPassedMenu dayPassedScript;
 
 
-		//dayTime is 120 seconds
+		//dayTime set in there
 		public float dayTime;
 		float ticks;
 
 		void Start ()
 		{
-				//targetScale = 0;  // target scale (max) is set in scene
-				//progressSprite.localScale = new Vector3 (resources.fuelAmount / 1000, progressSprite.localScale.y, progressSprite.localScale.z);
 				gameObject.SetActive (true);             
 				scaleY = fuelSprite.localScale.y;
 				scaleZ = fuelSprite.localScale.y;

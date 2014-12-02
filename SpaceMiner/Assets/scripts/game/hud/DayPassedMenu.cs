@@ -9,35 +9,37 @@ public class DayPassedMenu : MonoBehaviour
 		Vector3 travelingPoint;
 		public bool menuShown;
 		public AsteroidManager asteroidManager;
+		public Pirate pirate;
 
-		// Use this for initialization
 		void Start ()
 		{	
 				menuShown = false;
 				travelingPoint = offScreenOb.transform.position;
 		}
-	
-		// Update is called once per frame
+
 		void Update ()
 		{
 				transform.position = Vector3.MoveTowards (transform.position, travelingPoint, movementSpeed * Time.deltaTime);
 		}
 
 		public void TravelOnScreen ()
-		{
+		{		
+				//*******Add some vandalizing condition here (or in pirate)*********
+				pirate.StopVandalizing ();
 				menuShown = true;
 				travelingPoint = onScreenOb.transform.position;
 		}
 
 		public void TravelOffScreen ()
-		{
+		{				
+				pirate.StartVandalizing ();
 				travelingPoint = offScreenOb.transform.position;
 		}
 
 		void OnMouseDown ()
 		{
 				menuShown = false;
-				travelingPoint = offScreenOb.transform.position;
+				TravelOffScreen ();
 				asteroidManager.DestroyAsteroidsInSpace ();
 				asteroidManager.GenerateAsteroids (asteroidManager.asteroidsInSpace);
 		}
