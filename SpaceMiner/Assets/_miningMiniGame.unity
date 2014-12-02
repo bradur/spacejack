@@ -96,7 +96,7 @@ Transform:
   m_PrefabInternal: {fileID: 1401226453}
   m_GameObject: {fileID: 113308135}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: .74751389, y: 2.97799897, z: -4.47900391}
+  m_LocalPosition: {x: 1.94000006, y: 1.96000004, z: -4.48000002}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 2088993341}
@@ -237,6 +237,49 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 2
+--- !u!1 &473204457
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 4
+  m_Component:
+  - 4: {fileID: 473204459}
+  - 114: {fileID: 473204458}
+  m_Layer: 0
+  m_Name: resourceManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &473204458
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 473204457}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ff4d701283a29524590a0d1d50c74554, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  fuelAmount: 500
+  maxFuelAmount: 1500
+  creditCount: 1000
+  resourceArray: 000000000000000000000000000000000000000000000000
+--- !u!4 &473204459
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 473204457}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -1.39536214, y: .148045987, z: -4.47900391}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 5
 --- !u!1001 &1401226453
 Prefab:
   m_ObjectHideFlags: 0
@@ -244,17 +287,25 @@ Prefab:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 11400000, guid: 0299e4cd30f9d29468bb1a68d6cc2718, type: 2}
+      propertyPath: sprites.Array.size
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 11400000, guid: 0299e4cd30f9d29468bb1a68d6cc2718, type: 2}
+      propertyPath: textures.Array.size
+      value: 6
+      objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: 0299e4cd30f9d29468bb1a68d6cc2718, type: 2}
       propertyPath: m_LocalPosition.x
-      value: .74751389
+      value: 1.94000006
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: 0299e4cd30f9d29468bb1a68d6cc2718, type: 2}
       propertyPath: m_LocalPosition.y
-      value: 2.97799897
+      value: 1.96000004
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: 0299e4cd30f9d29468bb1a68d6cc2718, type: 2}
       propertyPath: m_LocalPosition.z
-      value: -4.47900391
+      value: -4.48000002
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: 0299e4cd30f9d29468bb1a68d6cc2718, type: 2}
       propertyPath: m_LocalRotation.x
@@ -275,6 +326,76 @@ Prefab:
     - target: {fileID: 400000, guid: 0299e4cd30f9d29468bb1a68d6cc2718, type: 2}
       propertyPath: m_RootOrder
       value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 11400000, guid: 0299e4cd30f9d29468bb1a68d6cc2718, type: 2}
+      propertyPath: resourceImages.Array.data[0]
+      value: 
+      objectReference: {fileID: 2800000, guid: 1afb234f6d8a6574bba1b44dd4fd91fb, type: 3}
+    - target: {fileID: 11400000, guid: 0299e4cd30f9d29468bb1a68d6cc2718, type: 2}
+      propertyPath: resourceImages.Array.data[1]
+      value: 
+      objectReference: {fileID: 2800000, guid: ab979c35f69c4954395def9c4bddac05, type: 3}
+    - target: {fileID: 11400000, guid: 0299e4cd30f9d29468bb1a68d6cc2718, type: 2}
+      propertyPath: resourceImages.Array.data[2]
+      value: 
+      objectReference: {fileID: 2800000, guid: 48e323f181511fe44b0bf15b03bb4742, type: 3}
+    - target: {fileID: 11400000, guid: 0299e4cd30f9d29468bb1a68d6cc2718, type: 2}
+      propertyPath: textures.Array.data[0]
+      value: 
+      objectReference: {fileID: 2800000, guid: 1afb234f6d8a6574bba1b44dd4fd91fb, type: 3}
+    - target: {fileID: 11400000, guid: 0299e4cd30f9d29468bb1a68d6cc2718, type: 2}
+      propertyPath: textures.Array.data[1]
+      value: 
+      objectReference: {fileID: 2800000, guid: ab979c35f69c4954395def9c4bddac05, type: 3}
+    - target: {fileID: 11400000, guid: 0299e4cd30f9d29468bb1a68d6cc2718, type: 2}
+      propertyPath: textures.Array.data[2]
+      value: 
+      objectReference: {fileID: 2800000, guid: 48e323f181511fe44b0bf15b03bb4742, type: 3}
+    - target: {fileID: 11400000, guid: 0299e4cd30f9d29468bb1a68d6cc2718, type: 2}
+      propertyPath: sprites.Array.data[0]
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 11400000, guid: 0299e4cd30f9d29468bb1a68d6cc2718, type: 2}
+      propertyPath: sprites.Array.data[1]
+      value: 
+      objectReference: {fileID: 21300000, guid: 1afb234f6d8a6574bba1b44dd4fd91fb,
+        type: 3}
+    - target: {fileID: 11400000, guid: 0299e4cd30f9d29468bb1a68d6cc2718, type: 2}
+      propertyPath: sprites.Array.data[2]
+      value: 
+      objectReference: {fileID: 21300000, guid: ab979c35f69c4954395def9c4bddac05,
+        type: 3}
+    - target: {fileID: 11400000, guid: 0299e4cd30f9d29468bb1a68d6cc2718, type: 2}
+      propertyPath: sprites.Array.data[3]
+      value: 
+      objectReference: {fileID: 21300000, guid: 48e323f181511fe44b0bf15b03bb4742,
+        type: 3}
+    - target: {fileID: 11400000, guid: 0299e4cd30f9d29468bb1a68d6cc2718, type: 2}
+      propertyPath: sprites.Array.data[5]
+      value: 
+      objectReference: {fileID: 21300000, guid: 01df251e99a058e41951941a0c83f6c8,
+        type: 3}
+    - target: {fileID: 11400000, guid: 0299e4cd30f9d29468bb1a68d6cc2718, type: 2}
+      propertyPath: sprites.Array.data[4]
+      value: 
+      objectReference: {fileID: 21300000, guid: e3b45d352d31c0641ac5f67df1288c19,
+        type: 3}
+    - target: {fileID: 11400000, guid: 0299e4cd30f9d29468bb1a68d6cc2718, type: 2}
+      propertyPath: sprites.Array.data[6]
+      value: 
+      objectReference: {fileID: 21300000, guid: 503f8e214e62fee42965b4ae78f5f95f,
+        type: 3}
+    - target: {fileID: 11400000, guid: 0299e4cd30f9d29468bb1a68d6cc2718, type: 2}
+      propertyPath: resourceType
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 11400000, guid: 0299e4cd30f9d29468bb1a68d6cc2718, type: 2}
+      propertyPath: surpriseFactor
+      value: 1.20000005
+      objectReference: {fileID: 0}
+    - target: {fileID: 11400000, guid: 0299e4cd30f9d29468bb1a68d6cc2718, type: 2}
+      propertyPath: maxSurprisePercentage
+      value: .200000003
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 0299e4cd30f9d29468bb1a68d6cc2718, type: 2}
@@ -325,7 +446,16 @@ MonoBehaviour:
   rows: 5
   background: {fileID: 2088993339}
   maxSurprisePercentage: .200000003
-  surpriseFactor: .850000024
+  surpriseFactor: 1.20000005
+  resourceType: 3
+  sprites:
+  - {fileID: 0}
+  - {fileID: 21300000, guid: 1afb234f6d8a6574bba1b44dd4fd91fb, type: 3}
+  - {fileID: 21300000, guid: ab979c35f69c4954395def9c4bddac05, type: 3}
+  - {fileID: 21300000, guid: 48e323f181511fe44b0bf15b03bb4742, type: 3}
+  - {fileID: 21300000, guid: e3b45d352d31c0641ac5f67df1288c19, type: 3}
+  - {fileID: 21300000, guid: 01df251e99a058e41951941a0c83f6c8, type: 3}
+  - {fileID: 21300000, guid: 503f8e214e62fee42965b4ae78f5f95f, type: 3}
 --- !u!1 &1619508827
 GameObject:
   m_ObjectHideFlags: 0
@@ -371,8 +501,8 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1619508827}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -.979300737, y: .934215546, z: 0}
-  m_LocalScale: {x: 1.05829203, y: 1.10746837, z: 1}
+  m_LocalPosition: {x: -.648536682, y: -.514878273, z: 0}
+  m_LocalScale: {x: 1.5480504, y: 1.83376563, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 3
@@ -462,7 +592,7 @@ SpriteRenderer:
   m_LightProbeAnchor: {fileID: 0}
   m_ScaleInLightmap: 1
   m_SortingLayerID: 0
-  m_SortingOrder: -200
+  m_SortingOrder: -20
   m_Sprite: {fileID: 21300000, guid: 66a82f5f8560f004d9a4b980b0637e06, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
 --- !u!4 &2088993341

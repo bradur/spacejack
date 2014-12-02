@@ -3489,8 +3489,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 377aa271b617cfd41b6b56e0794abf36, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  costType: 5
-  rewardType: 3
+  costType: 6
+  rewardType: 4
   costValue: 100
   rewardValue: 100
   sr: {fileID: 1969768014}
@@ -3906,8 +3906,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 377aa271b617cfd41b6b56e0794abf36, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  costType: 2
-  rewardType: 3
+  costType: 3
+  rewardType: 4
   costValue: 100
   rewardValue: 500
   sr: {fileID: 671929013}
@@ -4190,8 +4190,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 377aa271b617cfd41b6b56e0794abf36, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  costType: 0
-  rewardType: 3
+  costType: 1
+  rewardType: 4
   costValue: 100
   rewardValue: 300
   sr: {fileID: 1454442932}
@@ -4505,8 +4505,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 377aa271b617cfd41b6b56e0794abf36, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  costType: 3
-  rewardType: 5
+  costType: 4
+  rewardType: 6
   costValue: 100
   rewardValue: 100
   sr: {fileID: 126807939}
@@ -4818,8 +4818,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 377aa271b617cfd41b6b56e0794abf36, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  costType: 1
-  rewardType: 3
+  costType: 2
+  rewardType: 4
   costValue: 100
   rewardValue: 250
   sr: {fileID: 243172288}
@@ -4966,8 +4966,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 377aa271b617cfd41b6b56e0794abf36, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  costType: 1
-  rewardType: 5
+  costType: 2
+  rewardType: 6
   costValue: 100
   rewardValue: 500
   sr: {fileID: 886771198}

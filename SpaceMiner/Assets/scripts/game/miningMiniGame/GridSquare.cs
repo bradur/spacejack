@@ -8,8 +8,11 @@ public class GridSquare : MonoBehaviour {
     public Color oddColor;
 
 
-    public SpriteRenderer surprise;
+    public SpriteRenderer surpriseSprite;
+    public SpriteRenderer resourceSprite;
     bool hasSurprise;
+
+    Resource resource;
 
     SpriteRenderer sr;
     Color originalColor;
@@ -35,7 +38,15 @@ public class GridSquare : MonoBehaviour {
 
     void Kill(){
         Disable();
+        if(resource != Resource.None){
+            print("Resource yield: "+resource);
+        }
+        if(surpriseSprite != null){
+            surpriseSprite.enabled = false;
+        }
+        resourceSprite.enabled = true;
         dead = true;
+
     }
 
     public bool IsDead(){
@@ -45,7 +56,7 @@ public class GridSquare : MonoBehaviour {
     public void AddSurprise(){
         hasSurprise = true;
         if(sr.enabled){
-            surprise.enabled = true;
+            surpriseSprite.enabled = true;
         }
     }
 
@@ -53,6 +64,9 @@ public class GridSquare : MonoBehaviour {
         //gameObject.SetActive(false);
         sr.enabled = false;
         //print("Disable: y: "+ row +" <> x: "+column+" SiblingIndex: "+transform.GetSiblingIndex());
+        
+        //surpriseSprite.enabled = false;
+        //resourceSprite.enabled = false;
         gameObject.collider2D.enabled = false;
     }
 
@@ -63,8 +77,16 @@ public class GridSquare : MonoBehaviour {
             sr.enabled = true;
             gameObject.collider2D.enabled = true;
             if(hasSurprise){
-                surprise.enabled = true;
+                surpriseSprite.enabled = true;
             }
+        }
+    }
+
+    public void SetResource(Sprite sprite, Resource resourceType, bool enable=true){
+        resourceSprite.sprite = sprite;
+        resource = resourceType;
+        if(enable){
+            resourceSprite.enabled = true;
         }
     }
 

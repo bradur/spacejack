@@ -2,6 +2,7 @@
 using System.Collections;
 
 public enum Resource{
+    None,
     Dmitryivanovite,
     Sinoite,
     Alabandite,
@@ -12,6 +13,7 @@ public enum Resource{
 
 public enum Tool
 {
+    None,
     BronzePickaxe,
     DiamondPickaxe,
     Drill,
@@ -20,12 +22,14 @@ public enum Tool
 
 public enum JetPackUpgrade
 {
+    None,
     Lazy,
     TheBeast,
     Expert
 }
 
 public enum ResourceType{
+    None,
     Dmitryivanovite,
     Sinoite,
     Alabandite,

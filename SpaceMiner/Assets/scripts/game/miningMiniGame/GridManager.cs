@@ -10,6 +10,8 @@ public class GridManager : MonoBehaviour {
     public GameObject background;                       // background object
     public float maxSurprisePercentage = 0.2f;          // maximum percentage of surprises per blocks
     public float surpriseFactor = 0.85f;                // chance of surprise spawning
+    public Resource resourceType;                       // type of resource the game yields
+    public Sprite[] sprites = new Sprite[6];
 
     // local variables
     SpriteRenderer sr;                                  // renderer for the background
@@ -44,14 +46,18 @@ public class GridManager : MonoBehaviour {
         if(maxSurprises >= squares){
             maxSurprises = squares;
         }
+        
         else if(maxSurprises <= 0){
             maxSurprises = 0;
         }
+        //print(maxSurprises);
+        //print(squares);
         //print(maxSurprises);
         //maxSurprises = 5;
         for(int i = 0;i < squares; i++){
             shuffleBag.Add(i);
         }
+        print(shuffleBag.Count);
 
         GameObject newSquare = (GameObject)Instantiate(squarePrefab);
         squareWidth = newSquare.GetComponent<SpriteRenderer>().sprite.texture.width;
@@ -69,6 +75,8 @@ public class GridManager : MonoBehaviour {
     void Start () {
         float moveX = columns/2;
         float moveY = rows/2;
+
+        print(SystemInfo.deviceUniqueIdentifier);
 
         gameScaleX = transform.localScale.x;
         gameScaleY = transform.localScale.y;
@@ -194,6 +202,7 @@ public class GridManager : MonoBehaviour {
     int Shuffle(){
         int randomShuffle;
         while(shuffleBag.Count > 0){
+            //randomShuffle = Random.Next(shuffleBag.Count);
             randomShuffle = Random.Range(0, shuffleBag.Count);
             if(shuffleBag.Contains(randomShuffle)){
                 shuffleBag.Remove(randomShuffle);
@@ -201,6 +210,14 @@ public class GridManager : MonoBehaviour {
             }
         }
         return -1;
+    }
+
+    Resource GetRandomResource(){
+        // random resource (no minerals)
+        // 4 == credits
+        // 5 == lifesupport
+        // 6 == fuel
+        return (Resource)Random.Range(4, 7);
     }
 
     GameObject GenerateSquare(){
@@ -220,21 +237,27 @@ public class GridManager : MonoBehaviour {
                 if(i == 0){
                     gridSquare.Enable();        // enable first row
                 }
+                if(i == rows-1){
+                    gridSquare.SetResource(sprites[(int)resourceType], resourceType);
+                }
                 square.transform.localPosition = new Vector3(-scale_x*j, -scale_y*i, 0f);
             }
         }
 
         int shuffle;
         for(int i = 0; i < maxSurprises; i++){
-            if(Random.value > surpriseFactor){
+            if(surpriseFactor > Random.value){
                 shuffle = Shuffle();
+                //print(shuffleBag.Count);
                 if(shuffle == -1){
                     break;
                 }
-                transform.GetChild(shuffle).GetComponent<GridSquare>().AddSurprise();
+                GridSquare gridSquare = transform.GetChild(shuffle).GetComponent<GridSquare>();
+                gridSquare.AddSurprise();
+                Resource surpriseResource = GetRandomResource();
+                gridSquare.SetResource(sprites[(int)surpriseResource], surpriseResource, false);
                 //print("Surprise added to: "+shuffle);
             }
-
         }
 
 
