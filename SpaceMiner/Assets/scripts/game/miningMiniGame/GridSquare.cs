@@ -10,9 +10,14 @@ public class GridSquare : MonoBehaviour {
 
     public SpriteRenderer surpriseSprite;
     public SpriteRenderer resourceSprite;
+    public TextMesh popUpText;
+
     bool hasSurprise;
 
     Resource resource;
+    int resourceCount = 10;
+
+    Animator animator;
 
     SpriteRenderer sr;
     Color originalColor;
@@ -58,6 +63,7 @@ public class GridSquare : MonoBehaviour {
         if(sr.enabled){
             surpriseSprite.enabled = true;
         }
+        animator = GetComponent<Animator>();
     }
 
     public void Disable(){
@@ -111,7 +117,12 @@ public class GridSquare : MonoBehaviour {
         sr.color = originalColor;
         //print("y: "+ row +" <> x: "+column+" SiblingIndex: "+transform.GetSiblingIndex());
         Kill();
-        transform.parent.gameObject.GetComponent<GridManager>().SquareDestroyed(row, column);
+        if(hasSurprise){
+            string resourceString = resource.ToString();
+            popUpText.text = "+ " + resourceCount + " " + char.ToUpper(resourceString[0]) + resourceString.Substring(1).ToLower();
+            animator.enabled = true;
+        }
+        transform.parent.gameObject.GetComponent<GridManager>().SquareDestroyed(row, column, resource, resourceCount);
     }
 
     void OnMouseDown(){

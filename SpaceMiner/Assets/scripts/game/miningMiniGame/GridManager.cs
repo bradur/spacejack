@@ -13,6 +13,8 @@ public class GridManager : MonoBehaviour {
     public Resource resourceType;                       // type of resource the game yields
     public Sprite[] sprites = new Sprite[6];
 
+    public ResourceManager resourceManager;
+
     // local variables
     SpriteRenderer sr;                                  // renderer for the background
     Object squarePrefab;                                // square prefab
@@ -76,8 +78,6 @@ public class GridManager : MonoBehaviour {
         float moveX = columns/2;
         float moveY = rows/2;
 
-        print(SystemInfo.deviceUniqueIdentifier);
-
         gameScaleX = transform.localScale.x;
         gameScaleY = transform.localScale.y;
         //background.transform.localScale = new Vector3(gameScaleX, gameScaleY, 1f);
@@ -112,7 +112,14 @@ public class GridManager : MonoBehaviour {
         }
     }
 
-    public void SquareDestroyed(int row, int column){
+    public void SquareDestroyed(int row, int column, Resource resource, int resourceCount)
+    {
+
+        // Add resource to player if there is any
+        if (resource != Resource.None)
+        {
+            resourceManager.UpdateResourceCount(resource, resourceCount);
+        }
 
         //print("Destroyed: y: "+row+ " <> x: "+column);
         // squares are laid out like this:
