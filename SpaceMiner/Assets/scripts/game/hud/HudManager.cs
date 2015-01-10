@@ -27,16 +27,14 @@ public class HudManager : MonoBehaviour
 
 		public void UseFuel (int amount)
 		{
-				resourceManager.fuelAmount -= amount;
-				
+				resourceManager.fuelAmount -= amount;				
 		}
 		
 		void UpdateHud ()
 		{
-				for (int i = 0; i < text.Length; i++) {
+				for (int i = 0; i < text.Length - 1; i++) {
 						Resource indicatorsResource = indicatorList [i].GetComponent<Indicator> ().resource;
 						if (indicatorsResource == Resource.Fuel) {
-//								indicatorList [i].GetComponent<TextMesh> ().text = resourceManager.GetResourceCount (indicatorsResource) + "/" + resourceManager.maxFuelAmount;
 						} else {
 								indicatorList [i].GetComponent<TextMesh> ().text = "" + resourceManager.GetResourceCount (indicatorsResource);
 						}			
