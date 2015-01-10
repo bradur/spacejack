@@ -59,6 +59,11 @@ public class Asteroid : MonoBehaviour
 				this.asteroidExplosion = asteroidAnim;
 		}
 
+		public GameObject GetAsteroidExplosion ()
+		{
+				return asteroidExplosion;
+		}
+
 		public void ExplodeInSeconds (float seconds)
 		{
 				if (!bombPlanted) {

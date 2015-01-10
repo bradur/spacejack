@@ -20,8 +20,7 @@ public class Pirate : MonoBehaviour
 
 		void Start ()
 		{
-		//Uncomment this when you start working next time!!
-//				onJourney = true;
+				onJourney = true;
 				dayTime = true;
 				asteroidReached = false;
 				myPos = transform.position;
@@ -49,6 +48,7 @@ public class Pirate : MonoBehaviour
 								if (bombPlantTimer < 0) {
 										onJourney = true;
 										asteroidReached = false;
+										bombPlantTimer = originalBombPlantTimer;
 										if (asteroid != null) {
 												//Instantiate countdown numbers
 												expNumber.StartCounting ();
@@ -56,10 +56,14 @@ public class Pirate : MonoBehaviour
 												asteroid.GetComponent<Asteroid> ().ExplodeInSeconds (bombExplosionTimer);
 												//makes explosion for asteroid animation and links it to current asteroid
 												expNumber.SetupExplosionForAsteroid (asteroid);
+										} else {
+												//Todo: destroy asteroids explosion animation/countdown when day ends.
+												Debug.Log ("horo");
+												expNumber.DestroyExplosionAnimations ();
+										
 										}
-										UpdateTravelingPoint ();
-										bombPlantTimer = originalBombPlantTimer;
-								}						
+								}
+								UpdateTravelingPoint ();
 						}
 				}
 		}
@@ -69,7 +73,7 @@ public class Pirate : MonoBehaviour
 				float xDistance, yDistance, distanceToCurrent;		
 				float nearestDistance = 1000;
 				GameObject nearestAsteroid = null;
-				//When new day this does not work, it checks from old children list? :o
+				//When new day comes, this does not work, it checks from old children list? :o
 				foreach (Transform child in managerObj.GetComponentsInChildren<Transform>()) {
 						if (child.gameObject.tag == "asteroid") {
 								xDistance = myPos.x - child.transform.position.x;
@@ -95,6 +99,7 @@ public class Pirate : MonoBehaviour
 				asteroid = collider.gameObject;
 		}
 
+		//Stops rendering and logic
 		public void StopVandalizing ()
 		{
 				travelingPoint = Vector3.zero;
@@ -102,12 +107,15 @@ public class Pirate : MonoBehaviour
 				dayTime = false;
 				asteroidReached = false;
 				onJourney = false;
+				renderer.enabled = false;
 		}
 
+		//Starts rendering and logic
 		public void StartVandalizing ()
 		{
-				dayTime = true;
 				UpdateTravelingPoint ();
+				renderer.enabled = true;
+				dayTime = true;				
 				onJourney = true;
 		}
 }

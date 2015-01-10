@@ -19,7 +19,7 @@ public class DayCycle : MonoBehaviour
 		DayPassedMenu dayPassedScript;
 
 
-		//dayTime set in there
+		//dayTime set in IDE
 		public float dayTime;
 		float ticks;
 

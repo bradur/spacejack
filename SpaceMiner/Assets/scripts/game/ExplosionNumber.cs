@@ -8,7 +8,7 @@ public class ExplosionNumber : MonoBehaviour
 		GameObject explosionTimer;
 		Object asteroidExplosionTemplate;
 		GameObject asteroidExplosion;
-		
+		GameObject currentAsteroid;
 
 		// Use this for initialization
 		void Start ()
@@ -28,9 +28,15 @@ public class ExplosionNumber : MonoBehaviour
 				if (asteroid == null) {
 						return;
 				}
+				currentAsteroid = asteroid;
 				asteroidExplosion = (GameObject)Instantiate (asteroidExplosionTemplate);
 				asteroid.GetComponent<Asteroid> ().SetAsteroidExplosion (asteroidExplosion);
 				asteroidExplosion.transform.position = new Vector3 (asteroid.transform.position.x, asteroid.transform.position.y, 0);
 				asteroidExplosion.GetComponent<Explosion> ().Hide ();
+		}
+
+		public void DestroyExplosionAnimations ()
+		{
+				Destroy (currentAsteroid);
 		}
 }
