@@ -3,7 +3,6 @@ using System.Collections;
 
 public class Pirate : MonoBehaviour
 {
-		public ExplosionNumber expNumber;
 		public AsteroidManager asteroidManager;
 		public GameObject managerObj;
 		Vector2 myPos;
@@ -11,10 +10,8 @@ public class Pirate : MonoBehaviour
 		public float speed;
 		public bool asteroidReached;
 		public float bombPlantTimer;
-		public float bombExplosionTimer;
 		float originalBombPlantTimer;
-		float originalBombExplosionTimer;
-		GameObject asteroid;
+		Asteroid asteroidScript;
 		bool dayTime;
 		bool onJourney;
 
@@ -24,8 +21,6 @@ public class Pirate : MonoBehaviour
 				dayTime = true;
 				asteroidReached = false;
 				myPos = transform.position;
-				originalBombPlantTimer = bombPlantTimer;
-				originalBombExplosionTimer = bombExplosionTimer;
 		}
 
 		void Update ()
@@ -46,33 +41,21 @@ public class Pirate : MonoBehaviour
 								//When asteroid reached, plant the bomb.
 								bombPlantTimer -= Time.deltaTime;
 								if (bombPlantTimer < 0) {
-										onJourney = true;
-										asteroidReached = false;
-										bombPlantTimer = originalBombPlantTimer;
-										if (asteroid != null) {
-												//Instantiate countdown numbers
-												expNumber.StartCounting ();
-												//Asteroid will destroy at the same time as countdown goes to zero
-												asteroid.GetComponent<Asteroid> ().ExplodeInSeconds (bombExplosionTimer);
-												//makes explosion for asteroid animation and links it to current asteroid
-												expNumber.SetupExplosionForAsteroid (asteroid);
-										} else {
-												//Todo: destroy asteroids explosion animation/countdown when day ends.
-												Debug.Log ("horo");
-												expNumber.DestroyExplosionAnimations ();
-										
-										}
+										asteroidScript.EnableExplicitContent (this);
 								}
-								UpdateTravelingPoint ();
 						}
 				}
 		}
 
 		public void UpdateTravelingPoint ()
 		{	
+				Debug.Log ("Update traveling point");
 				float xDistance, yDistance, distanceToCurrent;		
 				float nearestDistance = 1000;
 				GameObject nearestAsteroid = null;
+				onJourney = true;
+				asteroidReached = false;
+				bombPlantTimer = originalBombPlantTimer;
 				//When new day comes, this does not work, it checks from old children list? :o
 				foreach (Transform child in managerObj.GetComponentsInChildren<Transform>()) {
 						if (child.gameObject.tag == "asteroid") {
@@ -89,14 +72,16 @@ public class Pirate : MonoBehaviour
 //				if (nearestAsteroid != null) {
 //						nearestAsteroid.transform.parent = null;
 //				}
-//				Debug.Log ("Traveling towards x: " + nearestAsteroid.transform.localPosition.x + " y: " + nearestAsteroid.transform.localPosition.y);
+				Debug.Log ("Traveling towards x: " + nearestAsteroid.transform.localPosition.x + " y: " + nearestAsteroid.transform.localPosition.y);
 
 
 		}
 
 		void OnTriggerEnter2D (Collider2D collider)
 		{
-				asteroid = collider.gameObject;
+				if (collider.gameObject.tag == "asteroid") {
+						asteroidScript = collider.gameObject.GetComponent<Asteroid> ();
+				}
 		}
 
 		//Stops rendering and logic

@@ -12,13 +12,12 @@ public class Asteroid : MonoBehaviour
 		bool collided = false;
 		public int mineralAmount;
 		public Resource mineralType;
-		bool bombPlanted;
 		float explosionTimer;
-		GameObject asteroidExplosion;
+		public Animator asteroidAnimator;
+		Pirate pirateScript;
 		// Use this for initialization
 		void Start ()
 		{
-				bombPlanted = false;
 				RotationStep = Random.Range (MinRotationStep, MaxRotationStep);
 				int rotdir = Random.value > 0.5f ? 1 : -1;
 				RotationStep = RotationStep * rotdir;
@@ -28,7 +27,8 @@ public class Asteroid : MonoBehaviour
 
 		public void DestroySelf ()
 		{
-				asteroidExplosion.GetComponent<Explosion> ().Explode (transform.position.x, transform.position.y);
+				gameObject.tag = "Untagged";
+				pirateScript.UpdateTravelingPoint ();
 				Destroy (gameObject);
 		}
 
@@ -36,12 +36,6 @@ public class Asteroid : MonoBehaviour
 		void Update ()
 		{
 				transform.Rotate (eulerAngles);
-				if (bombPlanted) {
-						explosionTimer -= Time.deltaTime;
-						if (explosionTimer < 0) {
-								DestroySelf ();
-						}
-				}
 		}
 
 		void OnMouseUp ()
@@ -54,22 +48,12 @@ public class Asteroid : MonoBehaviour
 				collided = true;
 		}
 
-		public void SetAsteroidExplosion (GameObject asteroidAnim)
+		//Enables animator
+		public void EnableExplicitContent (Pirate pirateScript)
 		{
-				this.asteroidExplosion = asteroidAnim;
-		}
-
-		public GameObject GetAsteroidExplosion ()
-		{
-				return asteroidExplosion;
-		}
-
-		public void ExplodeInSeconds (float seconds)
-		{
-				if (!bombPlanted) {
-						bombPlanted = true;
-						explosionTimer = seconds;
-				}
+				transform.rotation = Quaternion.identity;
+				asteroidAnimator.enabled = true;
+				this.pirateScript = pirateScript;
 		}
 
 		public Resource MineralType {
