@@ -473,7 +473,7 @@ MonoBehaviour:
   scaleSpeed: 1
   playerOb: {fileID: 175163710}
   dayPassedObject: {fileID: 867643536}
-  dayTime: 10
+  dayTime: 120
 --- !u!1 &175163710
 GameObject:
   m_ObjectHideFlags: 0
@@ -654,14 +654,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 552e9272b8079144c995fcf51a4dd8cb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  expNumber: {fileID: 600737807}
   asteroidManager: {fileID: 2132148244}
   managerObj: {fileID: 2132148243}
   travelingPoint: {x: 0, y: 0}
   speed: 30
   asteroidReached: 0
   bombPlantTimer: 1
-  bombExplosionTimer: 3
 --- !u!50 &190823926
 Rigidbody2D:
   m_ObjectHideFlags: 0
@@ -1408,6 +1406,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 35f6052c09084e84db21eac3d287c3e3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  explosionTimerTemplate: {fileID: 0}
+  explosionTimer: {fileID: 0}
+  asteroidExplosionTemplate: {fileID: 0}
+  asteroidExplosion: {fileID: 0}
+  currentAsteroid: {fileID: 0}
 --- !u!1 &689995742
 GameObject:
   m_ObjectHideFlags: 0
@@ -1554,6 +1557,7 @@ MonoBehaviour:
   playerObject: {fileID: 175163710}
   mineralAmount: 0
   mineralType: 0
+  asteroidAnimator: {fileID: 0}
 --- !u!60 &802376760
 PolygonCollider2D:
   m_ObjectHideFlags: 0
@@ -1633,6 +1637,15 @@ MonoBehaviour:
   background: {fileID: 514594528}
   maxSurprisePercentage: .200000003
   surpriseFactor: .850000024
+  resourceType: 0
+  sprites:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  resourceManager: {fileID: 0}
 --- !u!1 &825215856
 GameObject:
   m_ObjectHideFlags: 0

@@ -1,29 +1,10 @@
 ﻿<Properties>
-<<<<<<< HEAD
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="MonoDevelop.Default" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\scripts\game\Pirate.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\scripts\game\Asteroid.cs">
     <Files>
-      <File FileName="Assets\scripts\game\hud\HudManager.cs" Line="35" Column="40" />
-      <File FileName="Assets\scripts\game\Pirate.cs" Line="60" Column="68" />
-      <File FileName="Assets\scripts\game\ExplosionNumber.cs" Line="40" Column="27" />
-      <File FileName="Assets\scripts\game\Asteroid.cs" Line="62" Column="41" />
-      <File FileName="Assets\scripts\game\AsteroidManager.cs" Line="1" Column="1" />
+      <File FileName="Assets\scripts\game\Pirate.cs" Line="50" Column="49" />
       <File FileName="Assets\scripts\game\Explosion.cs" Line="1" Column="1" />
-      <File FileName="Assets\scripts\game\hud\DayCycle.cs" Line="19" Column="32" />
-      <File FileName="Assets\scripts\game\hud\DayPassedMenu.cs" Line="27" Column="73" />
-      <File FileName="Assets\scripts\game\Player.cs" Line="66" Column="37" />
-=======
-  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\scripts\game\Pirate.cs">
-    <Files>
-      <File FileName="Assets\scripts\game\Pirate.cs" Line="23" Column="54" />
-      <File FileName="Assets\scripts\game\ExplosionNumber.cs" Line="22" Column="71" />
-      <File FileName="Assets\scripts\game\Asteroid.cs" Line="31" Column="100" />
-      <File FileName="Assets\scripts\game\AsteroidManager.cs" Line="22" Column="5" />
-      <File FileName="Assets\scripts\game\Explosion.cs" Line="11" Column="58" />
-      <File FileName="Assets\scripts\game\hud\DayCycle.cs" Line="22" Column="25" />
-      <File FileName="Assets\scripts\game\hud\DayPassedMenu.cs" Line="27" Column="73" />
->>>>>>> 9dbefb11857b4c429a736abeb378d24501c94ea6
+      <File FileName="Assets\scripts\game\Asteroid.cs" Line="55" Column="4" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
