@@ -39,8 +39,8 @@ public class DayPassedMenu : MonoBehaviour
 		void OnMouseDown ()
 		{
 				menuShown = false;
-				TravelOffScreen ();
 				asteroidManager.DestroyAsteroidsInSpace ();
 				asteroidManager.GenerateAsteroids (asteroidManager.asteroidsInSpace);
+				TravelOffScreen ();
 		}
 }
