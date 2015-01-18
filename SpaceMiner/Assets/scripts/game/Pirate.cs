@@ -48,15 +48,13 @@ public class Pirate : MonoBehaviour
 		}
 
 		public void UpdateTravelingPoint ()
-		{	
-				Debug.Log ("Update traveling point");
+		{
 				float xDistance, yDistance, distanceToCurrent;		
 				float nearestDistance = 1000;
 				GameObject nearestAsteroid = null;
 				onJourney = true;
 				asteroidReached = false;
 				bombPlantTimer = originalBombPlantTimer;
-				//When new day comes, this does not work, it checks from old children list? :o
 				foreach (Transform child in managerObj.GetComponentsInChildren<Transform>()) {
 						if (child.gameObject.tag == "asteroid") {
 								xDistance = myPos.x - child.transform.position.x;
@@ -69,12 +67,6 @@ public class Pirate : MonoBehaviour
 								}
 						}
 				}
-//				if (nearestAsteroid != null) {
-//						nearestAsteroid.transform.parent = null;
-//				}
-				Debug.Log ("Traveling towards x: " + nearestAsteroid.transform.localPosition.x + " y: " + nearestAsteroid.transform.localPosition.y);
-
-
 		}
 
 		void OnTriggerEnter2D (Collider2D collider)
