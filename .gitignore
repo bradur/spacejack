@@ -41,4 +41,5 @@ Thumbs.db
 Readme.md.meta
 *.csproj
 *.sln
-*.userprefs
+SpaceMiner/UnityVS.SpaceMiner.v12.suo
+SpaceMiner/SpaceMiner.userprefs
