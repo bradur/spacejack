@@ -235,12 +235,23 @@ public class GridManager : MonoBehaviour {
         return newSquare;
     }
 
+    public void DestroyLastRow(){
+        for (int j = 0; j < columns; j++)
+        {
+            transform.GetChild((rows - 1) * columns + j).gameObject.GetComponent<GridSquare>().ExplodeAndDie();
+        }
+    }
+
     void GenerateGrid(){
         for(int i = 0; i < rows; i++){
             for(int j = columns-1; j >= 0; j--){
                 GameObject square = GenerateSquare();
                 GridSquare gridSquare = square.GetComponent<GridSquare>();
                 gridSquare.SetPosition(i, columns-1-j);
+                if (i == rows-1)
+                {
+                    gridSquare.isLastRow = true;
+                }
                 if(i == 0){
                     gridSquare.Enable();        // enable first row
                 }

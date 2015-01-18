@@ -34,6 +34,7 @@ public class GridSquare : MonoBehaviour {
     bool dead = false;
     int row;
     int column;
+    public bool isLastRow;
     // Use this for initialization
     void Start () {
         
@@ -70,7 +71,7 @@ public class GridSquare : MonoBehaviour {
         if(sr.enabled){
             surpriseSprite.enabled = true;
         }
-        animator = GetComponent<Animator>();
+        //animator = GetComponent<Animator>();
     }
 
     public void Disable(){
@@ -98,11 +99,21 @@ public class GridSquare : MonoBehaviour {
     }
 
     public void SetResource(Sprite sprite, Resource resourceType, bool enable=true){
+        animator = GetComponent<Animator>();
         resourceSprite.sprite = sprite;
         resource = resourceType;
         if(enable){
             resourceSprite.enabled = true;
         }
+    }
+
+    public void ExplodeAndDie()
+    {
+        string resourceString = resource.ToString();
+        popUpText.text = "+ " + resourceCount + " " + char.ToUpper(resourceString[0]) + resourceString.Substring(1).ToLower();
+        animator.SetBool("explode", true);
+        animator.enabled = true;
+        transform.parent.gameObject.GetComponent<GridManager>().SquareDestroyed(row, column, resource, resourceCount);
     }
 
     public void SetPosition(int row, int column){
@@ -129,17 +140,25 @@ public class GridSquare : MonoBehaviour {
     }*/
 
     void OnMouseUp(){
+
         if (isAccessible) {
             sr.color = originalColor;
             //print("y: "+ row +" <> x: "+column+" SiblingIndex: "+transform.GetSiblingIndex());
             Kill();
-            if(hasSurprise){
-                string resourceString = resource.ToString();
-                popUpText.text = "+ " + resourceCount + " " + char.ToUpper(resourceString[0]) + resourceString.Substring(1).ToLower();
-                animator.enabled = true;
-                powerup.Play();
+            if (isLastRow)
+            {
+                transform.parent.gameObject.GetComponent<GridManager>().DestroyLastRow();
             }
-            transform.parent.gameObject.GetComponent<GridManager>().SquareDestroyed(row, column, resource, resourceCount);
+            else
+            {
+                if(hasSurprise){
+                    string resourceString = resource.ToString();
+                    popUpText.text = "+ " + resourceCount + " " + char.ToUpper(resourceString[0]) + resourceString.Substring(1).ToLower();
+                    animator.enabled = true;
+                    powerup.Play();
+                }
+                transform.parent.gameObject.GetComponent<GridManager>().SquareDestroyed(row, column, resource, resourceCount);
+            }
         }
         else
         {
