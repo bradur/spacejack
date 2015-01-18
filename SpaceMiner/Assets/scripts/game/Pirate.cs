@@ -14,7 +14,7 @@ public class Pirate : MonoBehaviour
 		Asteroid asteroidScript;
 		bool dayTime;
 		bool onJourney;
-
+	
 		void Start ()
 		{
 				onJourney = true;
@@ -22,19 +22,19 @@ public class Pirate : MonoBehaviour
 				asteroidReached = false;
 				myPos = transform.position;
 		}
-
+	
 		void Update ()
 		{
 				if (dayTime) {				
 						if (onJourney) {
 								Vector2 dir = (travelingPoint - (Vector2)transform.position).normalized;
 								rigidbody2D.velocity = dir * speed * Time.deltaTime;
-
+				
 								if (Mathf.Abs (transform.position.x - travelingPoint.x) < 0.1 && Mathf.Abs (transform.position.y - travelingPoint.y) < 0.1) {
 										rigidbody2D.velocity = Vector2.zero;
 										onJourney = false;
 										asteroidReached = true;
-								
+					
 								}
 						} 
 						if (asteroidReached) {
@@ -46,24 +46,15 @@ public class Pirate : MonoBehaviour
 						}
 				}
 		}
-
+	
 		public void UpdateTravelingPoint ()
-<<<<<<< HEAD
-		{
-=======
 		{	
-				Debug.Log ("Update traveling point");
->>>>>>> 64ee0bb06f42bfb7bc36f5ebf0826a0c62f67e57
 				float xDistance, yDistance, distanceToCurrent;		
 				float nearestDistance = 1000;
 				GameObject nearestAsteroid = null;
 				onJourney = true;
 				asteroidReached = false;
 				bombPlantTimer = originalBombPlantTimer;
-<<<<<<< HEAD
-=======
-				//When new day comes, this does not work, it checks from old children list? :o
->>>>>>> 64ee0bb06f42bfb7bc36f5ebf0826a0c62f67e57
 				foreach (Transform child in managerObj.GetComponentsInChildren<Transform>()) {
 						if (child.gameObject.tag == "asteroid") {
 								xDistance = myPos.x - child.transform.position.x;
@@ -75,25 +66,17 @@ public class Pirate : MonoBehaviour
 										nearestAsteroid = child.gameObject;
 								}
 						}
-				}
-<<<<<<< HEAD
-=======
-//				if (nearestAsteroid != null) {
-//						nearestAsteroid.transform.parent = null;
-//				}
-				Debug.Log ("Traveling towards x: " + nearestAsteroid.transform.localPosition.x + " y: " + nearestAsteroid.transform.localPosition.y);
-
-
->>>>>>> 64ee0bb06f42bfb7bc36f5ebf0826a0c62f67e57
+				}		
+					
 		}
-
+			
 		void OnTriggerEnter2D (Collider2D collider)
 		{
 				if (collider.gameObject.tag == "asteroid") {
 						asteroidScript = collider.gameObject.GetComponent<Asteroid> ();
 				}
 		}
-
+			
 		//Stops rendering and logic
 		public void StopVandalizing ()
 		{
@@ -104,7 +87,7 @@ public class Pirate : MonoBehaviour
 				onJourney = false;
 				renderer.enabled = false;
 		}
-
+      
 		//Starts rendering and logic
 		public void StartVandalizing ()
 		{
