@@ -32,6 +32,16 @@ public class Asteroid : MonoBehaviour
 				Destroy (gameObject);
 		}
 
+        public void RestartPirateShip()
+        {
+            if (pirateScript == null)
+            {
+                pirateScript = GameObject.FindGameObjectWithTag("pirate").GetComponent<Pirate>();
+            }
+            EnableExplicitContent(pirateScript);
+            pirateScript.StartMoving();
+       }
+
 		// Update is called once per frame
 		void Update ()
 		{

@@ -14,7 +14,9 @@ public class Pirate : MonoBehaviour
 		Asteroid asteroidScript;
 		bool dayTime;
 		bool onJourney;
-	
+
+        Vector2 cachedVelocity;
+
 		void Start ()
 		{
 				onJourney = true;
@@ -76,7 +78,23 @@ public class Pirate : MonoBehaviour
 						asteroidScript = collider.gameObject.GetComponent<Asteroid> ();
 				}
 		}
-			
+
+
+        public void StopMoving()
+        {
+            cachedVelocity = rigidbody2D.velocity;
+            rigidbody2D.velocity = Vector2.zero;
+            onJourney = false;
+            dayTime = false;
+        }
+
+        public void StartMoving()
+        {
+            rigidbody2D.velocity = cachedVelocity;
+            onJourney = true;
+            dayTime = true;
+        }
+
 		//Stops rendering and logic
 		public void StopVandalizing ()
 		{

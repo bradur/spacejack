@@ -13,7 +13,7 @@ public class GridManager : MonoBehaviour {
     public Resource resourceType;                       // type of resource the game yields
     public Sprite[] sprites = new Sprite[6];
 
-    public ResourceManager resourceManager;
+    public HudManager resourceManager;
     public AudioSource gainResource;
     public AudioSource clickSquare;
     public AudioSource errorSound;
@@ -38,6 +38,8 @@ public class GridManager : MonoBehaviour {
 
     float gameScaleX;
     float gameScaleY;
+    Texture2D cachedTexture;
+    Asteroid currentAsteroid;
     //Transform transform;
 
     List<int> shuffleBag = new List<int>();             // list for shuffle
@@ -75,13 +77,18 @@ public class GridManager : MonoBehaviour {
         gameHeight = squareHeight*rows;
         scale_x = newSquare.transform.localScale.x;
         scale_y = newSquare.transform.localScale.y;
-
-        GenerateGrid();
+        sr = background.GetComponent<SpriteRenderer>();
+        width = sr.sprite.texture.width;
+        height = sr.sprite.texture.height;
+        cachedTexture = new Texture2D(width, height);
+        cachedTexture.SetPixels(sr.sprite.texture.GetPixels());
+        cachedTexture.Apply();
     }
 
 
     // Use this for initialization
     void Start () {
+        /*
         //transform = transform;
         float moveX = columns/2;
         float moveY = rows/2;
@@ -100,24 +107,90 @@ public class GridManager : MonoBehaviour {
         marginX = (int)(width-gameWidth);
         marginY = (int)(height-gameHeight);
         background.transform.localPosition = new Vector3(-moveX, -moveY, 1f);
+         * */
         /*background.transform.localPosition = new Vector3(
             transform.localPosition.x-moveX-(marginX/2/squareWidth*gameScaleX),
             transform.localPosition.y-moveY-(marginY/2/squareHeight*gameScaleY)
         );*/
+        /*
         transParent = new Color[squareWidth*squareHeight];
         for(int i = 0;i < transParent.Length; i++){
             transParent[i] = Color.clear;
-        }
+        }*/
 
+    }
+
+
+    void InitializeTexture()
+    {
+        float moveX = columns / 2;
+        float moveY = rows / 2;
+
+        gameScaleX = transform.localScale.x;
+        gameScaleY = transform.localScale.y;
+        //background.transform.localScale = new Vector3(gameScaleX, gameScaleY, 1f);
+
+        //PixelsToUnits = sr.sprite.rect.width / sr.sprite.bounds.size.x;
+
+        //float viewPortUnits = Camera.main.orthographicSize*2f*(Screen.width/Screen.height);
+ 
+
+        marginX = (int)(width - gameWidth);
+        marginY = (int)(height - gameHeight);
+        background.transform.localPosition = new Vector3(-moveX, -moveY, 1f);
+        /*background.transform.localPosition = new Vector3(
+            transform.localPosition.x-moveX-(marginX/2/squareWidth*gameScaleX),
+            transform.localPosition.y-moveY-(marginY/2/squareHeight*gameScaleY)
+        );*/
+        transParent = new Color[squareWidth * squareHeight];
+        for (int i = 0; i < transParent.Length; i++)
+        {
+            transParent[i] = Color.clear;
+        }
+        
+        sr.sprite = Sprite.Create(                      // create new sprite and set it as our sprite
+            cachedTexture,                              // Texture2D texture
+            sr.sprite.rect,                             // Rect rect
+            new Vector2(0.5f, 0.5f),                    // Vector2 pivot
+            squareWidth                                 // float pixelsToUnits
+        );
         texture = sr.sprite.texture;
     }
-    
+
     // Update is called once per frame
     void Update () {
         if(Input.GetKeyDown(KeyCode.Escape))
         {
             Application.Quit();
         }
+    }
+
+    void OnMouseUp()
+    {
+        EndMiniGame();
+    }
+
+    public void InitializeGame(Asteroid asteroid)
+    {
+        transform.parent.gameObject.SetActive(true);
+        resourceType = asteroid.mineralType;
+        currentAsteroid = asteroid;
+        squaresLeftOnLastRow = columns;
+        InitializeTexture();
+        GenerateGrid();
+
+    }
+
+    void EndMiniGame()
+    {
+        resourceType = Resource.None;
+        GetComponent<BoxCollider2D>().enabled = false;
+        currentAsteroid.RestartPirateShip();
+        foreach (Transform child in transform)
+        {
+            Destroy(child.gameObject);
+        }
+        transform.parent.gameObject.SetActive(false);
     }
 
     public void SquareDestroyed(int row, int column, Resource resource, int resourceCount)
@@ -244,10 +317,7 @@ public class GridManager : MonoBehaviour {
         return newSquare;
     }
 
-    void EndMiniGame()
-    {
-        print("End!");
-    }
+
 
     // exploding animation after selecting last row
     public void DestroyLastRow(int currentColumn, string direction="no-direction"){
@@ -294,6 +364,14 @@ public class GridManager : MonoBehaviour {
                 transform.GetChild((rows - 1) * columns + currentColumn + 1).gameObject.GetComponent<GridSquare>().ExplodeAndDie("right");
                 squaresLeftOnLastRow--;
             }
+        }
+        if (squaresLeftOnLastRow <= 0)
+        {
+            foreach (Transform child in transform)
+            {
+                child.gameObject.GetComponent<BoxCollider2D>().enabled = false;
+            }
+            GetComponent<BoxCollider2D>().enabled = true;
         }
 
     }

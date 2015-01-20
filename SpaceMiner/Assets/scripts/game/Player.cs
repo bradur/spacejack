@@ -18,6 +18,8 @@ public class Player : MonoBehaviour
 		GameObject lastCollider = null;
 		float fuelTimer;
 		public GameObject home;
+        public GridManager miniGame;
+        public Pirate pirateShip;
 
 		void Start ()
 		{
@@ -44,6 +46,7 @@ public class Player : MonoBehaviour
 								onJourney = false;
 								// show progress bar only after player has stopped on the asteroid, not immediately when colliding
 								if (asteroidReached) {
+                                        
 										switch (farmingTool) {
 										case Tool.BronzePickaxe:
 												farmingSpeed = 1;
@@ -56,8 +59,10 @@ public class Player : MonoBehaviour
 												break;
 										}
 										if (lastCollider != null) {
-												progressbar.SetTarget (lastCollider);
-												progressbar.StartProcess (farmingSpeed);
+												/*progressbar.SetTarget (lastCollider);
+												progressbar.StartProcess (farmingSpeed);*/
+                                            pirateShip.StopMoving();
+                                            miniGame.InitializeGame(lastCollider.GetComponent<Asteroid>());
 										}
 										
 								}

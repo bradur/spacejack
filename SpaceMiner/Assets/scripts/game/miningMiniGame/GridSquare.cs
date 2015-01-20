@@ -113,12 +113,12 @@ public class GridSquare : MonoBehaviour {
         animator.SetBool("explode", true);
         animator.enabled = true;
         transform.parent.gameObject.GetComponent<GridManager>().SquareDestroyed(row, column, resource, resourceCount);
-        print("ExplodeAndDie() column: " + column + "  direction: " + explodeDirection);
+        //print("ExplodeAndDie() column: " + column + "  direction: " + explodeDirection);
     }
 
     public void OneOfLastRowDies()
     {
-        print("OneOfLastRowDies() column: " + column + "  direction: " + explodeDirection);
+        //print("OneOfLastRowDies() column: " + column + "  direction: " + explodeDirection);
         transform.parent.gameObject.GetComponent<GridManager>().DestroyLastRow(column, explodeDirection);
     }
 

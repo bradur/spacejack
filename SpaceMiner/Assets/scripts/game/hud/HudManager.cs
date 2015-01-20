@@ -19,6 +19,12 @@ public class HudManager : MonoBehaviour
 	
 		}
 
+        public void UpdateResourceCount(Resource resource, int amount)
+        {
+            resourceManager.UpdateResourceCount(resource, amount);
+            UpdateHud();
+        }
+
 		public void UpdateResources (Resource resource, int amount)
 		{
 				resourceManager.UpdateResourceCount (resource, amount);
@@ -35,6 +41,7 @@ public class HudManager : MonoBehaviour
 				for (int i = 0; i < text.Length - 1; i++) {
 						Resource indicatorsResource = indicatorList [i].GetComponent<Indicator> ().resource;
 						if (indicatorsResource == Resource.Fuel) {
+                            indicatorList[i].GetComponent<TextMesh>().text = "" + resourceManager.GetResourceCount(indicatorsResource);
 						} else {
 								indicatorList [i].GetComponent<TextMesh> ().text = "" + resourceManager.GetResourceCount (indicatorsResource);
 						}			
