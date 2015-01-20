@@ -14,6 +14,9 @@ public class GridManager : MonoBehaviour {
     public Sprite[] sprites = new Sprite[6];
 
     public ResourceManager resourceManager;
+    public AudioSource gainResource;
+    public AudioSource clickSquare;
+    public AudioSource errorSound;
 
     // local variables
     SpriteRenderer sr;                                  // renderer for the background
@@ -35,11 +38,14 @@ public class GridManager : MonoBehaviour {
 
     float gameScaleX;
     float gameScaleY;
+    //Transform transform;
 
     List<int> shuffleBag = new List<int>();             // list for shuffle
 
     Color[] transParent;                                // transparent color (used as an "eraser" on texture)
     int movesMade = 0;
+
+    int squaresLeftOnLastRow;
 
     void Awake(){
         squarePrefab = Resources.Load("gridSquare");
@@ -52,6 +58,7 @@ public class GridManager : MonoBehaviour {
         else if(maxSurprises <= 0){
             maxSurprises = 0;
         }
+        squaresLeftOnLastRow = columns;
         //print(maxSurprises);
         //print(squares);
         //print(maxSurprises);
@@ -59,7 +66,7 @@ public class GridManager : MonoBehaviour {
         for(int i = 0;i < squares; i++){
             shuffleBag.Add(i);
         }
-        print(shuffleBag.Count);
+        //print(shuffleBag.Count);
 
         GameObject newSquare = (GameObject)Instantiate(squarePrefab);
         squareWidth = newSquare.GetComponent<SpriteRenderer>().sprite.texture.width;
@@ -75,6 +82,7 @@ public class GridManager : MonoBehaviour {
 
     // Use this for initialization
     void Start () {
+        //transform = transform;
         float moveX = columns/2;
         float moveY = rows/2;
 
@@ -114,11 +122,12 @@ public class GridManager : MonoBehaviour {
 
     public void SquareDestroyed(int row, int column, Resource resource, int resourceCount)
     {
-
+        clickSquare.Play();
         // Add resource to player if there is any
         if (resource != Resource.None)
         {
             resourceManager.UpdateResourceCount(resource, resourceCount);
+            gainResource.Play();
         }
 
         //print("Destroyed: y: "+row+ " <> x: "+column);
@@ -140,13 +149,13 @@ public class GridManager : MonoBehaviour {
         for(int i = 0; i <= row; i++){
             for(int j = 0; j <= columns-1; j++){
                 //print(i+" : "+(i*columns+j));
-                transform.GetChild(i*columns+j).gameObject.GetComponent<GridSquare>().Disable();
+                transform.GetChild(i * columns + j).gameObject.GetComponent<GridSquare>().Disable();
             }
         }
 
         // 2. Enable the square to the left of current position (or if there is empty space in between the next non-empty square)
         for(int j = column; j <= columns-1; j++){
-            GridSquare gs = transform.GetChild(row*columns+j).gameObject.GetComponent<GridSquare>();
+            GridSquare gs = transform.GetChild(row * columns + j).gameObject.GetComponent<GridSquare>();
             if(!gs.IsDead()){
                 gs.Enable();
                 break;
@@ -155,7 +164,7 @@ public class GridManager : MonoBehaviour {
 
         // 3. Enable the square to the right of current position (or if there is empty space in between the next non-empty square)
         for(int j = column; j >= 0; j--){
-            GridSquare gs = transform.GetChild(row*columns+j).gameObject.GetComponent<GridSquare>();
+            GridSquare gs = transform.GetChild(row * columns + j).gameObject.GetComponent<GridSquare>();
             if(!gs.IsDead()){
                 gs.Enable();
                 break;
@@ -164,7 +173,7 @@ public class GridManager : MonoBehaviour {
 
         // 4. If not the final row, enable the square directly underneath
         if(row != rows-1){
-            transform.GetChild((row+1)*columns+column).gameObject.GetComponent<GridSquare>().Enable();
+            transform.GetChild((row + 1) * columns + column).gameObject.GetComponent<GridSquare>().Enable();
         }
 
         // draw transparent pixels on texture to simulate destruction
@@ -235,11 +244,58 @@ public class GridManager : MonoBehaviour {
         return newSquare;
     }
 
-    public void DestroyLastRow(){
-        for (int j = 0; j < columns; j++)
-        {
-            transform.GetChild((rows - 1) * columns + j).gameObject.GetComponent<GridSquare>().ExplodeAndDie();
+    void EndMiniGame()
+    {
+        print("End!");
+    }
+
+    // exploding animation after selecting last row
+    public void DestroyLastRow(int currentColumn, string direction="no-direction"){
+
+        if (columns == squaresLeftOnLastRow && direction == "no-direction") {
+            for (int j = 0; j < columns; j++)
+            {
+                transform.GetChild((rows - 1) * columns + j).gameObject.GetComponent<GridSquare>().Kill();
+            }
+            squaresLeftOnLastRow--;
+            transform.GetChild((rows - 1) * columns + currentColumn).gameObject.GetComponent<GridSquare>().ExplodeAndDie();
         }
+        else{
+            if (direction == "no-direction") {
+
+                bool leftMost = currentColumn == 0;
+                bool rightMost = currentColumn == columns - 1;
+                if (leftMost)
+                {
+                    transform.GetChild((rows - 1) * columns + currentColumn+1).gameObject.GetComponent<GridSquare>().ExplodeAndDie("right");
+                    squaresLeftOnLastRow--;
+                }
+                else if(rightMost){
+                    transform.GetChild((rows - 1) * columns + currentColumn-1).gameObject.GetComponent<GridSquare>().ExplodeAndDie("left");
+                    squaresLeftOnLastRow--;
+                }
+                if (!leftMost && !rightMost)
+                {
+                    transform.GetChild((rows - 1) * columns + currentColumn+1).gameObject.GetComponent<GridSquare>().ExplodeAndDie("right");
+                    transform.GetChild((rows - 1) * columns + currentColumn-1).gameObject.GetComponent<GridSquare>().ExplodeAndDie("left");
+                    squaresLeftOnLastRow--;
+                    squaresLeftOnLastRow--;
+                }
+            }
+
+            else if (direction == "left" && currentColumn != 0)
+            {
+                transform.GetChild((rows - 1) * columns + currentColumn - 1).gameObject.GetComponent<GridSquare>().ExplodeAndDie("left");
+                squaresLeftOnLastRow--;
+            }
+
+            else if (direction == "right" && currentColumn != columns-1)
+            {
+                transform.GetChild((rows - 1) * columns + currentColumn + 1).gameObject.GetComponent<GridSquare>().ExplodeAndDie("right");
+                squaresLeftOnLastRow--;
+            }
+        }
+
     }
 
     void GenerateGrid(){
@@ -247,6 +303,7 @@ public class GridManager : MonoBehaviour {
             for(int j = columns-1; j >= 0; j--){
                 GameObject square = GenerateSquare();
                 GridSquare gridSquare = square.GetComponent<GridSquare>();
+                gridSquare.errorSound = errorSound;
                 gridSquare.SetPosition(i, columns-1-j);
                 if (i == rows-1)
                 {
@@ -261,7 +318,7 @@ public class GridManager : MonoBehaviour {
                 square.transform.localPosition = new Vector3(-scale_x*j, -scale_y*i, 0f);
             }
         }
-
+        
         int shuffle;
         for(int i = 0; i < maxSurprises; i++){
             if(surpriseFactor > Random.value){

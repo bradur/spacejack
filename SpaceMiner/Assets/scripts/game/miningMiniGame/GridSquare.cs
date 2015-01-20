@@ -12,9 +12,7 @@ public class GridSquare : MonoBehaviour {
     public SpriteRenderer resourceSprite;
     public TextMesh popUpText;
 
-    public AudioSource powerup;
-    public AudioSource error;
-    public AudioSource destroy;
+    public AudioSource errorSound;
 
     bool hasSurprise;
 
@@ -34,6 +32,7 @@ public class GridSquare : MonoBehaviour {
     bool dead = false;
     int row;
     int column;
+    string explodeDirection;
     public bool isLastRow;
     // Use this for initialization
     void Start () {
@@ -48,12 +47,11 @@ public class GridSquare : MonoBehaviour {
     
     }
 
-    void Kill(){
+    public void Kill(){
         Disable();
-        destroy.Play();
-        if(resource != Resource.None){
+        /*if(resource != Resource.None){
             print("Resource yield: "+resource);
-        }
+        }*/
         if(surpriseSprite != null){
             surpriseSprite.enabled = false;
         }
@@ -107,13 +105,21 @@ public class GridSquare : MonoBehaviour {
         }
     }
 
-    public void ExplodeAndDie()
+    public void ExplodeAndDie(string direction="no-direction")
     {
         string resourceString = resource.ToString();
+        explodeDirection = direction;
         popUpText.text = "+ " + resourceCount + " " + char.ToUpper(resourceString[0]) + resourceString.Substring(1).ToLower();
         animator.SetBool("explode", true);
         animator.enabled = true;
         transform.parent.gameObject.GetComponent<GridManager>().SquareDestroyed(row, column, resource, resourceCount);
+        print("ExplodeAndDie() column: " + column + "  direction: " + explodeDirection);
+    }
+
+    public void OneOfLastRowDies()
+    {
+        print("OneOfLastRowDies() column: " + column + "  direction: " + explodeDirection);
+        transform.parent.gameObject.GetComponent<GridManager>().DestroyLastRow(column, explodeDirection);
     }
 
     public void SetPosition(int row, int column){
@@ -147,7 +153,7 @@ public class GridSquare : MonoBehaviour {
             Kill();
             if (isLastRow)
             {
-                transform.parent.gameObject.GetComponent<GridManager>().DestroyLastRow();
+                transform.parent.gameObject.GetComponent<GridManager>().DestroyLastRow(column);
             }
             else
             {
@@ -155,14 +161,13 @@ public class GridSquare : MonoBehaviour {
                     string resourceString = resource.ToString();
                     popUpText.text = "+ " + resourceCount + " " + char.ToUpper(resourceString[0]) + resourceString.Substring(1).ToLower();
                     animator.enabled = true;
-                    powerup.Play();
                 }
                 transform.parent.gameObject.GetComponent<GridManager>().SquareDestroyed(row, column, resource, resourceCount);
             }
         }
         else
         {
-            error.Play();
+            errorSound.Play();
         }
     }
 
