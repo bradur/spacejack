@@ -112,14 +112,14 @@ public class GridSquare : MonoBehaviour {
         popUpText.text = "+ " + resourceCount + " " + char.ToUpper(resourceString[0]) + resourceString.Substring(1).ToLower();
         animator.SetBool("explode", true);
         animator.enabled = true;
-        transform.parent.gameObject.GetComponent<GridManager>().SquareDestroyed(row, column, resource, resourceCount);
+        transform.parent.parent.gameObject.GetComponent<GridManager>().SquareDestroyed(row, column, resource, resourceCount);
         //print("ExplodeAndDie() column: " + column + "  direction: " + explodeDirection);
     }
 
     public void OneOfLastRowDies()
     {
         //print("OneOfLastRowDies() column: " + column + "  direction: " + explodeDirection);
-        transform.parent.gameObject.GetComponent<GridManager>().DestroyLastRow(column, explodeDirection);
+        transform.parent.parent.gameObject.GetComponent<GridManager>().DestroyLastRow(column, explodeDirection);
     }
 
     public void SetPosition(int row, int column){
@@ -153,7 +153,7 @@ public class GridSquare : MonoBehaviour {
             Kill();
             if (isLastRow)
             {
-                transform.parent.gameObject.GetComponent<GridManager>().DestroyLastRow(column);
+                transform.parent.parent.gameObject.GetComponent<GridManager>().DestroyLastRow(column);
             }
             else
             {
@@ -162,7 +162,7 @@ public class GridSquare : MonoBehaviour {
                     popUpText.text = "+ " + resourceCount + " " + char.ToUpper(resourceString[0]) + resourceString.Substring(1).ToLower();
                     animator.enabled = true;
                 }
-                transform.parent.gameObject.GetComponent<GridManager>().SquareDestroyed(row, column, resource, resourceCount);
+                transform.parent.parent.gameObject.GetComponent<GridManager>().SquareDestroyed(row, column, resource, resourceCount);
             }
         }
         else

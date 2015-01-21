@@ -17,6 +17,8 @@ public class GridManager : MonoBehaviour {
     public AudioSource gainResource;
     public AudioSource clickSquare;
     public AudioSource errorSound;
+    public Transform squareContainer;
+    Animator animator;
 
     // local variables
     SpriteRenderer sr;                                  // renderer for the background
@@ -83,6 +85,8 @@ public class GridManager : MonoBehaviour {
         cachedTexture = new Texture2D(width, height);
         cachedTexture.SetPixels(sr.sprite.texture.GetPixels());
         cachedTexture.Apply();
+
+        animator = GetComponent<Animator>();
     }
 
 
@@ -186,10 +190,12 @@ public class GridManager : MonoBehaviour {
         resourceType = Resource.None;
         GetComponent<BoxCollider2D>().enabled = false;
         currentAsteroid.RestartPirateShip();
-        foreach (Transform child in transform)
+        foreach (Transform child in squareContainer)
         {
             Destroy(child.gameObject);
         }
+        animator.CrossFade("tap_idle", 0f);
+        animator.SetBool("finished", false);
         transform.parent.gameObject.SetActive(false);
     }
 
@@ -222,13 +228,13 @@ public class GridManager : MonoBehaviour {
         for(int i = 0; i <= row; i++){
             for(int j = 0; j <= columns-1; j++){
                 //print(i+" : "+(i*columns+j));
-                transform.GetChild(i * columns + j).gameObject.GetComponent<GridSquare>().Disable();
+                squareContainer.GetChild(i * columns + j).gameObject.GetComponent<GridSquare>().Disable();
             }
         }
 
         // 2. Enable the square to the left of current position (or if there is empty space in between the next non-empty square)
         for(int j = column; j <= columns-1; j++){
-            GridSquare gs = transform.GetChild(row * columns + j).gameObject.GetComponent<GridSquare>();
+            GridSquare gs = squareContainer.GetChild(row * columns + j).gameObject.GetComponent<GridSquare>();
             if(!gs.IsDead()){
                 gs.Enable();
                 break;
@@ -237,7 +243,7 @@ public class GridManager : MonoBehaviour {
 
         // 3. Enable the square to the right of current position (or if there is empty space in between the next non-empty square)
         for(int j = column; j >= 0; j--){
-            GridSquare gs = transform.GetChild(row * columns + j).gameObject.GetComponent<GridSquare>();
+            GridSquare gs = squareContainer.GetChild(row * columns + j).gameObject.GetComponent<GridSquare>();
             if(!gs.IsDead()){
                 gs.Enable();
                 break;
@@ -246,7 +252,7 @@ public class GridManager : MonoBehaviour {
 
         // 4. If not the final row, enable the square directly underneath
         if(row != rows-1){
-            transform.GetChild((row + 1) * columns + column).gameObject.GetComponent<GridSquare>().Enable();
+            squareContainer.GetChild((row + 1) * columns + column).gameObject.GetComponent<GridSquare>().Enable();
         }
 
         // draw transparent pixels on texture to simulate destruction
@@ -311,7 +317,7 @@ public class GridManager : MonoBehaviour {
 
     GameObject GenerateSquare(){
         GameObject newSquare = (GameObject)Instantiate(squarePrefab);
-        newSquare.transform.parent = transform;
+        newSquare.transform.parent = squareContainer;
         newSquare.transform.localScale = Vector3.one;
         //newSquare.SetActive(false);
         return newSquare;
@@ -325,10 +331,10 @@ public class GridManager : MonoBehaviour {
         if (columns == squaresLeftOnLastRow && direction == "no-direction") {
             for (int j = 0; j < columns; j++)
             {
-                transform.GetChild((rows - 1) * columns + j).gameObject.GetComponent<GridSquare>().Kill();
+                squareContainer.GetChild((rows - 1) * columns + j).gameObject.GetComponent<GridSquare>().Kill();
             }
             squaresLeftOnLastRow--;
-            transform.GetChild((rows - 1) * columns + currentColumn).gameObject.GetComponent<GridSquare>().ExplodeAndDie();
+            squareContainer.GetChild((rows - 1) * columns + currentColumn).gameObject.GetComponent<GridSquare>().ExplodeAndDie();
         }
         else{
             if (direction == "no-direction") {
@@ -337,17 +343,17 @@ public class GridManager : MonoBehaviour {
                 bool rightMost = currentColumn == columns - 1;
                 if (leftMost)
                 {
-                    transform.GetChild((rows - 1) * columns + currentColumn+1).gameObject.GetComponent<GridSquare>().ExplodeAndDie("right");
+                    squareContainer.GetChild((rows - 1) * columns + currentColumn + 1).gameObject.GetComponent<GridSquare>().ExplodeAndDie("right");
                     squaresLeftOnLastRow--;
                 }
                 else if(rightMost){
-                    transform.GetChild((rows - 1) * columns + currentColumn-1).gameObject.GetComponent<GridSquare>().ExplodeAndDie("left");
+                    squareContainer.GetChild((rows - 1) * columns + currentColumn - 1).gameObject.GetComponent<GridSquare>().ExplodeAndDie("left");
                     squaresLeftOnLastRow--;
                 }
                 if (!leftMost && !rightMost)
                 {
-                    transform.GetChild((rows - 1) * columns + currentColumn+1).gameObject.GetComponent<GridSquare>().ExplodeAndDie("right");
-                    transform.GetChild((rows - 1) * columns + currentColumn-1).gameObject.GetComponent<GridSquare>().ExplodeAndDie("left");
+                    squareContainer.GetChild((rows - 1) * columns + currentColumn + 1).gameObject.GetComponent<GridSquare>().ExplodeAndDie("right");
+                    squareContainer.GetChild((rows - 1) * columns + currentColumn - 1).gameObject.GetComponent<GridSquare>().ExplodeAndDie("left");
                     squaresLeftOnLastRow--;
                     squaresLeftOnLastRow--;
                 }
@@ -355,23 +361,24 @@ public class GridManager : MonoBehaviour {
 
             else if (direction == "left" && currentColumn != 0)
             {
-                transform.GetChild((rows - 1) * columns + currentColumn - 1).gameObject.GetComponent<GridSquare>().ExplodeAndDie("left");
+                squareContainer.GetChild((rows - 1) * columns + currentColumn - 1).gameObject.GetComponent<GridSquare>().ExplodeAndDie("left");
                 squaresLeftOnLastRow--;
             }
 
             else if (direction == "right" && currentColumn != columns-1)
             {
-                transform.GetChild((rows - 1) * columns + currentColumn + 1).gameObject.GetComponent<GridSquare>().ExplodeAndDie("right");
+                squareContainer.GetChild((rows - 1) * columns + currentColumn + 1).gameObject.GetComponent<GridSquare>().ExplodeAndDie("right");
                 squaresLeftOnLastRow--;
             }
         }
         if (squaresLeftOnLastRow <= 0)
         {
-            foreach (Transform child in transform)
+            foreach (Transform child in squareContainer)
             {
                 child.gameObject.GetComponent<BoxCollider2D>().enabled = false;
             }
             GetComponent<BoxCollider2D>().enabled = true;
+            animator.SetBool("finished", true);
         }
 
     }
@@ -405,10 +412,13 @@ public class GridManager : MonoBehaviour {
                 if(shuffle == -1){
                     break;
                 }
-                GridSquare gridSquare = transform.GetChild(shuffle).GetComponent<GridSquare>();
-                gridSquare.AddSurprise();
-                Resource surpriseResource = GetRandomResource();
-                gridSquare.SetResource(sprites[(int)surpriseResource], surpriseResource, false);
+                GridSquare gridSquare = squareContainer.GetChild(shuffle).GetComponent<GridSquare>();
+                if (gridSquare != null)
+                {
+                    gridSquare.AddSurprise();
+                    Resource surpriseResource = GetRandomResource();
+                    gridSquare.SetResource(sprites[(int)surpriseResource], surpriseResource, false);
+                }
                 //print("Surprise added to: "+shuffle);
             }
         }

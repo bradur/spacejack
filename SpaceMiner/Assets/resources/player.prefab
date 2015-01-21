@@ -82,8 +82,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f566f4cfbb932a44887766f8fccddf0d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 3
   progressBar: {fileID: 100000, guid: e9e11b08c2f61334b9590e14b2ea90c8, type: 2}
+  speed: 3
+  fuelConsumption: 0
+  resourceManager: {fileID: 0}
+  hudManager: {fileID: 0}
+  home: {fileID: 0}
+  miniGame: {fileID: 0}
+  pirateShip: {fileID: 0}
 --- !u!212 &21200000
 SpriteRenderer:
   m_ObjectHideFlags: 1
@@ -103,7 +109,7 @@ SpriteRenderer:
   m_LightProbeAnchor: {fileID: 0}
   m_ScaleInLightmap: 1
   m_SortingLayerID: 0
-  m_SortingOrder: 1
+  m_SortingOrder: -50
   m_Sprite: {fileID: 21300000, guid: e260e56783b5ccb42bf8849367d89289, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
 --- !u!1001 &100100000
