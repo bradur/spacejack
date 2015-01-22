@@ -38,13 +38,28 @@ public class HudManager : MonoBehaviour
 		
 		void UpdateHud ()
 		{
-				for (int i = 0; i < text.Length - 1; i++) {
-						Resource indicatorsResource = indicatorList [i].GetComponent<Indicator> ().resource;
-						if (indicatorsResource == Resource.Fuel) {
+            for (int i = 0; i < indicatorList.Length; i++)
+            {
+                    if (indicatorList[i] == null)
+                    {
+                        // do nothing
+                        print(indicatorList[i] + ": " + i);
+                    }
+                    else
+                    {
+                        Resource indicatorsResource = indicatorList[i].GetComponent<Indicator>().resource;
+                        print(indicatorsResource);
+                        if (indicatorsResource == Resource.Fuel)
+                        {
+                            
                             indicatorList[i].GetComponent<TextMesh>().text = "" + resourceManager.GetResourceCount(indicatorsResource);
-						} else {
-								indicatorList [i].GetComponent<TextMesh> ().text = "" + resourceManager.GetResourceCount (indicatorsResource);
-						}			
+                        }
+                        else
+                        {
+                            print(resourceManager.GetResourceCount(indicatorsResource));
+                            indicatorList[i].GetComponent<TextMesh>().text = "" + resourceManager.GetResourceCount(indicatorsResource);
+                        }
+                    }
 				}
 		}
 }
