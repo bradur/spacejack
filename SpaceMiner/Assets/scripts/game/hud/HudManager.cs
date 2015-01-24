@@ -43,12 +43,12 @@ public class HudManager : MonoBehaviour
                     if (indicatorList[i] == null)
                     {
                         // do nothing
-                        print(indicatorList[i] + ": " + i);
+                        //print(indicatorList[i] + ": " + i);
                     }
                     else
                     {
                         Resource indicatorsResource = indicatorList[i].GetComponent<Indicator>().resource;
-                        print(indicatorsResource);
+                        //print(indicatorsResource);
                         if (indicatorsResource == Resource.Fuel)
                         {
                             
@@ -56,7 +56,7 @@ public class HudManager : MonoBehaviour
                         }
                         else
                         {
-                            print(resourceManager.GetResourceCount(indicatorsResource));
+                            //print(resourceManager.GetResourceCount(indicatorsResource));
                             indicatorList[i].GetComponent<TextMesh>().text = "" + resourceManager.GetResourceCount(indicatorsResource);
                         }
                     }
