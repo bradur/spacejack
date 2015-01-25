@@ -373,7 +373,7 @@ public class GridManager : MonoBehaviour {
         }
         if (squaresLeftOnLastRow <= 0)
         {
-            //print("0 SQUARES");
+            print("0 SQUARES");
             foreach (Transform child in squareContainer)
             {
                 child.gameObject.GetComponent<BoxCollider2D>().enabled = false;
