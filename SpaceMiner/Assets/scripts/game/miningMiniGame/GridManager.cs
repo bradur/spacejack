@@ -323,65 +323,42 @@ public class GridManager : MonoBehaviour {
         return newSquare;
     }
 
-
-
     // exploding animation after selecting last row
-    public void DestroyLastRow(int currentColumn, string direction="no-direction"){
-
-        if (columns == squaresLeftOnLastRow && direction == "no-direction") {
-            for (int j = 0; j < columns; j++)
-            {
-                squareContainer.GetChild((rows - 1) * columns + j).gameObject.GetComponent<GridSquare>().Kill();
-            }
-            squaresLeftOnLastRow--;
-            squareContainer.GetChild((rows - 1) * columns + currentColumn).gameObject.GetComponent<GridSquare>().ExplodeAndDie();
-        }
-        else{
-            if (direction == "no-direction") {
-
-                bool leftMost = currentColumn == 0;
-                bool rightMost = currentColumn == columns - 1;
-                if (leftMost)
-                {
-                    squareContainer.GetChild((rows - 1) * columns + currentColumn + 1).gameObject.GetComponent<GridSquare>().ExplodeAndDie("right");
-                    squaresLeftOnLastRow--;
-                }
-                else if(rightMost){
-                    squareContainer.GetChild((rows - 1) * columns + currentColumn - 1).gameObject.GetComponent<GridSquare>().ExplodeAndDie("left");
-                    squaresLeftOnLastRow--;
-                }
-                if (!leftMost && !rightMost)
-                {
-                    squareContainer.GetChild((rows - 1) * columns + currentColumn + 1).gameObject.GetComponent<GridSquare>().ExplodeAndDie("right");
-                    squareContainer.GetChild((rows - 1) * columns + currentColumn - 1).gameObject.GetComponent<GridSquare>().ExplodeAndDie("left");
-                    squaresLeftOnLastRow--;
-                    squaresLeftOnLastRow--;
-                }
-            }
-
-            else if (direction == "left" && currentColumn != 0)
-            {
-                squareContainer.GetChild((rows - 1) * columns + currentColumn - 1).gameObject.GetComponent<GridSquare>().ExplodeAndDie("left");
-                squaresLeftOnLastRow--;
-            }
-
-            else if (direction == "right" && currentColumn != columns-1)
-            {
-                squareContainer.GetChild((rows - 1) * columns + currentColumn + 1).gameObject.GetComponent<GridSquare>().ExplodeAndDie("right");
-                squaresLeftOnLastRow--;
-            }
-        }
-        if (squaresLeftOnLastRow <= 0)
+    public void DestroyLastRow(int currentColumn, int direction=0){
+        int nextColumn = currentColumn + direction;
+        //print(squaresLeftOnLastRow);
+        //print(nextColumn);
+        if (nextColumn < columns && nextColumn > -1 && squaresLeftOnLastRow > 0)
         {
-            //print("0 SQUARES");
+            if (direction == 0)
+            {
+                GridSquare gs = squareContainer.GetChild((rows - 1) * columns + nextColumn + 1).gameObject.GetComponent<GridSquare>();
+                gs.ExplodeAndDie(1);
+
+                GridSquare gs2 = squareContainer.GetChild((rows - 1) * columns + nextColumn - 1).gameObject.GetComponent<GridSquare>();
+                gs2.ExplodeAndDie(-1);
+                squaresLeftOnLastRow--;
+                squaresLeftOnLastRow--;
+                squaresLeftOnLastRow--;
+            }
+            else
+            {
+                GridSquare gs = squareContainer.GetChild((rows - 1) * columns + nextColumn).gameObject.GetComponent<GridSquare>();
+                gs.ExplodeAndDie(direction);
+                squaresLeftOnLastRow--;
+            }
+            
+        }
+        if (squaresLeftOnLastRow < 1 && squaresLeftOnLastRow != -10)
+        {
+            squaresLeftOnLastRow = -10;
+            animator.SetBool("finished", true);
             foreach (Transform child in squareContainer)
             {
                 child.gameObject.GetComponent<BoxCollider2D>().enabled = false;
             }
             GetComponent<BoxCollider2D>().enabled = true;
-            animator.SetBool("finished", true);
         }
-
     }
 
     void GenerateGrid(){

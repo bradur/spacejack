@@ -16,7 +16,7 @@ AnimatorController:
     m_Controller: {fileID: 9100000}
   m_AnimatorLayers:
   - serializedVersion: 3
-    m_Name: Base Layer
+    m_Name: base
     m_StateMachine: {fileID: 110769874}
     m_Mask: {fileID: 0}
     m_BlendingMode: 0
@@ -177,7 +177,7 @@ StateMachine:
   m_ObjectHideFlags: 3
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
-  m_Name: Base Layer
+  m_Name: base
   m_DefaultState: {fileID: 110222232}
   m_States:
   - {fileID: 110269874}

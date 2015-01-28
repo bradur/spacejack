@@ -32,7 +32,7 @@ public class GridSquare : MonoBehaviour {
     bool dead = false;
     int row;
     int column;
-    string explodeDirection;
+    int explodeDirection = 1;
     public bool isLastRow;
     // Use this for initialization
     void Start () {
@@ -105,22 +105,40 @@ public class GridSquare : MonoBehaviour {
         }
     }
 
-    public void ExplodeAndDie(string direction="no-direction")
+    public void ExplodeAndDie(int direction)
     {
+        transform.parent.parent.gameObject.GetComponent<GridManager>().SquareDestroyed(row, column, resource, resourceCount);
         string resourceString = resource.ToString();
         explodeDirection = direction;
         popUpText.text = "+ " + resourceCount + " " + char.ToUpper(resourceString[0]) + resourceString.Substring(1).ToLower();
+
+        animator = GetComponent<Animator>();
+        
         animator.SetBool("explode", true);
         animator.enabled = true;
-        transform.parent.parent.gameObject.GetComponent<GridManager>().SquareDestroyed(row, column, resource, resourceCount);
+        StartCoroutine("WaitForAnimationToFinish");
+        //print(animator.GetCurrentAnimatorStateInfo(0).IsName("base.explode"));
+        //print(animator.GetCurrentAnimatorStateInfo(0).IsName("Base Layer.explode"));
+        //print(animator.GetCurrentAnimatorStateInfo(0).IsName("base.idle"));
         //print("ExplodeAndDie() column: " + column + "  direction: " + explodeDirection);
     }
 
-    public void OneOfLastRowDies()
+    IEnumerator WaitForAnimationToFinish()
+    {
+        do
+        {
+            yield return null;
+        } while (animator.GetCurrentAnimatorStateInfo(0).IsName("base.explode") || animator.GetCurrentAnimatorStateInfo(0).IsName("base.idle"));
+        //print("isFinish!");
+        transform.parent.parent.gameObject.GetComponent<GridManager>().DestroyLastRow(column, explodeDirection);
+        Kill();
+    }
+
+    /*public void OneOfLastRowDies()
     {
         //print("OneOfLastRowDies() column: " + column + "  direction: " + explodeDirection);
         transform.parent.parent.gameObject.GetComponent<GridManager>().DestroyLastRow(column, explodeDirection);
-    }
+    }*/
 
     public void SetPosition(int row, int column){
         this.row = row;
@@ -150,13 +168,13 @@ public class GridSquare : MonoBehaviour {
         if (isAccessible) {
             sr.color = originalColor;
             //print("y: "+ row +" <> x: "+column+" SiblingIndex: "+transform.GetSiblingIndex());
-            Kill();
             if (isLastRow)
             {
-                transform.parent.parent.gameObject.GetComponent<GridManager>().DestroyLastRow(column);
+                ExplodeAndDie(0);
             }
             else
             {
+                Kill();
                 if(hasSurprise){
                     string resourceString = resource.ToString();
                     popUpText.text = "+ " + resourceCount + " " + char.ToUpper(resourceString[0]) + resourceString.Substring(1).ToLower();
