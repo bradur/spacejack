@@ -17,7 +17,7 @@ public class MarketManager : MonoBehaviour {
 
         maxFuel = resourceManager.maxFuelAmount.ToString();
 
-        for(int i = 0; i< marketButtons.Length; i++){
+        for(int i = 1; i< marketButtons.Length; i++){
             UpdateResourceCount((Resource)i);
         }
 
@@ -28,7 +28,7 @@ public class MarketManager : MonoBehaviour {
     }
 
     void UpdateButtons(){
-        for(int i = 0; i < marketButtons.Length; i++)
+        for(int i = 1; i < marketButtons.Length; i++)
         {
             marketButtons[i].CheckAvailability(GetResourceCount(marketButtons[i].costType));
         }
@@ -39,7 +39,7 @@ public class MarketManager : MonoBehaviour {
     }
 
     void UpdateGoals(){
-        for(int i = 0; i < goals.Length; i++){
+        for(int i = 1; i < goals.Length; i++){
             goals[i].UpdateGoal(GetResourceCount(goals[i].goalType));
         }
     }
@@ -56,6 +56,7 @@ public class MarketManager : MonoBehaviour {
         if(resource == Resource.Credits){
             text = "$"+text;
         }
+
         resourceTexts[(int)resource].text = text;
         if(count != 0){
             UpdateButtons();
