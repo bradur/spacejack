@@ -332,6 +332,10 @@ public class GridManager : MonoBehaviour {
         {
             if (direction == 0)
             {
+                foreach (Transform child in squareContainer)
+                {
+                    child.gameObject.GetComponent<BoxCollider2D>().enabled = false;
+                }
                 GridSquare gs = squareContainer.GetChild((rows - 1) * columns + nextColumn + 1).gameObject.GetComponent<GridSquare>();
                 gs.ExplodeAndDie(1);
 
@@ -353,10 +357,6 @@ public class GridManager : MonoBehaviour {
         {
             squaresLeftOnLastRow = -10;
             animator.SetBool("finished", true);
-            foreach (Transform child in squareContainer)
-            {
-                child.gameObject.GetComponent<BoxCollider2D>().enabled = false;
-            }
             GetComponent<BoxCollider2D>().enabled = true;
         }
     }

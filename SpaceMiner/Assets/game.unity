@@ -2654,10 +2654,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ff4d701283a29524590a0d1d50c74554, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  fuelAmount: 5000
+  fuelAmount: 100
   maxFuelAmount: 5000
   creditCount: 1000
-  resourceArray: 00000000c800000032000000000000002c010000f4010000f4010000
+  resourceArray: 00000000c800000032000000000000002c010000f40100000a000000
 --- !u!4 &1052015027
 Transform:
   m_ObjectHideFlags: 0

@@ -107,6 +107,7 @@ public class GridSquare : MonoBehaviour {
 
     public void ExplodeAndDie(int direction)
     {
+        Kill();
         transform.parent.parent.gameObject.GetComponent<GridManager>().SquareDestroyed(row, column, resource, resourceCount);
         string resourceString = resource.ToString();
         explodeDirection = direction;
@@ -131,7 +132,7 @@ public class GridSquare : MonoBehaviour {
         } while (animator.GetCurrentAnimatorStateInfo(0).IsName("base.explode") || animator.GetCurrentAnimatorStateInfo(0).IsName("base.idle"));
         //print("isFinish!");
         transform.parent.parent.gameObject.GetComponent<GridManager>().DestroyLastRow(column, explodeDirection);
-        Kill();
+        
     }
 
     /*public void OneOfLastRowDies()
