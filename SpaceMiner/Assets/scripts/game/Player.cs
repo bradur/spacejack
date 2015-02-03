@@ -16,10 +16,13 @@ public class Player : MonoBehaviour
 		ResourceManager resources;
 		public HudManager hudManager;
 		GameObject lastCollider = null;
-		float fuelTimer;
+		float fuelUsageTimer;
 		public GameObject home;
-        public GridManager miniGame;
-        public Pirate pirateShip;
+		public GridManager miniGame;
+		public Pirate pirateShip;
+		public AudioSource fuelLow;
+		public float fuelLowSoundTickRate;
+		float fuelLowSoundTimer;
 
 		void Start ()
 		{
@@ -29,7 +32,7 @@ public class Player : MonoBehaviour
 				farmingTool = Tool.DiamondPickaxe;
 				resources = resourceManager.GetComponent<ResourceManager> ();
 
-				fuelTimer = Time.deltaTime;
+				fuelUsageTimer = Time.deltaTime;
 		}
 
 		void Update ()
@@ -37,8 +40,6 @@ public class Player : MonoBehaviour
 				if (onJourney && resources.fuelAmount > 0) {
 						Vector2 dir = (travelingPoint - (Vector2)transform.position).normalized;
 						rigidbody2D.velocity = dir * speed * Time.deltaTime;
-
-						
 						UseFuel ();
 						
 						if (Mathf.Abs (transform.position.x - travelingPoint.x) < 0.1 && Mathf.Abs (transform.position.y - travelingPoint.y) < 0.1) {
@@ -61,22 +62,33 @@ public class Player : MonoBehaviour
 										if (lastCollider != null) {
 												/*progressbar.SetTarget (lastCollider);
 												progressbar.StartProcess (farmingSpeed);*/
-                                            pirateShip.StopMoving();
-                                            miniGame.InitializeGame(lastCollider.GetComponent<Asteroid>());
+												pirateShip.StopMoving ();
+												miniGame.InitializeGame (lastCollider.GetComponent<Asteroid> ());
 										}
 										
 								}
 						}
 				} else if (!onJourney) {
-						fuelTimer = Time.unscaledTime;
+						fuelUsageTimer = Time.unscaledTime;
+				}
+
+				if (hudManager.resourceManager.fuelAmount < hudManager.resourceManager.maxFuelAmount / 3 && !fuelLow.isPlaying) {
+						fuelLowSoundTimer += Time.deltaTime;
+						if (hudManager.resourceManager.fuelAmount > hudManager.resourceManager.maxFuelAmount / 6 && fuelLowSoundTimer > fuelLowSoundTickRate) {
+								fuelLowSoundTimer = 0;
+								fuelLow.Play ();
+						}
+						else if (hudManager.resourceManager.fuelAmount < hudManager.resourceManager.maxFuelAmount / 6) {
+								fuelLow.Play ();
+						}
 				}
 
 		}
 		//uses fuelConsumption amount of fuel per second
 		void UseFuel ()
 		{
-				if (fuelTimer + 1 < Time.unscaledTime) {
-						fuelTimer = Time.unscaledTime;
+				if (fuelUsageTimer + 1 < Time.unscaledTime) {
+						fuelUsageTimer = Time.unscaledTime;
 						hudManager.UseFuel (fuelConsumption);
 				}
 		}

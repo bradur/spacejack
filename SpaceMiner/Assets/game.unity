@@ -516,6 +516,18 @@ Prefab:
       propertyPath: m_SortingOrder
       value: -50
       objectReference: {fileID: 0}
+    - target: {fileID: 11400000, guid: 0ebc90c4213a422409071ba7dc92f81e, type: 2}
+      propertyPath: gameOverScene
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 11400000, guid: 0ebc90c4213a422409071ba7dc92f81e, type: 2}
+      propertyPath: fuelLow
+      value: 
+      objectReference: {fileID: 1864833419}
+    - target: {fileID: 11400000, guid: 0ebc90c4213a422409071ba7dc92f81e, type: 2}
+      propertyPath: fuelLowSoundTickRate
+      value: .5
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 0ebc90c4213a422409071ba7dc92f81e, type: 2}
   m_RootGameObject: {fileID: 175163710}
@@ -672,6 +684,7 @@ Transform:
   m_LocalScale: {x: .562287092, y: .562288105, z: 1}
   m_Children:
   - {fileID: 847618379}
+  - {fileID: 1864833418}
   m_Father: {fileID: 1051983818}
   m_RootOrder: 1
 --- !u!50 &175163713
@@ -710,6 +723,8 @@ MonoBehaviour:
   home: {fileID: 802376756}
   miniGame: {fileID: 236838587}
   pirateShip: {fileID: 190823925}
+  fuelLow: {fileID: 1864833419}
+  fuelLowSoundTickRate: .5
 --- !u!60 &175163715
 PolygonCollider2D:
   m_ObjectHideFlags: 0
@@ -2654,7 +2669,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ff4d701283a29524590a0d1d50c74554, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  fuelAmount: 100
+  fuelAmount: 5000
   maxFuelAmount: 5000
   creditCount: 1000
   resourceArray: 00000000c800000032000000000000002c010000f40100000a000000
@@ -3073,6 +3088,7 @@ MonoBehaviour:
   - {fileID: 1120854610}
   - {fileID: 2129131918}
   - {fileID: 1881437351}
+  gameOverScene: 3
 --- !u!1 &1234502205
 GameObject:
   m_ObjectHideFlags: 0
@@ -3868,6 +3884,92 @@ SpriteRenderer:
   m_SortingOrder: -5
   m_Sprite: {fileID: 21300000, guid: e3b45d352d31c0641ac5f67df1288c19, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
+--- !u!1 &1864833417
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 4
+  m_Component:
+  - 4: {fileID: 1864833418}
+  - 82: {fileID: 1864833419}
+  m_Layer: 0
+  m_Name: fuellow
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1864833418
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1864833417}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1.26606226, y: 1.26606238, z: 1}
+  m_Children: []
+  m_Father: {fileID: 175163712}
+  m_RootOrder: 1
+--- !u!82 &1864833419
+AudioSource:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1864833417}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_audioClip: {fileID: 8300000, guid: 47ca2aa188513f349ac332c1e68bbd9f, type: 3}
+  m_PlayOnAwake: 0
+  m_Volume: 1
+  m_Pitch: 1
+  Loop: 0
+  Mute: 0
+  Priority: 128
+  DopplerLevel: 1
+  MinDistance: 1
+  MaxDistance: 500
+  Pan2D: 0
+  rolloffMode: 0
+  BypassEffects: 0
+  BypassListenerEffects: 0
+  BypassReverbZones: 0
+  rolloffCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    - time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+  panLevelCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+  spreadCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
 --- !u!1 &1876311936
 GameObject:
   m_ObjectHideFlags: 0
