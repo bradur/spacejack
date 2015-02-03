@@ -250,9 +250,22 @@ public class GridManager : MonoBehaviour {
             }
         }
 
-        // 4. If not the final row, enable the square directly underneath
+        // 4. If not the final row, enable the square directly underneath and remove a step
         if(row != rows-1){
-            squareContainer.GetChild((row + 1) * columns + column).gameObject.GetComponent<GridSquare>().Enable();
+            if (resourceManager.GetResourceCount(Resource.MiningSteps) > 0)
+            {
+                squareContainer.GetChild((row + 1) * columns + column).gameObject.GetComponent<GridSquare>().Enable();
+                resourceManager.UpdateResourceCount(Resource.MiningSteps, -1);
+            }
+            if(resourceManager.GetResourceCount(Resource.MiningSteps) < 1){
+                foreach (Transform child in squareContainer)
+                {
+                    child.gameObject.GetComponent<BoxCollider2D>().enabled = false;
+                }
+                squaresLeftOnLastRow = -10;
+                animator.SetBool("finished", true);
+                GetComponent<BoxCollider2D>().enabled = true;
+            }
         }
 
         // draw transparent pixels on texture to simulate destruction

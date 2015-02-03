@@ -8,7 +8,8 @@ public enum Resource{
     Alabandite,
     Credits,
     LifeSupport,
-    Fuel
+    Fuel,
+    MiningSteps
 };
 
 public enum Tool
@@ -28,16 +29,6 @@ public enum JetPackUpgrade
     Expert
 }
 
-public enum ResourceType{
-    None,
-    Dmitryivanovite,
-    Sinoite,
-    Alabandite,
-    Credits,
-    LifeSupport,
-    Fuel
-};
-
 public class ResourceManager : MonoBehaviour
 {
     public int fuelAmount;
@@ -47,12 +38,17 @@ public class ResourceManager : MonoBehaviour
 
     public int[] resourceArray = new int[System.Enum.GetNames(typeof(Resource)).Length];
 
+    public Tool currentTool;
+
+    public int[] toolSteps = new int[System.Enum.GetNames(typeof(Tool)).Length];
+
     void Awake() {
         DontDestroyOnLoad(transform.gameObject);
     }
 
     void Start ()
     {
+        SetResourceCount(Resource.MiningSteps, GetMaxSteps());
     }
 
     void Update ()
@@ -60,8 +56,24 @@ public class ResourceManager : MonoBehaviour
         
     }
 
+    public void SetTool(Tool newTool)
+    {
+        currentTool = newTool;
+        SetResourceCount(Resource.MiningSteps, GetMaxSteps());
+    }
+
+    public int GetMaxSteps()
+    {
+        return toolSteps[(int)currentTool];
+    }
+
     public int GetResourceCount(Resource resource){
         return resourceArray[(int)resource];
+    }
+
+    public void SetResourceCount(Resource resource, int amount)
+    {
+        resourceArray[(int)resource] = amount;
     }
 
     public void UpdateResourceCount(Resource resource, int amount=0)

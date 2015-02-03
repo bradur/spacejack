@@ -12,7 +12,7 @@ GameObject:
   - 114: {fileID: 11423346}
   - 61: {fileID: 6123348}
   - 95: {fileID: 9523348}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: gridsquare
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -28,7 +28,7 @@ GameObject:
   m_Component:
   - 4: {fileID: 423348}
   - 212: {fileID: 21223344}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: surprise
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -44,7 +44,7 @@ GameObject:
   m_Component:
   - 4: {fileID: 423346}
   - 212: {fileID: 21223346}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: resource
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -62,7 +62,7 @@ GameObject:
   - 23: {fileID: 2323348}
   - 102: {fileID: 10223348}
   - 114: {fileID: 11423348}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: popUpText
   m_TagString: Untagged
   m_Icon: {fileID: 0}

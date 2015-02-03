@@ -20,6 +20,11 @@ public class HudManager : MonoBehaviour
 	
 		}
 
+        public int GetResourceCount(Resource resource)
+        {
+            return resourceManager.GetResourceCount(resource);
+        }
+
 		public void UpdateResourceCount (Resource resource, int amount)
 		{
 				resourceManager.UpdateResourceCount (resource, amount);
@@ -52,7 +57,12 @@ public class HudManager : MonoBehaviour
 								if (indicatorsResource == Resource.Fuel) {
                             
 										indicatorList [i].GetComponent<TextMesh> ().text = "" + resourceManager.GetResourceCount (indicatorsResource);
-								} else {
+                                }
+                                else if (indicatorsResource == Resource.MiningSteps)
+                                {
+                                    indicatorList[i].GetComponent<TextMesh>().text = resourceManager.GetResourceCount(indicatorsResource) + " / " + resourceManager.GetMaxSteps();
+                                }
+                                else {
 										//print(resourceManager.GetResourceCount(indicatorsResource));
 										indicatorList [i].GetComponent<TextMesh> ().text = "" + resourceManager.GetResourceCount (indicatorsResource);
 								}
